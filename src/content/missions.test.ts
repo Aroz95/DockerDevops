@@ -59,7 +59,7 @@ describe.each(LANGUAGES)('testi delle missioni in "%s"', (language) => {
         const ids =
           mission.tipo === 'ordina'
             ? mission.elementi
-            : mission.tipo === 'completa'
+            : mission.tipo === 'completa' || mission.tipo === 'terminale'
               ? []
               : mission.opzioni;
         for (const id of ids) {
@@ -67,6 +67,9 @@ describe.each(LANGUAGES)('testi delle missioni in "%s"', (language) => {
         }
         for (const id of Object.keys(text.feedback ?? {})) {
           if (!ids.includes(id)) problems.push(`${where}: feedback per opzione inesistente "${id}"`);
+        }
+        if (mission.tipo === 'terminale' && text.obiettivi?.length !== mission.obiettivi.length) {
+          problems.push(`${where}: ${mission.obiettivi.length} obiettivi ma ${text.obiettivi?.length ?? 0} descrizioni`);
         }
         if (mission.tipo === 'completa') {
           const blanks = (text.modello ?? '').split(BLANK).length - 1;

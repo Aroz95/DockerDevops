@@ -27,12 +27,15 @@ export function Header() {
           </span>
         </Link>
 
-        <nav aria-label={t('nav.label')} className="flex gap-1">
+        <nav aria-label={t('nav.label')} className="flex flex-wrap gap-1">
           <NavLink to={paths.home} end className={navLinkClass}>
             {t('nav.home')}
           </NavLink>
           <NavLink to={paths.mappa} className={navLinkClass}>
             {t('nav.map')}
+          </NavLink>
+          <NavLink to={paths.palestra} className={navLinkClass}>
+            {t('nav.gym')}
           </NavLink>
           <NavLink to={paths.glossario} className={navLinkClass}>
             {t('nav.glossary')}

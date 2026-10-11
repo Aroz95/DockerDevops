@@ -40,6 +40,18 @@ export function FeedbackPanel({ evaluation, mission }: { evaluation: Evaluation;
         }),
       );
       break;
+    case 'terminale':
+      lines.push(
+        t('mission.feedback.goals', {
+          right: evaluation.goals.filter(Boolean).length,
+          total: evaluation.goals.length,
+        }),
+      );
+      evaluation.goals.forEach((ok, index) => {
+        const goal = mission.text.obiettivi?.[index];
+        if (!ok && goal) why.push(t('mission.feedback.goalMissing', { goal }));
+      });
+      break;
     case 'completa':
       lines.push(
         t('mission.feedback.fill', {

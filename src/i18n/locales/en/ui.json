@@ -9,7 +9,8 @@
     "home": "Home",
     "map": "Course map",
     "profile": "Profile",
-    "glossary": "Glossary"
+    "glossary": "Glossary",
+    "gym": "Gym"
   },
   "settings": {
     "language": "Language",
@@ -213,7 +214,9 @@
       "multipleWrong_other": "{{count}} of the chosen answers are wrong.",
       "order": "Items in the right place: {{right}} of {{total}}.",
       "fill": "Blanks filled in correctly: {{right}} of {{total}}.",
-      "tryAgain": "Fix it and press “Check” again. Mistakes don't cost points."
+      "tryAgain": "Fix it and press “Check” again. Mistakes don't cost points.",
+      "goals": "Goals reached: {{right}} of {{total}}.",
+      "goalMissing": "Still missing: {{goal}}"
     },
     "hints": {
       "label": "Hint {{number}} of {{total}}",
@@ -226,6 +229,39 @@
     },
     "fill": {
       "blank": "Blank {{number}}"
+    },
+    "goals": {
+      "title": "Goals",
+      "done": " (done)",
+      "todo": " (to do)"
+    }
+  },
+  "gym": {
+    "title": "Terminal gym",
+    "intro": "A free terminal where you can try commands without fear of breaking anything: it's a simulated computer that lives only on this page. Linux and Docker are included.",
+    "tryThese": "Try:",
+    "note": "The simulator reproduces the behavior and messages of real commands, in a reduced version. When a command isn't available, it tells you."
+  },
+  "terminal": {
+    "inputLabel": "Command to run",
+    "outputLabel": "Terminal output",
+    "reset": "Start over (new computer)",
+    "keys": {
+      "tab": "Complete the name (Tab)",
+      "up": "Previous command",
+      "down": "Next command",
+      "ctrlC": "Cancel the line (Ctrl+C)",
+      "enter": "Enter"
+    },
+    "hints": {
+      "unknownCommand": "The command “{{command}}” doesn't exist or the course simulator doesn't know it. Check the spelling, or type help to see the available commands.",
+      "interactiveShell": "Here a shell would open inside the container, waiting for your commands. The simulator doesn't reproduce interactive sessions: the container is closed right away.",
+      "foregroundStopped": "The container “{{name}}” was running in the foreground: in real life the terminal would stay busy until you press Ctrl+C. The simulator pressed it for you and the container stopped. To keep it running in the background use the -d option.",
+      "notSimulated": "“{{command}}” exists in Docker, but it isn't available in the course simulator yet.",
+      "execLimited": "In the simulator this command doesn't keep running inside the container.",
+      "helpIntro": "Welcome to the simulated terminal! Type a command and press Enter. Type help to see the available commands; type command-name --help to learn how to use it (for example: ls --help).",
+      "helpFooter": "The simulator reproduces real commands in a reduced version: for all the options check the official documentation.",
+      "manReduced": "This is a reduced version of the {{command}} manual. The full one is on man7.org."
     }
   }
 }

@@ -2,6 +2,7 @@ import type { Mission } from '@/content/missions';
 import { ChoiceMission } from './ChoiceMission';
 import { FillMission } from './FillMission';
 import { OrderMission } from './OrderMission';
+import { TerminalMission } from './TerminalMission';
 
 interface Props {
   mission: Mission;
@@ -19,5 +20,7 @@ export function MissionRenderer({ mission, ...rest }: Props) {
       return <OrderMission mission={mission} {...rest} />;
     case 'completa':
       return <FillMission mission={mission} {...rest} />;
+    case 'terminale':
+      return <TerminalMission mission={mission} {...rest} />;
   }
 }

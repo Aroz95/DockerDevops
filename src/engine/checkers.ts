@@ -1,3 +1,6 @@
+import { checkGoals, type Goal } from './sim/goals';
+import type { Machine } from './sim/machine';
+
 /**
  * Verificatori delle missioni: funzioni pure che confrontano la risposta dello studente
  * con quella attesa e restituiscono un esito dettagliato, da cui l'interfaccia costruisce
@@ -35,11 +38,25 @@ export interface FillEvaluation {
   blanks: boolean[];
 }
 
+export interface TerminalEvaluation {
+  tipo: 'terminale';
+  passed: boolean;
+  /** Per ogni obiettivo: è stato raggiunto? */
+  goals: boolean[];
+}
+
 export type Evaluation =
   | ChoiceEvaluation
   | MultipleChoiceEvaluation
   | OrderEvaluation
-  | FillEvaluation;
+  | FillEvaluation
+  | TerminalEvaluation;
+
+/** Missione nel terminale: si controlla lo stato finale della macchina simulata. */
+export function checkTerminal(goals: readonly Goal[], machine: Machine): TerminalEvaluation {
+  const results = checkGoals(goals, machine);
+  return { tipo: 'terminale', passed: results.every(Boolean), goals: results };
+}
 
 export function checkChoice(selected: string | null, correct: string): ChoiceEvaluation {
   return { tipo: 'scelta', passed: selected === correct, selected };

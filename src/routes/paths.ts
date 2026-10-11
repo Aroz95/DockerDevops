@@ -8,6 +8,7 @@ export const paths = {
   mappa: '/mappa',
   profilo: '/profilo',
   glossario: '/glossario',
+  palestra: '/palestra',
   livelloPattern: '/livello/:livelloId',
   lezionePattern: '/livello/:livelloId/lezione/:lezioneId',
   missionePattern: '/livello/:livelloId/missione/:missioneId',

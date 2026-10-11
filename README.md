@@ -134,6 +134,32 @@ Tipi disponibili:
 Le risposte di `completa` stanno nella logica: devono valere in tutte le lingue (comandi, numeri, nomi).
 Per i comandi lascia `ignoraMaiuscole` a `false`: `docker Run` non è `docker run`.
 
+### Missioni nel terminale (`tipo: "terminale"`)
+
+Lo studente lavora in un computer simulato (`src/engine/sim/`: file system, shell e Docker) e la missione
+si supera raggiungendo degli **obiettivi sullo stato finale**, non digitando un testo preciso:
+
+```json
+{
+  "id": "prima-cartella", "tipo": "terminale", "dopoLezione": "terminale-base",
+  "inizio": { "cartelle": ["documenti"], "file": { "documenti/note.txt": "ciao\n" }, "immagini": ["nginx"] },
+  "obiettivi": [
+    { "tipo": "esiste", "percorso": "~/progetto", "come": "cartella" },
+    { "tipo": "cartella-corrente", "percorso": "~/progetto" },
+    { "tipo": "container", "immagine": "nginx", "stato": "running", "porta": "8080:80" }
+  ]
+}
+```
+
+Nei testi, `obiettivi` contiene la descrizione di ogni obiettivo (stesso ordine): si spuntano mentre lo
+studente lavora. Obiettivi disponibili: `cartella-corrente`, `esiste`, `non-esiste`, `file-contiene`,
+`comando-eseguito`, `immagine-presente`, `immagine-assente`, `container`, `nessun-container`
+(dettagli in `src/engine/sim/goals.ts`).
+
+Il simulatore riproduce output e messaggi d'errore reali (bash, GNU coreutils, Docker Engine 29).
+Quando si aggiunge un comando, confrontarne l'output con quello vero e scriverne il test in
+`src/engine/sim/sim.test.ts`. La pagina **Palestra** offre lo stesso terminale senza obiettivi.
+
 Una missione si apre dopo aver letto la lezione indicata in `dopoLezione`; il livello è completo quando
 tutte le lezioni sono lette e tutte le missioni superate. I test controllano la coerenza tra logica e testi.
 
