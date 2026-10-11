@@ -3,6 +3,7 @@ import { emptyProgress } from '@/state/progressReducer';
 import { newlyEarnedBadges } from './badges';
 import { nextDay, previousDay } from './dates';
 import { currentStreak, longestStreak } from './streak';
+import { levelStatuses } from './unlock';
 import { getRankInfo, missionXp, totalXp, XP } from './xp';
 
 describe('date', () => {
@@ -59,6 +60,46 @@ describe('XP', () => {
     expect(getRankInfo(125).progress).toBeCloseTo(0.5);
     expect(getRankInfo(250).rank).toBe('marinaio');
     expect(getRankInfo(99999)).toMatchObject({ rank: 'ammiraglio', next: null, xpToNext: null, progress: 1 });
+  });
+});
+
+describe('sblocco dei livelli', () => {
+  const levels = [
+    { id: 'a', lessonIds: ['a1', 'a2'], missionIds: [] },
+    { id: 'b', lessonIds: ['b1'], missionIds: ['bm'] },
+    { id: 'c', lessonIds: [], missionIds: [] },
+    { id: 'd', lessonIds: ['d1'], missionIds: [] },
+  ];
+  const read = (...ids: string[]) =>
+    Object.fromEntries(ids.map((id) => [id, '2026-10-11T12:00:00.000Z']));
+
+  it('apre solo il primo livello all\'inizio', () => {
+    expect(levelStatuses(levels, emptyProgress())).toEqual({
+      a: 'available',
+      b: 'locked',
+      c: 'comingSoon',
+      d: 'locked',
+    });
+  });
+
+  it('sblocca il successivo quando il precedente è completo', () => {
+    const progress = { ...emptyProgress(), lessonsRead: read('a1', 'a2') };
+    expect(levelStatuses(levels, progress)).toMatchObject({ a: 'completed', b: 'available' });
+  });
+
+  it('richiede anche le missioni per completare un livello', () => {
+    const progress = { ...emptyProgress(), lessonsRead: read('a1', 'a2', 'b1') };
+    expect(levelStatuses(levels, progress).b).toBe('available');
+    const withMission = {
+      ...progress,
+      missions: { bm: { completedAt: '2026-10-11T12:00:00.000Z', xp: 50, hintsUsed: 0, attempts: 1 } },
+    };
+    expect(levelStatuses(levels, withMission).b).toBe('completed');
+  });
+
+  it('un livello senza contenuti blocca quelli dopo', () => {
+    const progress = { ...emptyProgress(), lessonsRead: read('a1', 'a2', 'b1', 'd1') };
+    expect(levelStatuses(levels, progress).d).toBe('locked');
   });
 });
 

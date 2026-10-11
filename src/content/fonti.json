@@ -1,0 +1,29 @@
+{
+  "_nota": "Registro delle documentazioni ufficiali ammesse come fonti (piano, sezione 10.3). Una fonte con un dominio non elencato fa fallire i test.",
+  "domini": [
+    "docs.docker.com",
+    "compose-spec.io",
+    "github.com/compose-spec",
+    "opencontainers.org",
+    "trivy.dev",
+    "man7.org",
+    "gnu.org",
+    "documentation.ubuntu.com",
+    "debian.org",
+    "rfc-editor.org",
+    "developer.mozilla.org",
+    "curl.se",
+    "git-scm.com",
+    "docs.github.com",
+    "yaml.org",
+    "semver.org",
+    "12factor.net",
+    "doc.traefik.io",
+    "nginx.org",
+    "letsencrypt.org",
+    "openssh.com",
+    "kubernetes.io",
+    "docs.python.org",
+    "nodejs.org"
+  ]
+}

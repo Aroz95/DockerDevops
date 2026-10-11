@@ -81,6 +81,39 @@ Tutte le chiavi in `localStorage` iniziano con `ddc:`. Al momento:
   Ha un numero di versione (`src/types/progress.ts`): se la struttura cambia, si aggiunge una migrazione
   in `src/state/progress-storage.ts` così i progressi degli studenti non vanno persi.
 
+## Scrivere una lezione
+
+1. Crea il file `src/content/it/<id-livello>/<NN>-<nome>.mdx` (es. `come-funziona/02-punti-e-progressi.mdx`).
+   `<NN>` decide l'ordine nel livello. Crea lo stesso file in `src/content/en/…` con il testo in inglese.
+2. In testa al file, il frontmatter:
+
+   ```yaml
+   ---
+   id: nome-lezione            # unico in tutto il corso, uguale nelle due lingue
+   titolo: Titolo della lezione
+   durata: 6                   # minuti di lettura
+   tipo: tecnica               # oppure guida-corso (lezioni sul corso stesso)
+   concetti_richiesti: [browser]
+   concetti_introdotti: [cloud]
+   fonti:
+     - titolo: "GitHub Docs – …"
+       url: https://docs.github.com/…
+   verificata_il: "2026-10-11"
+   ---
+   ```
+
+3. Ogni concetto introdotto va aggiunto in `src/content/<lingua>/glossario.json`.
+4. Nel testo puoi usare, senza importarli: `<Termine id="cloud">cloud</Termine>`,
+   `<Callout tipo="info|consiglio|attenzione">…</Callout>`, `<Analogia>…</Analogia>`.
+
+I test bloccano la pubblicazione se:
+- una lezione usa un concetto (o un `<Termine>`) prima che sia stato introdotto;
+- italiano e inglese non hanno le stesse lezioni con gli stessi metadati;
+- una fonte non è nel registro `src/content/fonti.json`, o una lezione tecnica non ha fonti;
+- manca una voce del glossario.
+
+Un livello si sblocca quando il precedente è completato; un livello senza lezioni appare "in preparazione".
+
 ## Progressi e gamification
 
 - `src/engine/` contiene le regole, come funzioni pure senza React: XP e gradi (`xp.ts`), serie di giorni

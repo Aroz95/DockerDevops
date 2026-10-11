@@ -8,7 +8,8 @@
     "label": "Navigazione principale",
     "home": "Inizio",
     "map": "Mappa del corso",
-    "profile": "Profilo"
+    "profile": "Profilo",
+    "glossary": "Glossario"
   },
   "settings": {
     "language": "Lingua",
@@ -50,7 +51,14 @@
     "worldMeta": "{{world}} · {{levels}}",
     "levelCount_one": "{{count}} livello",
     "levelCount_other": "{{count}} livelli",
-    "level": "Livello {{number}}"
+    "level": "Livello {{number}}",
+    "levelMeta": "{{level}} · {{status}}",
+    "status": {
+      "completed": "completato",
+      "available": "disponibile",
+      "locked": "bloccato",
+      "comingSoon": "in preparazione"
+    }
   },
   "notFound": {
     "title": "Pagina non trovata",
@@ -130,5 +138,50 @@
       "newerVersion": "Il file è stato creato con una versione più recente del corso. Ricarica la pagina e riprova.",
       "readFailed": "Non è stato possibile leggere il file."
     }
+  },
+  "level": {
+    "kicker": "{{level}} · {{world}}",
+    "lockedText": "Questo livello si sblocca quando completi quello precedente. Ogni livello usa parole e idee spiegate nei livelli prima: saltarli renderebbe tutto più difficile.",
+    "comingSoonText": "Le lezioni di questo livello sono ancora in preparazione. Tornerà disponibile appena pronte.",
+    "backToMap": "Torna alla mappa",
+    "progress": "Lezioni lette: {{read}} su {{total}}",
+    "progressLabel": "Avanzamento del livello",
+    "completed": "Livello completato!",
+    "start": "Inizia il livello",
+    "continue": "Continua da dove eri rimasto",
+    "lessonsTitle": "Lezioni",
+    "lessonMeta": "Lezione {{number}} · {{minutes}} min · {{status}}",
+    "read": "letta",
+    "unread": "da leggere"
+  },
+  "lesson": {
+    "backToLevel": "← {{level}}",
+    "meta": "Lezione {{number}} di {{total}} · circa {{minutes}} minuti",
+    "loading": "Caricamento della lezione…",
+    "navLabel": "Navigazione tra le lezioni",
+    "previous": "← {{title}}",
+    "readAndNext": "Ho letto, avanti (+{{xp}} XP)",
+    "readAndFinish": "Ho letto, fine livello (+{{xp}} XP)",
+    "nextLesson": "Lezione successiva →",
+    "backToLevelShort": "Torna al livello",
+    "analogy": "Un paragone",
+    "callout": {
+      "info": "Da sapere",
+      "consiglio": "Consiglio",
+      "attenzione": "Attenzione"
+    },
+    "sources": {
+      "title": "Approfondisci nella documentazione ufficiale",
+      "inEnglish": " (in inglese)",
+      "verified": "Contenuto verificato sulla documentazione ufficiale il {{date}}."
+    }
+  },
+  "glossary": {
+    "title": "Glossario",
+    "intro": "Tutte le parole tecniche del corso, spiegate in modo semplice. Ogni voce rimanda alla lezione che la introduce.",
+    "empty": "Il glossario si riempie man mano che vengono pubblicate le lezioni.",
+    "goToLesson": "Vai alla lezione",
+    "openGlossary": "Apri nel glossario",
+    "introducedIn": "Spiegato nella lezione: {{lesson}}"
   }
 }

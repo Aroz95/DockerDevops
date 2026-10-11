@@ -1,13 +1,18 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 import { Card } from '@/components/ui/Card';
 import type { MondoVista } from '@/content';
+import type { CourseLevel } from '@/hooks/useCourse';
+import { paths } from '@/routes/paths';
+import { LevelStatusIcon } from './LevelStatusIcon';
 
 interface MondoCardProps {
   mondo: MondoVista;
+  levels: CourseLevel[];
 }
 
-/** Un mondo nella mappa: titolo, descrizione ed elenco dei livelli. */
-export function MondoCard({ mondo }: MondoCardProps) {
+/** Un mondo nella mappa: titolo, descrizione ed elenco dei livelli con il loro stato. */
+export function MondoCard({ mondo, levels }: MondoCardProps) {
   const { t } = useTranslation();
   const headingId = `mondo-${mondo.id}`;
 
@@ -27,21 +32,37 @@ export function MondoCard({ mondo }: MondoCardProps) {
       </header>
 
       <ol aria-labelledby={headingId} className="grid gap-2 sm:grid-cols-2">
-        {mondo.livelli.map((livello) => (
-          <li
-            key={livello.id}
-            className="flex items-center gap-3 rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-800/60"
-          >
-            <span className="sr-only">{t('map.level', { number: livello.numero })}</span>
-            <span
-              aria-hidden="true"
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-200 font-mono text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200"
-            >
-              {livello.numero}
-            </span>
-            <span className="text-sm font-medium">{livello.titolo}</span>
-          </li>
-        ))}
+        {levels.map((level) => {
+          const open = level.status === 'available' || level.status === 'completed';
+          const content = (
+            <>
+              <LevelStatusIcon status={level.status} />
+              <span className="min-w-0">
+                <span className="block text-xs text-slate-500 dark:text-slate-400">
+                  {t('map.levelMeta', {
+                    level: t('map.level', { number: level.numero }),
+                    status: t(`map.status.${level.status}`),
+                  })}
+                </span>
+                <span className="block text-sm font-medium">{level.titolo}</span>
+              </span>
+            </>
+          );
+          return (
+            <li key={level.id}>
+              {open ? (
+                <Link
+                  to={paths.livello(level.id)}
+                  className="flex items-center gap-3 rounded-lg bg-slate-50 px-3 py-2 transition-colors hover:bg-teal-50 dark:bg-slate-800/60 dark:hover:bg-teal-950/50"
+                >
+                  {content}
+                </Link>
+              ) : (
+                <div className="flex items-center gap-3 rounded-lg px-3 py-2 opacity-70">{content}</div>
+              )}
+            </li>
+          );
+        })}
       </ol>
     </Card>
   );

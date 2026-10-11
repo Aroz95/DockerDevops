@@ -1,16 +1,12 @@
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MondoCard } from '@/components/mappa/MondoCard';
-import { getMondi } from '@/content';
+import { useCourse } from '@/hooks/useCourse';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
-import { useSettings } from '@/hooks/useSettings';
 
 export function MappaMondiPage() {
   const { t } = useTranslation();
-  const { settings } = useSettings();
+  const { mondi, levels } = useCourse();
   useDocumentTitle(t('map.title'));
-
-  const mondi = useMemo(() => getMondi(settings.language), [settings.language]);
 
   return (
     <div className="space-y-8">
@@ -23,7 +19,11 @@ export function MappaMondiPage() {
 
       <div className="space-y-6">
         {mondi.map((mondo) => (
-          <MondoCard key={mondo.id} mondo={mondo} />
+          <MondoCard
+            key={mondo.id}
+            mondo={mondo}
+            levels={levels.filter((level) => level.mondo.id === mondo.id)}
+          />
         ))}
       </div>
     </div>

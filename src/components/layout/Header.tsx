@@ -34,6 +34,9 @@ export function Header() {
           <NavLink to={paths.mappa} className={navLinkClass}>
             {t('nav.map')}
           </NavLink>
+          <NavLink to={paths.glossario} className={navLinkClass}>
+            {t('nav.glossary')}
+          </NavLink>
           <NavLink to={paths.profilo} className={navLinkClass}>
             {t('nav.profile')}
           </NavLink>

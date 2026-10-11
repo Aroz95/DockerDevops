@@ -8,7 +8,8 @@
     "label": "Main navigation",
     "home": "Home",
     "map": "Course map",
-    "profile": "Profile"
+    "profile": "Profile",
+    "glossary": "Glossary"
   },
   "settings": {
     "language": "Language",
@@ -50,7 +51,14 @@
     "worldMeta": "{{world}} · {{levels}}",
     "levelCount_one": "{{count}} level",
     "levelCount_other": "{{count}} levels",
-    "level": "Level {{number}}"
+    "level": "Level {{number}}",
+    "levelMeta": "{{level}} · {{status}}",
+    "status": {
+      "completed": "completed",
+      "available": "available",
+      "locked": "locked",
+      "comingSoon": "coming soon"
+    }
   },
   "notFound": {
     "title": "Page not found",
@@ -130,5 +138,50 @@
       "newerVersion": "The file was created with a newer version of the course. Reload the page and try again.",
       "readFailed": "The file could not be read."
     }
+  },
+  "level": {
+    "kicker": "{{level}} · {{world}}",
+    "lockedText": "This level unlocks when you complete the previous one. Every level uses words and ideas explained in the levels before it: skipping them would make everything harder.",
+    "comingSoonText": "The lessons for this level are still being written. It will become available as soon as they are ready.",
+    "backToMap": "Back to the map",
+    "progress": "Lessons read: {{read}} of {{total}}",
+    "progressLabel": "Level progress",
+    "completed": "Level completed!",
+    "start": "Start the level",
+    "continue": "Continue where you left off",
+    "lessonsTitle": "Lessons",
+    "lessonMeta": "Lesson {{number}} · {{minutes}} min · {{status}}",
+    "read": "read",
+    "unread": "to read"
+  },
+  "lesson": {
+    "backToLevel": "← {{level}}",
+    "meta": "Lesson {{number}} of {{total}} · about {{minutes}} minutes",
+    "loading": "Loading the lesson…",
+    "navLabel": "Lesson navigation",
+    "previous": "← {{title}}",
+    "readAndNext": "Done reading, next (+{{xp}} XP)",
+    "readAndFinish": "Done reading, finish level (+{{xp}} XP)",
+    "nextLesson": "Next lesson →",
+    "backToLevelShort": "Back to the level",
+    "analogy": "A comparison",
+    "callout": {
+      "info": "Good to know",
+      "consiglio": "Tip",
+      "attenzione": "Watch out"
+    },
+    "sources": {
+      "title": "Learn more in the official documentation",
+      "inEnglish": " (in English)",
+      "verified": "Content checked against the official documentation on {{date}}."
+    }
+  },
+  "glossary": {
+    "title": "Glossary",
+    "intro": "Every technical word in the course, explained simply. Each entry links to the lesson that introduces it.",
+    "empty": "The glossary fills up as lessons are published.",
+    "goToLesson": "Go to the lesson",
+    "openGlossary": "Open in the glossary",
+    "introducedIn": "Explained in the lesson: {{lesson}}"
   }
 }

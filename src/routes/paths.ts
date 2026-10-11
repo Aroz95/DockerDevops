@@ -7,4 +7,10 @@ export const paths = {
   home: '/',
   mappa: '/mappa',
   profilo: '/profilo',
+  glossario: '/glossario',
+  livelloPattern: '/livello/:livelloId',
+  lezionePattern: '/livello/:livelloId/lezione/:lezioneId',
+  livello: (livelloId: string) => `/livello/${livelloId}`,
+  lezione: (livelloId: string, lezioneId: string) => `/livello/${livelloId}/lezione/${lezioneId}`,
+  termine: (id: string) => `/glossario#${id}`,
 } as const;

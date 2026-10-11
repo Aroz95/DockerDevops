@@ -1,0 +1,22 @@
+{
+  "browser": {
+    "termine": "Browser",
+    "definizione": "Il programma con cui si visitano i siti web, come Chrome, Safari, Firefox o Edge."
+  },
+  "archiviazione-locale": {
+    "termine": "Archiviazione locale (local storage)",
+    "definizione": "Un piccolo spazio che il browser riserva a ogni sito per salvare dati sul tuo dispositivo. I dati restano solo in quel browser e su quel dispositivo."
+  },
+  "cloud": {
+    "termine": "Cloud",
+    "definizione": "Computer veri, che si trovano nei centri dati di un'azienda, che si usano via internet senza averli fisicamente davanti."
+  },
+  "github": {
+    "termine": "GitHub",
+    "definizione": "Un sito dove chi sviluppa software conserva, condivide e porta avanti i propri progetti, anche insieme ad altre persone."
+  },
+  "codespaces": {
+    "termine": "GitHub Codespaces",
+    "definizione": "Un servizio di GitHub che fornisce in pochi secondi un computer nel cloud già preparato, da usare dentro il browser."
+  }
+}
