@@ -4,6 +4,7 @@ import { HomePage } from './HomePage';
 import { MappaMondiPage } from './MappaMondiPage';
 import { NotFoundPage } from './NotFoundPage';
 import { paths } from './paths';
+import { ProfiloPage } from './ProfiloPage';
 
 /** Elenco delle pagine. Le nuove rotte (livello, lezione, missione…) si aggiungono qui. */
 export function AppRoutes() {
@@ -12,6 +13,7 @@ export function AppRoutes() {
       <Route element={<AppShell />}>
         <Route index element={<HomePage />} />
         <Route path={paths.mappa} element={<MappaMondiPage />} />
+        <Route path={paths.profilo} element={<ProfiloPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

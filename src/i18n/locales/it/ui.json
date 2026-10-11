@@ -7,7 +7,8 @@
   "nav": {
     "label": "Navigazione principale",
     "home": "Inizio",
-    "map": "Mappa del corso"
+    "map": "Mappa del corso",
+    "profile": "Profilo"
   },
   "settings": {
     "language": "Lingua",
@@ -58,5 +59,76 @@
   },
   "footer": {
     "storage": "I progressi sono salvati solo in questo browser."
+  },
+  "xp": {
+    "amount": "{{xp}} XP"
+  },
+  "ranks": {
+    "mozzo": "Mozzo",
+    "marinaio": "Marinaio",
+    "timoniere": "Timoniere",
+    "capitano": "Capitano",
+    "ammiraglio": "Ammiraglio dei container"
+  },
+  "profile": {
+    "title": "Il tuo profilo",
+    "rank": "Grado",
+    "rankProgress": "Avanzamento verso il prossimo grado",
+    "toNextRank": "Ti mancano {{xp}} XP per diventare {{rank}}.",
+    "maxRank": "Hai raggiunto il grado più alto. Complimenti!",
+    "statsTitle": "Statistiche",
+    "stats": {
+      "lessons": "Lezioni lette",
+      "missions": "Missioni superate",
+      "streak": "Giorni di fila",
+      "badges": "Badge ottenuti"
+    },
+    "badgesTitle": "Badge",
+    "badgeEarned": "Ottenuto il {{date}}",
+    "badgeLocked": "Non ancora ottenuto"
+  },
+  "badges": {
+    "prima-lezione": {
+      "name": "Prima lezione",
+      "description": "Leggi la tua prima lezione."
+    },
+    "prima-missione": {
+      "name": "Si salpa",
+      "description": "Supera la tua prima missione."
+    },
+    "senza-aiuti": {
+      "name": "Bussola interna",
+      "description": "Supera una missione senza usare suggerimenti."
+    },
+    "perseverante": {
+      "name": "Perseverante",
+      "description": "Supera una missione dopo almeno 5 tentativi: sbagliare fa parte dell'imparare."
+    },
+    "serie-7": {
+      "name": "Settimana di fuoco",
+      "description": "Studia per 7 giorni di fila."
+    }
+  },
+  "backup": {
+    "title": "Salvataggio dei progressi",
+    "intro": "I progressi sono salvati solo in questo browser. Esportali in un file per fare una copia di sicurezza o per continuare su un altro dispositivo.",
+    "storageUnavailable": "Questo browser non permette di salvare i dati (succede ad esempio in navigazione privata): i progressi andranno persi alla chiusura. Esportali prima di uscire.",
+    "export": "Esporta progressi",
+    "import": "Importa da file",
+    "reset": "Azzera progressi",
+    "cancel": "Annulla",
+    "confirmImport": "Il file contiene {{lessons}} lezioni lette e {{missions}} missioni superate. Vuoi sostituire i progressi attuali con questi?",
+    "confirmImportYes": "Sì, sostituisci",
+    "confirmReset": "Tutti i progressi, gli XP e i badge verranno cancellati da questo browser. L'operazione non si può annullare.",
+    "confirmResetYes": "Sì, azzera tutto",
+    "importedOk": "Progressi importati.",
+    "resetOk": "Progressi azzerati.",
+    "errors": {
+      "invalidJson": "Il file non è leggibile: non contiene dati in formato JSON.",
+      "wrongFile": "Questo file non è un'esportazione dei progressi di questo corso.",
+      "invalidData": "Il file è danneggiato: i progressi al suo interno non sono validi.",
+      "newerVersion": "Il file è stato creato con una versione più recente del corso. Ricarica la pagina e riprova.",
+      "readFailed": "Non è stato possibile leggere il file."
+    }
   }
 }

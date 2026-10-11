@@ -1,21 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import { SettingsProvider } from '@/context/SettingsProvider';
-import { AppRoutes } from '@/routes/AppRoutes';
-import { paths } from '@/routes/paths';
-import { loadSettings, type Settings } from '@/state/settings';
-
-function renderApp(route: string = paths.home, settings: Settings = { language: 'it', theme: 'light' }) {
-  return render(
-    <SettingsProvider initialSettings={settings}>
-      <MemoryRouter initialEntries={[route]}>
-        <AppRoutes />
-      </MemoryRouter>
-    </SettingsProvider>,
-  );
-}
+import { loadSettings } from '@/state/settings';
+import { renderApp } from '@/test/renderApp';
 
 describe('App', () => {
   it('mostra la pagina iniziale in italiano', () => {
@@ -59,8 +46,13 @@ describe('App', () => {
     expect(screen.getByRole('heading', { level: 2, name: 'Campo Base' })).toBeInTheDocument();
   });
 
+  it('mostra grado e XP nell\'intestazione', () => {
+    renderApp();
+    expect(screen.getByRole('link', { name: /Mozzo\s*0 XP/ })).toBeInTheDocument();
+  });
+
   it('mostra la pagina "non trovata" per indirizzi sconosciuti', () => {
-    renderApp('/indirizzo-inesistente');
+    renderApp({ route: '/indirizzo-inesistente' });
     expect(screen.getByRole('heading', { name: 'Pagina non trovata' })).toBeInTheDocument();
   });
 });

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link, NavLink } from 'react-router';
+import { XpIndicator } from '@/components/gamification/XpIndicator';
 import { LanguageSwitcher } from '@/components/settings/LanguageSwitcher';
 import { ThemeSelect } from '@/components/settings/ThemeSelect';
 import { paths } from '@/routes/paths';
@@ -33,9 +34,13 @@ export function Header() {
           <NavLink to={paths.mappa} className={navLinkClass}>
             {t('nav.map')}
           </NavLink>
+          <NavLink to={paths.profilo} className={navLinkClass}>
+            {t('nav.profile')}
+          </NavLink>
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex flex-wrap items-center gap-3">
+          <XpIndicator />
           <ThemeSelect />
           <LanguageSwitcher />
         </div>

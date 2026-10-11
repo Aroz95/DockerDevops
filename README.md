@@ -77,3 +77,14 @@ Regole di progetto:
 Tutte le chiavi in `localStorage` iniziano con `ddc:`. Al momento:
 
 - `ddc:settings` → lingua e tema (letta anche dallo script in `index.html` per evitare il lampo bianco col tema scuro).
+- `ddc:progress` → progressi: lezioni lette, missioni, suggerimenti, badge, giorni di studio, bozze.
+  Ha un numero di versione (`src/types/progress.ts`): se la struttura cambia, si aggiunge una migrazione
+  in `src/state/progress-storage.ts` così i progressi degli studenti non vanno persi.
+
+## Progressi e gamification
+
+- `src/engine/` contiene le regole, come funzioni pure senza React: XP e gradi (`xp.ts`), serie di giorni
+  (`streak.ts`), badge (`badges.ts`). I valori di XP e le soglie dei gradi si cambiano lì.
+- `src/state/progressReducer.ts` applica le azioni (lezione letta, tentativo, suggerimento, missione superata…).
+- `ProgressProvider` salva a ogni modifica; `useProgress()` dà accesso a stato, XP, grado e azioni.
+- Dalla pagina Profilo si esportano, importano e azzerano i progressi.

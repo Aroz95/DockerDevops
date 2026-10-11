@@ -6,4 +6,5 @@
 export const paths = {
   home: '/',
   mappa: '/mappa',
+  profilo: '/profilo',
 } as const;

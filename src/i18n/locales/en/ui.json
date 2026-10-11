@@ -7,7 +7,8 @@
   "nav": {
     "label": "Main navigation",
     "home": "Home",
-    "map": "Course map"
+    "map": "Course map",
+    "profile": "Profile"
   },
   "settings": {
     "language": "Language",
@@ -58,5 +59,76 @@
   },
   "footer": {
     "storage": "Progress is saved only in this browser."
+  },
+  "xp": {
+    "amount": "{{xp}} XP"
+  },
+  "ranks": {
+    "mozzo": "Deckhand",
+    "marinaio": "Sailor",
+    "timoniere": "Helmsman",
+    "capitano": "Captain",
+    "ammiraglio": "Container Admiral"
+  },
+  "profile": {
+    "title": "Your profile",
+    "rank": "Rank",
+    "rankProgress": "Progress towards the next rank",
+    "toNextRank": "{{xp}} XP to go to become {{rank}}.",
+    "maxRank": "You have reached the highest rank. Congratulations!",
+    "statsTitle": "Statistics",
+    "stats": {
+      "lessons": "Lessons read",
+      "missions": "Missions passed",
+      "streak": "Days in a row",
+      "badges": "Badges earned"
+    },
+    "badgesTitle": "Badges",
+    "badgeEarned": "Earned on {{date}}",
+    "badgeLocked": "Not earned yet"
+  },
+  "badges": {
+    "prima-lezione": {
+      "name": "First lesson",
+      "description": "Read your first lesson."
+    },
+    "prima-missione": {
+      "name": "Setting sail",
+      "description": "Pass your first mission."
+    },
+    "senza-aiuti": {
+      "name": "Inner compass",
+      "description": "Pass a mission without using hints."
+    },
+    "perseverante": {
+      "name": "Persistent",
+      "description": "Pass a mission after at least 5 attempts: making mistakes is part of learning."
+    },
+    "serie-7": {
+      "name": "Week on fire",
+      "description": "Study for 7 days in a row."
+    }
+  },
+  "backup": {
+    "title": "Saving your progress",
+    "intro": "Progress is saved only in this browser. Export it to a file to keep a backup or to continue on another device.",
+    "storageUnavailable": "This browser does not allow saving data (for example in private browsing): your progress will be lost when you close it. Export it before leaving.",
+    "export": "Export progress",
+    "import": "Import from file",
+    "reset": "Reset progress",
+    "cancel": "Cancel",
+    "confirmImport": "The file contains {{lessons}} lessons read and {{missions}} missions passed. Replace your current progress with it?",
+    "confirmImportYes": "Yes, replace",
+    "confirmReset": "All progress, XP and badges will be deleted from this browser. This cannot be undone.",
+    "confirmResetYes": "Yes, reset everything",
+    "importedOk": "Progress imported.",
+    "resetOk": "Progress reset.",
+    "errors": {
+      "invalidJson": "The file cannot be read: it does not contain JSON data.",
+      "wrongFile": "This file is not a progress export from this course.",
+      "invalidData": "The file is damaged: the progress inside it is not valid.",
+      "newerVersion": "The file was created with a newer version of the course. Reload the page and try again.",
+      "readFailed": "The file could not be read."
+    }
   }
 }
