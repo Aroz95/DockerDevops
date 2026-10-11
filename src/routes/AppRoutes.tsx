@@ -5,6 +5,7 @@ import { HomePage } from './HomePage';
 import { LezionePage } from './LezionePage';
 import { LivelloPage } from './LivelloPage';
 import { MappaMondiPage } from './MappaMondiPage';
+import { MissionePage } from './MissionePage';
 import { NotFoundPage } from './NotFoundPage';
 import { paths } from './paths';
 import { ProfiloPage } from './ProfiloPage';
@@ -18,6 +19,7 @@ export function AppRoutes() {
         <Route path={paths.mappa} element={<MappaMondiPage />} />
         <Route path={paths.livelloPattern} element={<LivelloPage />} />
         <Route path={paths.lezionePattern} element={<LezionePage />} />
+        <Route path={paths.missionePattern} element={<MissionePage />} />
         <Route path={paths.glossario} element={<GlossarioPage />} />
         <Route path={paths.profilo} element={<ProfiloPage />} />
         <Route path="*" element={<NotFoundPage />} />

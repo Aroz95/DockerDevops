@@ -4,7 +4,7 @@ import { LevelStatusIcon } from '@/components/mappa/LevelStatusIcon';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { Card } from '@/components/ui/Card';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { useCourse } from '@/hooks/useCourse';
+import { isMissionOpen, useCourse } from '@/hooks/useCourse';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import { useProgress } from '@/hooks/useProgress';
 import { NotFoundPage } from './NotFoundPage';
@@ -49,7 +49,12 @@ export function LivelloPage() {
   }
 
   const readCount = level.lessons.filter((lesson) => progress.lessonsRead[lesson.id]).length;
-  const nextLesson = level.lessons.find((lesson) => !progress.lessonsRead[lesson.id]);
+  const passedCount = level.missions.filter((mission) => progress.missions[mission.id]).length;
+  const totalSteps = level.lessons.length + level.missions.length;
+  // Primo passo ancora da fare, nell'ordine del percorso (lezione, sue missioni, lezione…).
+  const nextTodo = level.steps.find((step) =>
+    step.kind === 'lesson' ? !progress.lessonsRead[step.id] : !progress.missions[step.id],
+  );
 
   return (
     <div className="max-w-3xl space-y-8">
@@ -58,17 +63,23 @@ export function LivelloPage() {
       <Card className="space-y-3">
         <p className="text-sm text-slate-600 dark:text-slate-300">
           {t('level.progress', { read: readCount, total: level.lessons.length })}
+          {level.missions.length > 0 && (
+            <>
+              <br />
+              {t('level.missionsProgress', { passed: passedCount, total: level.missions.length })}
+            </>
+          )}
         </p>
         <ProgressBar
-          value={level.lessons.length ? readCount / level.lessons.length : 0}
+          value={totalSteps ? (readCount + passedCount) / totalSteps : 0}
           label={t('level.progressLabel')}
         />
         {level.status === 'completed' ? (
           <p className="font-semibold text-teal-700 dark:text-teal-400">{t('level.completed')}</p>
         ) : (
-          nextLesson && (
-            <ButtonLink to={paths.lezione(level.id, nextLesson.id)}>
-              {t(readCount === 0 ? 'level.start' : 'level.continue')}
+          nextTodo && (
+            <ButtonLink to={paths.passo(level.id, nextTodo)}>
+              {t(readCount + passedCount === 0 ? 'level.start' : 'level.continue')}
             </ButtonLink>
           )
         )}
@@ -104,6 +115,54 @@ export function LivelloPage() {
           })}
         </ol>
       </section>
+
+      {level.missions.length > 0 && (
+        <section aria-labelledby="missioni" className="space-y-3">
+          <h2 id="missioni" className="text-xl font-bold text-slate-900 dark:text-white">
+            {t('level.missionsTitle')}
+          </h2>
+          <ol className="space-y-2">
+            {level.missions.map((mission, index) => {
+              const passed = Boolean(progress.missions[mission.id]);
+              const open = isMissionOpen(mission, progress);
+              const lesson = level.lessons.find((l) => l.id === mission.dopoLezione);
+              const meta = t('level.missionMeta', {
+                number: index + 1,
+                status: passed
+                  ? t('level.missionPassed', { xp: progress.missions[mission.id]?.xp ?? 0 })
+                  : open
+                    ? t('level.missionOpen')
+                    : t('level.missionLocked', { lesson: lesson?.titolo ?? '' }),
+              });
+              const content = (
+                <>
+                  <LevelStatusIcon status={passed ? 'completed' : open ? 'available' : 'locked'} />
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-medium">{mission.text.titolo}</span>
+                    <span className="block text-xs text-slate-500 dark:text-slate-400">{meta}</span>
+                  </span>
+                </>
+              );
+              return (
+                <li key={mission.id}>
+                  {open ? (
+                    <Link
+                      to={paths.missione(level.id, mission.id)}
+                      className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 transition-colors hover:border-amber-400 dark:border-slate-800 dark:bg-slate-900"
+                    >
+                      {content}
+                    </Link>
+                  ) : (
+                    <div className="flex items-center gap-3 rounded-lg border border-dashed border-slate-300 px-4 py-3 opacity-70 dark:border-slate-700">
+                      {content}
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      )}
     </div>
   );
 }

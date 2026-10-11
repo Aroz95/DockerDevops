@@ -1,0 +1,100 @@
+{
+  "sfida-fine-mondo": {
+    "titolo": "La fine di ogni mondo",
+    "domanda": "Come si chiama l'esercizio più grande che chiude ogni mondo?",
+    "opzioni": {
+      "missione-finale": "Missione finale",
+      "sfida-boss": "Sfida del Boss",
+      "esame": "Esame del mondo",
+      "livello-bonus": "Livello bonus"
+    },
+    "feedback": {
+      "missione-finale": "Le missioni sono gli esercizi dopo le lezioni: ce ne sono tante in ogni livello, non solo alla fine.",
+      "esame": "Nel corso non ci sono esami con voti: l'esercizio finale ha un nome da videogioco.",
+      "livello-bonus": "Non esistono livelli bonus: tutti i livelli fanno parte del percorso principale."
+    },
+    "suggerimenti": [
+      "Rileggi la sezione «Come è organizzato» della lezione Benvenuto a bordo.",
+      "Pensa ai videogiochi: alla fine di ogni mondo c'è un avversario più difficile degli altri.",
+      "La risposta è «Sfida del Boss»: un esercizio più grande che mette insieme tutto quello che hai imparato nel mondo."
+    ],
+    "spiegazione": "Ogni mondo si chiude con una Sfida del Boss: un esercizio più grande che usa tutto quello che hai imparato in quel mondo e ti dice se sei pronto per il successivo."
+  },
+  "struttura-corso": {
+    "titolo": "Dal più grande al più piccolo",
+    "domanda": "Metti in ordine queste parti del corso, dalla più grande alla più piccola.",
+    "opzioni": {
+      "mondo": "Mondo",
+      "livello": "Livello",
+      "lezione": "Lezione"
+    },
+    "suggerimenti": [
+      "Una di queste parti contiene le altre due.",
+      "Ogni mondo contiene alcuni livelli.",
+      "L'ordine giusto è: Mondo, Livello, Lezione. Un mondo contiene livelli, e ogni livello contiene lezioni e missioni."
+    ],
+    "spiegazione": "Il corso è diviso in mondi; ogni mondo contiene livelli; ogni livello contiene lezioni (e missioni)."
+  },
+  "quando-riparti-da-zero": {
+    "titolo": "Dove sono i tuoi progressi?",
+    "domanda": "In quali di questi casi ti ritrovi a ripartire da zero? Scegli tutte le risposte giuste.",
+    "opzioni": {
+      "cancelli-dati": "Cancelli i dati di navigazione del browser.",
+      "altro-browser": "Apri il corso da un altro browser o da un altro dispositivo.",
+      "chiudi-scheda": "Chiudi la scheda del corso e la riapri domani.",
+      "navigazione-privata": "Studi in navigazione privata e poi chiudi la finestra.",
+      "usi-suggerimento": "Usi un suggerimento in una missione."
+    },
+    "feedback": {
+      "chiudi-scheda": "Chiudere e riaprire la scheda non cancella nulla: l'archiviazione locale resta nel browser.",
+      "usi-suggerimento": "Un suggerimento riduce solo gli XP di quella missione, non cancella i progressi."
+    },
+    "suggerimenti": [
+      "I progressi vivono nell'archiviazione locale di un certo browser, su un certo dispositivo.",
+      "Chiediti: in quali casi quello spazio viene svuotato, o non è lo stesso spazio di prima?",
+      "Le risposte giuste sono tre: cancellare i dati di navigazione, usare un altro browser o dispositivo, e chiudere una finestra di navigazione privata."
+    ],
+    "spiegazione": "I progressi stanno nell'archiviazione locale di quel browser: spariscono se la svuoti (cancellando i dati o chiudendo la navigazione privata) e non ci sono su un altro browser o dispositivo. Per questo esistono «esporta» e «importa»."
+  },
+  "costo-suggerimento": {
+    "titolo": "Quanto costa un suggerimento",
+    "domanda": "Completa la frase con un numero.",
+    "modello": "Ogni suggerimento usato riduce gli XP della missione del ___ %.",
+    "feedbackSpazi": ["Scrivi solo il numero, senza il simbolo %."],
+    "suggerimenti": [
+      "La risposta è nella lezione «Punti, gradi e dove finiscono i tuoi progressi», nella sezione sui suggerimenti.",
+      "Usando tutti e tre i suggerimenti si perdono tre quarti degli XP della missione.",
+      "La risposta è 25: ogni suggerimento toglie un quarto degli XP della missione."
+    ],
+    "spiegazione": "Ogni suggerimento toglie il 25% degli XP della missione, ma una parte resta sempre garantita: chiedere aiuto è permesso."
+  },
+  "quota-codespaces": {
+    "titolo": "Vero o falso: la quota gratuita",
+    "domanda": "Se non hai registrato un metodo di pagamento, quando finisci la quota gratuita mensile di Codespaces ti arriva un addebito.",
+    "opzioni": {
+      "vero": "Vero",
+      "falso": "Falso"
+    },
+    "feedback": {
+      "vero": "Senza un metodo di pagamento GitHub non può addebitare nulla: rileggi la sezione «Quanto costa»."
+    },
+    "suggerimenti": [
+      "Rileggi la sezione «Quanto costa» della lezione Prepararsi ai laboratori.",
+      "Cosa succede a Codespaces quando la quota finisce e non c'è un metodo di pagamento?",
+      "È falso: senza metodo di pagamento Codespaces si ferma fino al mese successivo, senza addebiti."
+    ],
+    "spiegazione": "Falso: senza un metodo di pagamento registrato, quando la quota gratuita finisce Codespaces si ferma fino al mese successivo. Non arrivano addebiti a sorpresa."
+  },
+  "sito-account": {
+    "titolo": "Pronti per i laboratori",
+    "domanda": "Completa la frase con il nome del sito.",
+    "modello": "Per usare Codespaces nei laboratori devo creare un account su ___ .",
+    "feedbackSpazi": ["È il sito dove chi sviluppa software conserva e condivide i propri progetti."],
+    "suggerimenti": [
+      "Codespaces è un servizio offerto da un sito molto noto a chi scrive software.",
+      "Il nome completo del servizio è «… Codespaces».",
+      "La risposta è GitHub (va bene anche github.com)."
+    ],
+    "spiegazione": "Codespaces è un servizio di GitHub: con un account GitHub gratuito avrai un computer nel cloud pronto per i laboratori."
+  }
+}

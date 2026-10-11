@@ -13,7 +13,7 @@ describe('Mappa, livelli e lezioni', () => {
     expect(screen.getByText(/Livello 1 · in preparazione/)).toBeInTheDocument();
   });
 
-  it('si legge una lezione, si guadagnano XP e si passa alla successiva', async () => {
+  it('si legge una lezione, si guadagnano XP e si passa alla sua missione', async () => {
     const user = userEvent.setup();
     renderApp({ route: paths.livello('come-funziona') });
 
@@ -24,10 +24,11 @@ describe('Mappa, livelli e lezioni', () => {
     // Il testo della lezione viene caricato separatamente.
     expect(await screen.findByRole('heading', { level: 2, name: 'Perché questo corso' })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /Ho letto, avanti \(\+10 XP\)/ }));
+    // Dopo la lezione si passa alla sua prima missione.
+    await user.click(screen.getByRole('button', { name: /Ho letto, alla missione \(\+10 XP\)/ }));
 
     expect(
-      await screen.findByRole('heading', { level: 1, name: /Punti, gradi e dove finiscono/ }),
+      await screen.findByRole('heading', { level: 1, name: 'La fine di ogni mondo' }),
     ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Mozzo\s*10 XP/ })).toBeInTheDocument();
     expect(Object.keys(loadProgress().lessonsRead)).toEqual(['benvenuto']);

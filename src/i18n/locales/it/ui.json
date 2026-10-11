@@ -152,7 +152,13 @@
     "lessonsTitle": "Lezioni",
     "lessonMeta": "Lezione {{number}} · {{minutes}} min · {{status}}",
     "read": "letta",
-    "unread": "da leggere"
+    "unread": "da leggere",
+    "missionsProgress": "Missioni superate: {{passed}} su {{total}}",
+    "missionsTitle": "Missioni",
+    "missionMeta": "Missione {{number}} · {{status}}",
+    "missionPassed": "superata (+{{xp}} XP)",
+    "missionOpen": "da fare",
+    "missionLocked": "si apre dopo la lezione «{{lesson}}»"
   },
   "lesson": {
     "backToLevel": "← {{level}}",
@@ -174,7 +180,9 @@
       "title": "Approfondisci nella documentazione ufficiale",
       "inEnglish": " (in inglese)",
       "verified": "Contenuto verificato sulla documentazione ufficiale il {{date}}."
-    }
+    },
+    "readAndMission": "Ho letto, alla missione (+{{xp}} XP)",
+    "toMission": "Vai alla missione →"
   },
   "glossary": {
     "title": "Glossario",
@@ -183,5 +191,41 @@
     "goToLesson": "Vai alla lezione",
     "openGlossary": "Apri nel glossario",
     "introducedIn": "Spiegato nella lezione: {{lesson}}"
+  },
+  "mission": {
+    "kicker": "Missione {{number}} di {{total}}",
+    "lockedText": "Questa missione si apre dopo aver letto la lezione «{{lesson}}».",
+    "goToLesson": "Vai alla lezione",
+    "check": "Verifica",
+    "continue": "Continua →",
+    "alreadyCompleted": "Hai già superato questa missione (+{{xp}} XP). Puoi rifarla per ripasso: non cambia i tuoi XP.",
+    "passed": "Missione superata! +{{xp}} XP",
+    "passedAgain": "Risposta corretta!",
+    "feedback": {
+      "title": "Non ancora…",
+      "choiceWrong": "La risposta scelta non è quella giusta.",
+      "choiceNone": "Scegli una risposta.",
+      "multipleRight_one": "Hai scelto {{count}} risposta giusta.",
+      "multipleRight_other": "Hai scelto {{count}} risposte giuste.",
+      "multipleMissing_one": "Ne manca ancora {{count}}.",
+      "multipleMissing_other": "Ne mancano ancora {{count}}.",
+      "multipleWrong_one": "{{count}} delle risposte scelte è sbagliata.",
+      "multipleWrong_other": "{{count}} delle risposte scelte sono sbagliate.",
+      "order": "Elementi al posto giusto: {{right}} su {{total}}.",
+      "fill": "Spazi completati correttamente: {{right}} su {{total}}.",
+      "tryAgain": "Correggi e premi di nuovo «Verifica». Sbagliare non toglie punti."
+    },
+    "hints": {
+      "label": "Suggerimento {{number}} di {{total}}",
+      "show": "Mostra il suggerimento {{number}} (−{{penalty}}% XP)",
+      "showFree": "Mostra il suggerimento {{number}}"
+    },
+    "order": {
+      "up": "Sposta su: {{item}}",
+      "down": "Sposta giù: {{item}}"
+    },
+    "fill": {
+      "blank": "Spazio {{number}}"
+    }
   }
 }

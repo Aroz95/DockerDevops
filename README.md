@@ -114,6 +114,29 @@ I test bloccano la pubblicazione se:
 
 Un livello si sblocca quando il precedente è completato; un livello senza lezioni appare "in preparazione".
 
+## Scrivere una missione
+
+Ogni missione ha due parti, così una correzione alla verifica vale per tutte le lingue:
+
+- **logica** in `src/content/esercizi/<id-livello>.json`: tipo, risposte giuste, XP, lezione da cui dipende;
+- **testi** in `src/content/<lingua>/esercizi/<id-livello>.json`: titolo, domanda, opzioni,
+  feedback per le opzioni sbagliate, 1-3 suggerimenti, spiegazione finale.
+
+Tipi disponibili:
+
+| tipo | logica | testi in più |
+|---|---|---|
+| `scelta` | `opzioni`, `corretta` | `opzioni` (testo di ogni opzione), `feedback` |
+| `scelta-multipla` | `opzioni`, `corrette` | come sopra |
+| `ordina` | `elementi` nell'ordine giusto | `opzioni` (testo di ogni elemento) |
+| `completa` | `risposte` (per ogni spazio, le varianti accettate), `ignoraMaiuscole` | `modello` con `___`, `feedbackSpazi` |
+
+Le risposte di `completa` stanno nella logica: devono valere in tutte le lingue (comandi, numeri, nomi).
+Per i comandi lascia `ignoraMaiuscole` a `false`: `docker Run` non è `docker run`.
+
+Una missione si apre dopo aver letto la lezione indicata in `dopoLezione`; il livello è completo quando
+tutte le lezioni sono lette e tutte le missioni superate. I test controllano la coerenza tra logica e testi.
+
 ## Progressi e gamification
 
 - `src/engine/` contiene le regole, come funzioni pure senza React: XP e gradi (`xp.ts`), serie di giorni

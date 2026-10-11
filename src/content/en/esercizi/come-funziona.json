@@ -1,0 +1,100 @@
+{
+  "sfida-fine-mondo": {
+    "titolo": "The end of every world",
+    "domanda": "What is the name of the bigger exercise that closes every world?",
+    "opzioni": {
+      "missione-finale": "Final mission",
+      "sfida-boss": "Boss Challenge",
+      "esame": "World exam",
+      "livello-bonus": "Bonus level"
+    },
+    "feedback": {
+      "missione-finale": "Missions are the exercises after the lessons: there are many in every level, not just at the end.",
+      "esame": "There are no graded exams in the course: the final exercise has a video-game name.",
+      "livello-bonus": "There are no bonus levels: every level is part of the main path."
+    },
+    "suggerimenti": [
+      "Re-read the “How it is organized” section of the Welcome aboard lesson.",
+      "Think of video games: at the end of each world there is an opponent tougher than the others.",
+      "The answer is “Boss Challenge”: a bigger exercise that brings together everything you learned in the world."
+    ],
+    "spiegazione": "Every world ends with a Boss Challenge: a bigger exercise that uses everything you learned in that world and tells you whether you are ready for the next one."
+  },
+  "struttura-corso": {
+    "titolo": "From biggest to smallest",
+    "domanda": "Put these parts of the course in order, from biggest to smallest.",
+    "opzioni": {
+      "mondo": "World",
+      "livello": "Level",
+      "lezione": "Lesson"
+    },
+    "suggerimenti": [
+      "One of these parts contains the other two.",
+      "Every world contains a few levels.",
+      "The right order is: World, Level, Lesson. A world contains levels, and each level contains lessons and missions."
+    ],
+    "spiegazione": "The course is divided into worlds; each world contains levels; each level contains lessons (and missions)."
+  },
+  "quando-riparti-da-zero": {
+    "titolo": "Where is your progress?",
+    "domanda": "In which of these cases do you end up starting from zero? Choose all the right answers.",
+    "opzioni": {
+      "cancelli-dati": "You clear the browser's browsing data.",
+      "altro-browser": "You open the course from another browser or another device.",
+      "chiudi-scheda": "You close the course tab and reopen it tomorrow.",
+      "navigazione-privata": "You study in private browsing and then close the window.",
+      "usi-suggerimento": "You use a hint in a mission."
+    },
+    "feedback": {
+      "chiudi-scheda": "Closing and reopening the tab deletes nothing: local storage stays in the browser.",
+      "usi-suggerimento": "A hint only reduces the XP of that mission, it doesn't delete your progress."
+    },
+    "suggerimenti": [
+      "Your progress lives in the local storage of a specific browser, on a specific device.",
+      "Ask yourself: in which cases is that space emptied, or not the same space as before?",
+      "There are three right answers: clearing browsing data, using another browser or device, and closing a private browsing window."
+    ],
+    "spiegazione": "Your progress lives in that browser's local storage: it disappears if you empty it (by clearing data or closing private browsing) and it isn't there on another browser or device. That is why “export” and “import” exist."
+  },
+  "costo-suggerimento": {
+    "titolo": "How much a hint costs",
+    "domanda": "Complete the sentence with a number.",
+    "modello": "Each hint you use reduces the mission's XP by ___ %.",
+    "feedbackSpazi": ["Write only the number, without the % sign."],
+    "suggerimenti": [
+      "The answer is in the lesson “Points, ranks and where your progress goes”, in the section about hints.",
+      "Using all three hints loses three quarters of the mission's XP.",
+      "The answer is 25: each hint takes away a quarter of the mission's XP."
+    ],
+    "spiegazione": "Each hint takes away 25% of the mission's XP, but a part is always guaranteed: asking for help is allowed."
+  },
+  "quota-codespaces": {
+    "titolo": "True or false: the free quota",
+    "domanda": "If you haven't added a payment method, when you use up the free monthly Codespaces quota you get charged.",
+    "opzioni": {
+      "vero": "True",
+      "falso": "False"
+    },
+    "feedback": {
+      "vero": "Without a payment method GitHub cannot charge anything: re-read the “How much it costs” section."
+    },
+    "suggerimenti": [
+      "Re-read the “How much it costs” section of the Getting ready for the labs lesson.",
+      "What happens to Codespaces when the quota runs out and there is no payment method?",
+      "It's false: without a payment method Codespaces stops until the next month, with no charges."
+    ],
+    "spiegazione": "False: without a payment method on file, when the free quota runs out Codespaces stops until the next month. There are no surprise charges."
+  },
+  "sito-account": {
+    "titolo": "Ready for the labs",
+    "domanda": "Complete the sentence with the name of the website.",
+    "modello": "To use Codespaces in the labs I need to create an account on ___ .",
+    "feedbackSpazi": ["It's the website where people who develop software keep and share their projects."],
+    "suggerimenti": [
+      "Codespaces is a service offered by a website well known to people who write software.",
+      "The full name of the service is “… Codespaces”.",
+      "The answer is GitHub (github.com works too)."
+    ],
+    "spiegazione": "Codespaces is a GitHub service: with a free GitHub account you will get a computer in the cloud ready for the labs."
+  }
+}

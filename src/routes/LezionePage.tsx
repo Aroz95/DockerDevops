@@ -5,7 +5,7 @@ import { FontiUfficiali } from '@/components/lezione/FontiUfficiali';
 import { mdxComponents } from '@/components/lezione/mdxComponents';
 import { getLessonComponent } from '@/content/lessons';
 import { XP } from '@/engine/xp';
-import { useCourse } from '@/hooks/useCourse';
+import { nextStep, useCourse } from '@/hooks/useCourse';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import { useProgress } from '@/hooks/useProgress';
 import { LivelloPage } from './LivelloPage';
@@ -30,14 +30,15 @@ export function LezionePage() {
 
   const Content = getLessonComponent(lesson);
   const previous = level.lessons[index - 1];
-  const next = level.lessons[index + 1];
   const alreadyRead = Boolean(progress.lessonsRead[lesson.id]);
+  // Dopo la lezione: prima le sue missioni ancora da fare, poi la lezione successiva.
+  const next = nextStep(level, { kind: 'lesson', id: lesson.id }, progress);
 
   const levelId = level.id;
   const lessonId = lesson.id;
   function finish() {
     markLessonRead(lessonId);
-    navigate(next ? paths.lezione(levelId, next.id) : paths.livello(levelId));
+    navigate(next ? paths.passo(levelId, next) : paths.livello(levelId));
   }
 
   return (
@@ -89,8 +90,21 @@ export function LezionePage() {
           className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-600 px-5 py-2.5 font-semibold text-white transition-colors hover:bg-teal-700 dark:bg-teal-500 dark:text-slate-950 dark:hover:bg-teal-400"
         >
           {alreadyRead
-            ? t(next ? 'lesson.nextLesson' : 'lesson.backToLevelShort')
-            : t(next ? 'lesson.readAndNext' : 'lesson.readAndFinish', { xp: XP.lesson })}
+            ? t(
+                !next
+                  ? 'lesson.backToLevelShort'
+                  : next.kind === 'mission'
+                    ? 'lesson.toMission'
+                    : 'lesson.nextLesson',
+              )
+            : t(
+                !next
+                  ? 'lesson.readAndFinish'
+                  : next.kind === 'mission'
+                    ? 'lesson.readAndMission'
+                    : 'lesson.readAndNext',
+                { xp: XP.lesson },
+              )}
         </button>
       </nav>
     </article>

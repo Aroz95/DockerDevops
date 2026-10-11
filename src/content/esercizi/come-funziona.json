@@ -1,0 +1,45 @@
+{
+  "missioni": [
+    {
+      "id": "sfida-fine-mondo",
+      "tipo": "scelta",
+      "dopoLezione": "benvenuto",
+      "opzioni": ["missione-finale", "sfida-boss", "esame", "livello-bonus"],
+      "corretta": "sfida-boss"
+    },
+    {
+      "id": "struttura-corso",
+      "tipo": "ordina",
+      "dopoLezione": "benvenuto",
+      "elementi": ["mondo", "livello", "lezione"]
+    },
+    {
+      "id": "quando-riparti-da-zero",
+      "tipo": "scelta-multipla",
+      "dopoLezione": "punti-e-progressi",
+      "opzioni": ["cancelli-dati", "altro-browser", "chiudi-scheda", "navigazione-privata", "usi-suggerimento"],
+      "corrette": ["cancelli-dati", "altro-browser", "navigazione-privata"]
+    },
+    {
+      "id": "costo-suggerimento",
+      "tipo": "completa",
+      "dopoLezione": "punti-e-progressi",
+      "risposte": [["25"]],
+      "ignoraMaiuscole": true
+    },
+    {
+      "id": "quota-codespaces",
+      "tipo": "scelta",
+      "dopoLezione": "prepararsi-ai-laboratori",
+      "opzioni": ["vero", "falso"],
+      "corretta": "falso"
+    },
+    {
+      "id": "sito-account",
+      "tipo": "completa",
+      "dopoLezione": "prepararsi-ai-laboratori",
+      "risposte": [["GitHub", "github.com"]],
+      "ignoraMaiuscole": true
+    }
+  ]
+}

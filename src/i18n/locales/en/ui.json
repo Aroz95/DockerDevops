@@ -152,7 +152,13 @@
     "lessonsTitle": "Lessons",
     "lessonMeta": "Lesson {{number}} · {{minutes}} min · {{status}}",
     "read": "read",
-    "unread": "to read"
+    "unread": "to read",
+    "missionsProgress": "Missions passed: {{passed}} of {{total}}",
+    "missionsTitle": "Missions",
+    "missionMeta": "Mission {{number}} · {{status}}",
+    "missionPassed": "passed (+{{xp}} XP)",
+    "missionOpen": "to do",
+    "missionLocked": "opens after the lesson “{{lesson}}”"
   },
   "lesson": {
     "backToLevel": "← {{level}}",
@@ -174,7 +180,9 @@
       "title": "Learn more in the official documentation",
       "inEnglish": " (in English)",
       "verified": "Content checked against the official documentation on {{date}}."
-    }
+    },
+    "readAndMission": "Done reading, to the mission (+{{xp}} XP)",
+    "toMission": "Go to the mission →"
   },
   "glossary": {
     "title": "Glossary",
@@ -183,5 +191,41 @@
     "goToLesson": "Go to the lesson",
     "openGlossary": "Open in the glossary",
     "introducedIn": "Explained in the lesson: {{lesson}}"
+  },
+  "mission": {
+    "kicker": "Mission {{number}} of {{total}}",
+    "lockedText": "This mission opens after you read the lesson “{{lesson}}”.",
+    "goToLesson": "Go to the lesson",
+    "check": "Check",
+    "continue": "Continue →",
+    "alreadyCompleted": "You have already passed this mission (+{{xp}} XP). You can redo it as a review: it does not change your XP.",
+    "passed": "Mission passed! +{{xp}} XP",
+    "passedAgain": "Correct answer!",
+    "feedback": {
+      "title": "Not yet…",
+      "choiceWrong": "The answer you chose is not the right one.",
+      "choiceNone": "Choose an answer.",
+      "multipleRight_one": "You chose {{count}} right answer.",
+      "multipleRight_other": "You chose {{count}} right answers.",
+      "multipleMissing_one": "{{count}} is still missing.",
+      "multipleMissing_other": "{{count}} are still missing.",
+      "multipleWrong_one": "{{count}} of the chosen answers is wrong.",
+      "multipleWrong_other": "{{count}} of the chosen answers are wrong.",
+      "order": "Items in the right place: {{right}} of {{total}}.",
+      "fill": "Blanks filled in correctly: {{right}} of {{total}}.",
+      "tryAgain": "Fix it and press “Check” again. Mistakes don't cost points."
+    },
+    "hints": {
+      "label": "Hint {{number}} of {{total}}",
+      "show": "Show hint {{number}} (−{{penalty}}% XP)",
+      "showFree": "Show hint {{number}}"
+    },
+    "order": {
+      "up": "Move up: {{item}}",
+      "down": "Move down: {{item}}"
+    },
+    "fill": {
+      "blank": "Blank {{number}}"
+    }
   }
 }
