@@ -1,18 +1,7 @@
-import type { AnchorHTMLAttributes } from 'react';
 import type { MdxComponents } from '@/content/lessons';
 import { Analogia, Callout } from './Callout';
+import { MdxLink } from './MdxLink';
 import { Termine } from './Termine';
-
-/** I link esterni (documentazione ufficiale) si aprono in una nuova scheda. */
-function MdxLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
-  const external = props.href?.startsWith('http');
-  return (
-    <a
-      {...props}
-      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-    />
-  );
-}
 
 /**
  * Componenti disponibili dentro i file .mdx senza bisogno di importarli.
