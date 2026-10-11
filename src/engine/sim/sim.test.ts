@@ -178,7 +178,7 @@ describe('Docker simulato', () => {
     expect(lines[0]).toMatch(/^IMAGE\s{3,}ID\s{3,}DISK USAGE\s{3}CONTENT SIZE\s{3}EXTRA$/);
     expect(lines[1]).toMatch(/^alpine:latest\s{3,}[0-9a-f]{12}\s+13\.1MB\s+3\.8MB$/);
     run('docker run alpine echo ciao');
-    expect(run('docker images')).toMatch(/^i Info →   U  In Use\n\n/);
+    expect(run('docker images')).toMatch(/^i Info → {3}U {2}In Use\n\n/);
   });
 
   it('avvia nginx in sottofondo e lo mostra in docker ps', () => {
