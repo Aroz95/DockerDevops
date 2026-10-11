@@ -161,7 +161,9 @@
     "missionOpen": "da fare",
     "missionLocked": "si apre dopo la lezione «{{lesson}}»",
     "goToNext": "Vai al Livello {{number}}: {{title}} →",
-    "nextComingSoon": "Il prossimo livello (Livello {{number}}: {{title}}) è ancora in preparazione. Lo troverai sulla mappa appena sarà pubblicato: i tuoi progressi restano salvati."
+    "nextComingSoon": "Il prossimo livello (Livello {{number}}: {{title}}) è ancora in preparazione. Lo troverai sulla mappa appena sarà pubblicato: i tuoi progressi restano salvati.",
+    "lockedMissing": "Per sbloccarlo completa il Livello {{number}} «{{title}}». Ti mancano: lezioni da leggere {{lessons}}, missioni da superare {{missions}}.",
+    "goToBlocking": "Vai al Livello {{number}}"
   },
   "lesson": {
     "backToLevel": "← {{level}}",
@@ -265,5 +267,9 @@
       "helpFooter": "Il simulatore riproduce i comandi reali in versione ridotta: per tutte le opzioni consulta la documentazione ufficiale.",
       "manReduced": "Questa è una versione ridotta del manuale di {{command}}. Quella completa è su man7.org (in inglese)."
     }
+  },
+  "update": {
+    "available": "È disponibile una nuova versione del corso, con nuovi contenuti o correzioni.",
+    "reload": "Aggiorna ora"
   }
 }

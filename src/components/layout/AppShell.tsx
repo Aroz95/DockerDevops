@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Outlet, useLocation } from 'react-router';
 import { Footer } from './Footer';
 import { Header } from './Header';
+import { UpdateBanner } from './UpdateBanner';
 
 const MAIN_ID = 'contenuto';
 
@@ -29,6 +30,7 @@ export function AppShell() {
       >
         {t('app.skipToContent')}
       </a>
+      <UpdateBanner />
       <Header />
       <main id={MAIN_ID} tabIndex={-1} className="mx-auto w-full max-w-5xl flex-1 px-4 py-10">
         <Outlet />

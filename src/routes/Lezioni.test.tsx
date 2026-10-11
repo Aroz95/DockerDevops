@@ -57,6 +57,10 @@ describe('Mappa, livelli e lezioni', () => {
   it('un livello bloccato spiega perché non si può entrare', () => {
     renderApp({ route: paths.livello('computer') });
     expect(screen.getByText(/si sblocca quando completi quello precedente/)).toBeInTheDocument();
+    expect(
+      screen.getByText('Per sbloccarlo completa il Livello 0 «Come funziona questo corso». Ti mancano: lezioni da leggere 3, missioni da superare 6.'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Vai al Livello 0' })).toBeInTheDocument();
   });
 
   it('un livello senza contenuti dice che è in preparazione', () => {

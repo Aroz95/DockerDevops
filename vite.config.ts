@@ -12,9 +12,22 @@ import { defineConfig } from 'vite';
 // Il workflow di deploy imposta BASE_PATH da solo; in locale si usa "/".
 const base = process.env.BASE_PATH ?? '/';
 
+// Identifica la versione pubblicata (il commit su GitHub). Il sito confronta la propria versione
+// con version.json per accorgersi degli aggiornamenti, anche quando è aperto dalla schermata Home.
+const version = process.env.GITHUB_SHA ?? 'dev';
+
 export default defineConfig({
   base,
+  define: {
+    __APP_VERSION__: JSON.stringify(version),
+  },
   plugins: [
+    {
+      name: 'version-file',
+      generateBundle() {
+        this.emitFile({ type: 'asset', fileName: 'version.json', source: JSON.stringify({ version }) });
+      },
+    },
     // Le lezioni sono file .mdx: Markdown con componenti React.
     // Il blocco "---" iniziale (frontmatter) diventa l'export `frontmatter`.
     {

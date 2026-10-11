@@ -35,15 +35,37 @@ export function LivelloPage() {
   );
 
   if (level.status === 'locked' || level.status === 'comingSoon') {
+    // Il primo livello precedente non ancora completato: è lì che bisogna tornare.
+    const index = levels.findIndex((l) => l.id === level.id);
+    const blocking = levels.slice(0, index).find((l) => l.status !== 'completed');
+    const missingLessons = blocking?.lessons.filter((l) => !progress.lessonsRead[l.id]).length ?? 0;
+    const missingMissions = blocking?.missions.filter((m) => !progress.missions[m.id]).length ?? 0;
     return (
       <div className="max-w-2xl space-y-6">
         {header}
         <p className="text-slate-600 dark:text-slate-300">
           {t(level.status === 'locked' ? 'level.lockedText' : 'level.comingSoonText')}
         </p>
-        <ButtonLink to={paths.mappa} variant="secondary">
-          {t('level.backToMap')}
-        </ButtonLink>
+        {level.status === 'locked' && blocking && blocking.status === 'available' && (
+          <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900 dark:bg-amber-950/40 dark:text-amber-200">
+            {t('level.lockedMissing', {
+              number: blocking.numero,
+              title: blocking.titolo,
+              lessons: missingLessons,
+              missions: missingMissions,
+            })}
+          </p>
+        )}
+        <div className="flex flex-wrap gap-3">
+          {level.status === 'locked' && blocking && blocking.status === 'available' && (
+            <ButtonLink to={paths.livello(blocking.id)}>
+              {t('level.goToBlocking', { number: blocking.numero })}
+            </ButtonLink>
+          )}
+          <ButtonLink to={paths.mappa} variant="secondary">
+            {t('level.backToMap')}
+          </ButtonLink>
+        </div>
       </div>
     );
   }

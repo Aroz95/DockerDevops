@@ -161,7 +161,9 @@
     "missionOpen": "to do",
     "missionLocked": "opens after the lesson “{{lesson}}”",
     "goToNext": "Go to Level {{number}}: {{title}} →",
-    "nextComingSoon": "The next level (Level {{number}}: {{title}}) is still being written. You'll find it on the map as soon as it's published: your progress stays saved."
+    "nextComingSoon": "The next level (Level {{number}}: {{title}}) is still being written. You'll find it on the map as soon as it's published: your progress stays saved.",
+    "lockedMissing": "To unlock it, complete Level {{number}} “{{title}}”. Still to do: lessons to read {{lessons}}, missions to pass {{missions}}.",
+    "goToBlocking": "Go to Level {{number}}"
   },
   "lesson": {
     "backToLevel": "← {{level}}",
@@ -265,5 +267,9 @@
       "helpFooter": "The simulator reproduces real commands in a reduced version: for all the options check the official documentation.",
       "manReduced": "This is a reduced version of the {{command}} manual. The full one is on man7.org."
     }
+  },
+  "update": {
+    "available": "A new version of the course is available, with new content or fixes.",
+    "reload": "Update now"
   }
 }
