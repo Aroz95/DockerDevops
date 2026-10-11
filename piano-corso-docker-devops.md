@@ -354,7 +354,7 @@ Altre regole:
 | Specifica Compose | compose-spec.io, github.com/compose-spec |
 | Standard immagini e container | opencontainers.org (OCI) |
 | Trivy | trivy.dev |
-| Linux: comandi e pagine di manuale | man7.org (Linux man-pages), gnu.org (Bash, coreutils) |
+| Linux: kernel, comandi e pagine di manuale | docs.kernel.org, man7.org (Linux man-pages), gnu.org (Bash, coreutils) |
 | Distribuzione usata negli esempi | documentation.ubuntu.com, debian.org/doc |
 | Reti e HTTP | RFC su rfc-editor.org (es. RFC 9110 per HTTP); MDN Web Docs come supporto divulgativo |
 | curl | curl.se/docs |

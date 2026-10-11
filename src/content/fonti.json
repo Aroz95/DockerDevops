@@ -6,6 +6,7 @@
     "github.com/compose-spec",
     "opencontainers.org",
     "trivy.dev",
+    "kernel.org",
     "man7.org",
     "gnu.org",
     "documentation.ubuntu.com",
