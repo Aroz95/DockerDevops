@@ -19,7 +19,11 @@ export default defineConfig({
     // Il blocco "---" iniziale (frontmatter) diventa l'export `frontmatter`.
     {
       enforce: 'pre',
-      ...mdx({ remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm] }),
+      ...mdx({
+        remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
+        // "file.mdx?raw" (usato dai test per leggere il testo originale) non va compilato.
+        exclude: /\?raw$/,
+      }),
     },
     react({ include: /\.(mdx|js|jsx|ts|tsx)$/ }),
     tailwindcss(),
