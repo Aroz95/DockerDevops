@@ -34,7 +34,7 @@ export function dockerCli(engine: DockerEngine, args: string[]): CommandOutput {
     case 'ps':
       return engine.ps(params);
     case 'images':
-      return engine.images();
+      return engine.imagesCommand();
     case 'pull':
       return engine.pullCommand(params);
     case 'stop':

@@ -260,7 +260,7 @@ export class DockerEngine {
     const env: Record<string, string> = {};
     let index = 0;
 
-    const takeValue = (flag: string, arg: string): string | null => {
+    const takeValue = (arg: string): string | null => {
       const eq = arg.indexOf('=');
       if (arg.startsWith('--') && eq > 0) return arg.slice(eq + 1);
       if (!arg.startsWith('--') && arg.length > 2) return arg.slice(2);
@@ -277,22 +277,22 @@ export class DockerEngine {
       else if (longName === '--tty') tty = true;
       else if (longName === '--rm') autoRemove = true;
       else if (longName === '--name' || arg === '--name') {
-        const value = takeValue('--name', arg);
+        const value = takeValue(arg);
         if (!value) return fail(125, 'docker: flag needs an argument: --name', '', RUN_HELP);
         name = value;
       } else if (longName === '--publish' || arg.startsWith('-p')) {
-        const value = takeValue('-p', arg);
+        const value = takeValue(arg);
         if (!value) return fail(125, "docker: flag needs an argument: 'p' in -p", '', RUN_HELP);
         const match = /^(?:(\d+\.\d+\.\d+\.\d+):)?(\d+):(\d+)(?:\/(tcp|udp))?$/.exec(value);
         if (!match) return fail(125, `docker: invalid publish opts format (should be name=value but got '${value}')`, '', RUN_HELP);
         ports.push({ host: match[2] as string, container: `${match[3]}/${match[4] ?? 'tcp'}` });
       } else if (longName === '--env' || arg.startsWith('-e')) {
-        const value = takeValue('-e', arg);
+        const value = takeValue(arg);
         if (!value) return fail(125, "docker: flag needs an argument: 'e' in -e", '', RUN_HELP);
         const eq = value.indexOf('=');
         if (eq > 0) env[value.slice(0, eq)] = value.slice(eq + 1);
       } else if (longName === '--volume' || arg.startsWith('-v') || longName === '--restart') {
-        takeValue(arg, arg); // accettati ma non simulati
+        takeValue(arg); // accettati ma non simulati
       } else if (/^-[dit]+$/.test(arg)) {
         if (arg.includes('d')) detach = true;
         if (arg.includes('i')) interactive = true;
@@ -443,7 +443,7 @@ export class DockerEngine {
     return ok(table(rows));
   }
 
-  images(): CommandOutput {
+  imagesCommand(): CommandOutput {
     this.refresh();
     if (this.images.length === 0) {
       return ok('IMAGE   ID             DISK USAGE   CONTENT SIZE   EXTRA\n');

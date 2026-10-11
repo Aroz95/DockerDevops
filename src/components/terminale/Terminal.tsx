@@ -169,6 +169,9 @@ export function Terminal({ machine, onCommand, initialLines = [], className = ''
 
 function TerminalLine({ line }: { line: OutputLine }) {
   const { t } = useTranslation();
+  // Le chiavi dei suggerimenti sono tutte in terminal.hints.*; i parametri variano per chiave,
+  // quindi qui si usa la firma generica di t().
+  const hintText = t as unknown as (key: string, params: Record<string, string>) => string;
   switch (line.kind) {
     case 'input':
       return (
@@ -184,7 +187,7 @@ function TerminalLine({ line }: { line: OutputLine }) {
     case 'hint':
       return (
         <div className="my-1 rounded border-l-2 border-amber-400 bg-amber-400/10 px-2 py-1 font-sans text-xs text-amber-200">
-          {t(`terminal.hints.${line.key}`, line.params ?? {})}
+          {hintText(`terminal.hints.${line.key}`, line.params ?? {})}
         </div>
       );
   }
