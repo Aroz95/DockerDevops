@@ -5,6 +5,7 @@
  * - 10.1: fonti solo dal registro ufficiale;
  * - glossario completo per ogni concetto introdotto.
  */
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { LANGUAGES } from '@/i18n/languages';
 import { getGlossary } from './glossary';
@@ -12,11 +13,10 @@ import { STRUTTURA } from './index';
 import { getAllLessons, type Lesson } from './lessons';
 import { isOfficialSource } from './schema';
 
-const rawSources = import.meta.glob<string>('./*/*/*.mdx', {
-  query: '?raw',
-  import: 'default',
-  eager: true,
-});
+/** Testo originale del file .mdx (lesson.file è relativo a questa cartella). */
+function rawSource(lesson: Lesson): string {
+  return readFileSync(new URL(lesson.file, import.meta.url), 'utf8');
+}
 
 const LEVEL_IDS = STRUTTURA.flatMap((mondo) => mondo.livelli);
 
@@ -28,8 +28,7 @@ function lessonsInOrder(language: (typeof LANGUAGES)[number]): Lesson[] {
 
 /** id usati in <Termine id="..."> dentro il testo della lezione. */
 function termsUsed(lesson: Lesson): string[] {
-  const source = rawSources[lesson.file] ?? '';
-  return [...source.matchAll(/<Termine\s+id="([^"]+)"/g)].map((match) => match[1] ?? '');
+  return [...rawSource(lesson).matchAll(/<Termine\s+id="([^"]+)"/g)].map((match) => match[1] ?? '');
 }
 
 describe.each(LANGUAGES)('lezioni in "%s"', (language) => {
