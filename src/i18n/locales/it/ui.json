@@ -1,0 +1,62 @@
+{
+  "app": {
+    "name": "Docker & DevOps",
+    "tagline": "da zero",
+    "skipToContent": "Vai al contenuto"
+  },
+  "nav": {
+    "label": "Navigazione principale",
+    "home": "Inizio",
+    "map": "Mappa del corso"
+  },
+  "settings": {
+    "language": "Lingua",
+    "theme": {
+      "label": "Tema",
+      "light": "Chiaro",
+      "dark": "Scuro",
+      "system": "Come il sistema"
+    }
+  },
+  "languages": {
+    "it": "Italiano",
+    "en": "English"
+  },
+  "home": {
+    "title": "Impara Docker e DevOps partendo da zero",
+    "intro": "Non serve sapere nulla in anticipo. Ogni parola nuova viene spiegata prima di essere usata, e ogni lezione si chiude con missioni pratiche che il sito controlla per te.",
+    "cta": "Vai alla mappa del corso",
+    "features": {
+      "title": "Come funziona",
+      "fromZero": {
+        "title": "Da zero, davvero",
+        "text": "Si parte da cos'è un sistema operativo e da come si usa il terminale, poi si arriva a Docker, alle pipeline e alla produzione."
+      },
+      "missions": {
+        "title": "Missioni verificate",
+        "text": "Quiz, terminale simulato, file da scrivere e laboratori su Docker vero. Ogni risposta riceve un commento che spiega cosa va e cosa manca."
+      },
+      "local": {
+        "title": "I tuoi progressi restano a te",
+        "text": "Niente account e niente server: tutto viene salvato solo in questo browser. Puoi esportare i progressi in un file e riprenderli altrove."
+      }
+    }
+  },
+  "map": {
+    "title": "Mappa del corso",
+    "intro": "Il corso è diviso in mondi. Ogni mondo contiene livelli da completare in ordine e si chiude con una sfida finale.",
+    "world": "Mondo {{number}}",
+    "worldMeta": "{{world}} · {{levels}}",
+    "levelCount_one": "{{count}} livello",
+    "levelCount_other": "{{count}} livelli",
+    "level": "Livello {{number}}"
+  },
+  "notFound": {
+    "title": "Pagina non trovata",
+    "text": "L'indirizzo che hai aperto non corrisponde a nessuna pagina del corso.",
+    "back": "Torna all'inizio"
+  },
+  "footer": {
+    "storage": "I progressi sono salvati solo in questo browser."
+  }
+}

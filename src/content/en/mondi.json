@@ -1,0 +1,77 @@
+{
+  "mondi": {
+    "campo-base": {
+      "titolo": "Base Camp",
+      "descrizione": "The foundations Docker is built on: how a computer works, the terminal, Linux and networking.",
+      "boss": "Set up a project folder from the terminal and explain why an app fails on another computer."
+    },
+    "primi-passi": {
+      "titolo": "First steps with Docker",
+      "descrizione": "Install Docker, start your first containers, pull images, open ports and keep data that does not disappear.",
+      "boss": "Run a database and an admin panel, with data that survives deleting the container."
+    },
+    "costruire-immagini": {
+      "titolo": "Building your own images",
+      "descrizione": "Write Dockerfiles, package real applications and learn to get images that are small and quick to build.",
+      "boss": "Containerize a provided app from scratch, with an image under a maximum size."
+    },
+    "multi-container": {
+      "titolo": "Multi-container applications",
+      "descrizione": "Let containers talk to each other and describe a whole application in one file with Docker Compose.",
+      "boss": "Fix a broken stack: networks, ports, variables and startup order to correct."
+    },
+    "devops": {
+      "titolo": "DevOps",
+      "descrizione": "Git, registries and automated pipelines: from code to a published image with no manual steps.",
+      "boss": "Build a pipeline that, on every push, tests the app, builds the image and publishes it with the right tag."
+    },
+    "produzione": {
+      "titolo": "Production",
+      "descrizione": "Security, servers, HTTPS, logs and a method to solve problems when something breaks.",
+      "boss": "Deploy the World 3 stack to production over HTTPS and fix a simulated failure."
+    },
+    "oltre": {
+      "titolo": "Beyond and independence",
+      "descrizione": "When you need an orchestrator, how to keep learning on your own, and the final project.",
+      "boss": "Final project: your own app, from Dockerfile to deployment, with a pipeline and a security checklist."
+    }
+  },
+  "livelli": {
+    "come-funziona": "How this course works",
+    "computer": "The computer behind the scenes",
+    "terminale": "The terminal",
+    "linux": "Essential Linux",
+    "reti": "Networking for beginners",
+    "perche-docker": "The problem Docker solves",
+    "installare-docker": "Installing and understanding Docker",
+    "vita-container": "Life of a container",
+    "immagini": "Images",
+    "porte": "Opening ports",
+    "dati": "Data that does not disappear (if you know how)",
+    "configurare-container": "Configuring containers",
+    "primo-dockerfile": "Your first Dockerfile",
+    "app-in-immagine": "A real app in an image",
+    "cache-layer": "Cache and layers",
+    "cmd-entrypoint": "CMD and ENTRYPOINT",
+    "immagini-leggere": "Lightweight images",
+    "reti-docker": "Docker networks",
+    "yaml": "YAML from scratch",
+    "compose": "Docker Compose",
+    "compose-avanzato": "Advanced Compose",
+    "stack-completo": "A complete stack",
+    "cos-e-devops": "What DevOps is",
+    "git-github": "Git and GitHub from scratch",
+    "pubblicare-immagini": "Publishing images",
+    "ci-actions": "CI with GitHub Actions",
+    "cd-rilascio": "CD: from build to release",
+    "configurazione-segreti": "Configuration and secrets",
+    "sicurezza": "Container security",
+    "server": "The server",
+    "reverse-proxy-https": "Reverse proxy and HTTPS",
+    "osservabilita": "Observability",
+    "troubleshooting": "Troubleshooting method",
+    "orchestrazione": "Orchestration",
+    "autonomia": "Becoming independent",
+    "progetto-finale": "Final project"
+  }
+}

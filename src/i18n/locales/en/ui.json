@@ -1,0 +1,62 @@
+{
+  "app": {
+    "name": "Docker & DevOps",
+    "tagline": "from scratch",
+    "skipToContent": "Skip to content"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "map": "Course map"
+  },
+  "settings": {
+    "language": "Language",
+    "theme": {
+      "label": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "Match system"
+    }
+  },
+  "languages": {
+    "it": "Italiano",
+    "en": "English"
+  },
+  "home": {
+    "title": "Learn Docker and DevOps from scratch",
+    "intro": "No prior knowledge needed. Every new word is explained before it is used, and every lesson ends with hands-on missions that the site checks for you.",
+    "cta": "Go to the course map",
+    "features": {
+      "title": "How it works",
+      "fromZero": {
+        "title": "Truly from zero",
+        "text": "We start with what an operating system is and how to use the terminal, then move on to Docker, pipelines and production."
+      },
+      "missions": {
+        "title": "Checked missions",
+        "text": "Quizzes, a simulated terminal, files to write and labs on real Docker. Every answer gets feedback explaining what works and what is missing."
+      },
+      "local": {
+        "title": "Your progress stays yours",
+        "text": "No account and no server: everything is saved only in this browser. You can export your progress to a file and pick it up elsewhere."
+      }
+    }
+  },
+  "map": {
+    "title": "Course map",
+    "intro": "The course is divided into worlds. Each world contains levels to complete in order and ends with a final challenge.",
+    "world": "World {{number}}",
+    "worldMeta": "{{world}} · {{levels}}",
+    "levelCount_one": "{{count}} level",
+    "levelCount_other": "{{count}} levels",
+    "level": "Level {{number}}"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The address you opened does not match any page of the course.",
+    "back": "Back to home"
+  },
+  "footer": {
+    "storage": "Progress is saved only in this browser."
+  }
+}

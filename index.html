@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Corso interattivo di Docker e DevOps da zero, con missioni verificate nel browser."
+    />
+    <title>Docker &amp; DevOps da zero</title>
+    <script>
+      // Applica il tema prima del primo disegno della pagina, per evitare il "lampo" bianco.
+      // La chiave deve restare allineata a STORAGE_PREFIX + SETTINGS_KEY in src/state/storage.ts
+      // e src/state/settings.ts.
+      (function () {
+        try {
+          var raw = localStorage.getItem('ddc:settings');
+          var theme = raw ? JSON.parse(raw).theme : 'system';
+          var dark =
+            theme === 'dark' ||
+            (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) document.documentElement.classList.add('dark');
+        } catch (e) {
+          /* localStorage non disponibile: si usa il tema chiaro */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

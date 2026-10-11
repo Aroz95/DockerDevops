@@ -1,0 +1,52 @@
+{
+  "mondi": [
+    {
+      "id": "campo-base",
+      "livelli": ["come-funziona", "computer", "terminale", "linux", "reti", "perche-docker"]
+    },
+    {
+      "id": "primi-passi",
+      "livelli": [
+        "installare-docker",
+        "vita-container",
+        "immagini",
+        "porte",
+        "dati",
+        "configurare-container"
+      ]
+    },
+    {
+      "id": "costruire-immagini",
+      "livelli": [
+        "primo-dockerfile",
+        "app-in-immagine",
+        "cache-layer",
+        "cmd-entrypoint",
+        "immagini-leggere"
+      ]
+    },
+    {
+      "id": "multi-container",
+      "livelli": ["reti-docker", "yaml", "compose", "compose-avanzato", "stack-completo"]
+    },
+    {
+      "id": "devops",
+      "livelli": [
+        "cos-e-devops",
+        "git-github",
+        "pubblicare-immagini",
+        "ci-actions",
+        "cd-rilascio",
+        "configurazione-segreti"
+      ]
+    },
+    {
+      "id": "produzione",
+      "livelli": ["sicurezza", "server", "reverse-proxy-https", "osservabilita", "troubleshooting"]
+    },
+    {
+      "id": "oltre",
+      "livelli": ["orchestrazione", "autonomia", "progetto-finale"]
+    }
+  ]
+}

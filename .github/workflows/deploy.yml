@@ -1,0 +1,77 @@
+# Controlla il progetto e lo pubblica su GitHub Pages a ogni push su "main".
+# Prerequisito (una volta sola): Settings → Pages → Build and deployment → Source: "GitHub Actions".
+name: Verifica e pubblica
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Una sola pubblicazione alla volta; quelle in coda non vengono annullate.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  verifica:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      # Con package-lock.json si installano sempre le stesse versioni (npm ci);
+      # finché il file non esiste, npm install lo genera ad ogni esecuzione.
+      - name: Installa le dipendenze
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+
+      # Il sito vive in /<nome-repository>/, tranne per i repository <utente>.github.io.
+      - name: Calcola il percorso base
+        id: base
+        run: |
+          repo="${{ github.event.repository.name }}"
+          if [[ "$repo" == *.github.io ]]; then
+            echo "path=/" >> "$GITHUB_OUTPUT"
+          else
+            echo "path=/$repo/" >> "$GITHUB_OUTPUT"
+          fi
+
+      - run: npm run build
+        env:
+          BASE_PATH: ${{ steps.base.outputs.path }}
+
+      - uses: actions/configure-pages@v5
+        if: github.event_name != 'pull_request'
+
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: dist
+
+  pubblica:
+    if: github.event_name != 'pull_request'
+    needs: verifica
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

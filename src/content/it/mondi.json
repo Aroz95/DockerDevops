@@ -1,0 +1,77 @@
+{
+  "mondi": {
+    "campo-base": {
+      "titolo": "Campo Base",
+      "descrizione": "Le fondamenta su cui poggia Docker: come funziona un computer, il terminale, Linux e le reti.",
+      "boss": "Prepara da terminale la cartella di un progetto e spiega perché un'app va in errore su un altro computer."
+    },
+    "primi-passi": {
+      "titolo": "Primi passi con Docker",
+      "descrizione": "Installi Docker, avvii i primi container, scarichi immagini, apri porte e salvi dati che non spariscono.",
+      "boss": "Avvia un database e un pannello di amministrazione, con dati che sopravvivono alla cancellazione del container."
+    },
+    "costruire-immagini": {
+      "titolo": "Costruire le proprie immagini",
+      "descrizione": "Scrivi Dockerfile, impacchetti applicazioni reali e impari a ottenere immagini piccole e veloci da costruire.",
+      "boss": "Containerizza da zero un'app fornita, con un'immagine sotto una dimensione massima."
+    },
+    "multi-container": {
+      "titolo": "Applicazioni multi-container",
+      "descrizione": "Fai parlare i container tra loro e descrivi un'intera applicazione in un file con Docker Compose.",
+      "boss": "Rimetti in funzione uno stack rotto: reti, porte, variabili e ordine di avvio da correggere."
+    },
+    "devops": {
+      "titolo": "DevOps",
+      "descrizione": "Git, registry e pipeline automatiche: dal codice all'immagine pubblicata senza passaggi manuali.",
+      "boss": "Costruisci una pipeline che a ogni push testa l'app, crea l'immagine e la pubblica con il tag corretto."
+    },
+    "produzione": {
+      "titolo": "Produzione",
+      "descrizione": "Sicurezza, server, HTTPS, log e un metodo per risolvere i problemi quando qualcosa si rompe.",
+      "boss": "Metti in produzione lo stack del Mondo 3 in HTTPS e risolvi un guasto simulato."
+    },
+    "oltre": {
+      "titolo": "Oltre e autonomia",
+      "descrizione": "Quando serve un orchestratore, come continuare da solo e il progetto finale.",
+      "boss": "Progetto finale: la tua app, dal Dockerfile al deploy, con pipeline e checklist di sicurezza."
+    }
+  },
+  "livelli": {
+    "come-funziona": "Come funziona questo corso",
+    "computer": "Il computer dietro le quinte",
+    "terminale": "Il terminale",
+    "linux": "Linux essenziale",
+    "reti": "Reti per principianti",
+    "perche-docker": "Il problema che Docker risolve",
+    "installare-docker": "Installare e capire Docker",
+    "vita-container": "Vita di un container",
+    "immagini": "Le immagini",
+    "porte": "Aprire le porte",
+    "dati": "I dati non spariscono (se sai come)",
+    "configurare-container": "Configurare i container",
+    "primo-dockerfile": "Il primo Dockerfile",
+    "app-in-immagine": "Un'app vera in un'immagine",
+    "cache-layer": "Cache e layer",
+    "cmd-entrypoint": "CMD e ENTRYPOINT",
+    "immagini-leggere": "Immagini leggere",
+    "reti-docker": "Le reti di Docker",
+    "yaml": "YAML da zero",
+    "compose": "Docker Compose",
+    "compose-avanzato": "Compose avanzato",
+    "stack-completo": "Uno stack completo",
+    "cos-e-devops": "Cos'è DevOps",
+    "git-github": "Git e GitHub da zero",
+    "pubblicare-immagini": "Pubblicare immagini",
+    "ci-actions": "CI con GitHub Actions",
+    "cd-rilascio": "CD: dalla build al rilascio",
+    "configurazione-segreti": "Configurazione e segreti",
+    "sicurezza": "Sicurezza dei container",
+    "server": "Il server",
+    "reverse-proxy-https": "Reverse proxy e HTTPS",
+    "osservabilita": "Osservabilità",
+    "troubleshooting": "Metodo di troubleshooting",
+    "orchestrazione": "Orchestrazione",
+    "autonomia": "Diventare autonomi",
+    "progetto-finale": "Progetto finale"
+  }
+}
