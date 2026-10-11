@@ -1,0 +1,127 @@
+{
+  "dove-resta-il-documento": {
+    "titolo": "Where does the document stay?",
+    "domanda": "You write a letter, save it and turn the computer off. Which component does the letter stay in?",
+    "opzioni": {
+      "ram": "In RAM",
+      "disco": "On the disk",
+      "processore": "In the processor",
+      "schermo": "In the screen"
+    },
+    "feedback": {
+      "ram": "RAM empties when the computer turns off: it's for the work in progress, not for keeping things.",
+      "processore": "The processor executes instructions, but it doesn't keep documents.",
+      "schermo": "The screen shows things, it doesn't keep them."
+    },
+    "suggerimenti": [
+      "The computer is off: which component remembers things even without power?",
+      "In the kitchen analogy, what stays full even when the cook goes home?",
+      "On the disk: it's the only one of the three components that keeps data while the computer is off. That's why “saving” means copying from RAM to the disk."
+    ],
+    "spiegazione": "Saving means copying data from RAM to the disk. RAM empties when the computer turns off, the disk doesn't: that's why a saved document is still there when you turn the computer back on."
+  },
+  "cosa-e-hardware": {
+    "titolo": "Can you touch it?",
+    "domanda": "Which of these are hardware? Choose all the right answers.",
+    "opzioni": {
+      "tastiera": "The keyboard",
+      "processore": "The processor",
+      "browser": "The browser",
+      "memoria": "RAM",
+      "gioco": "A video game"
+    },
+    "feedback": {
+      "browser": "The browser is a program: it's made of instructions, you can't touch it. It's software.",
+      "gioco": "A video game is made of instructions: it's software, even if you play it with a controller (which is hardware)."
+    },
+    "suggerimenti": [
+      "Hardware is everything you could touch with your hands.",
+      "Two of the answers are programs, that is instructions.",
+      "The keyboard, the processor and RAM are hardware. The browser and the video game are software."
+    ],
+    "spiegazione": "Keyboard, processor and RAM are physical objects: hardware. Browser and video game are instructions: software, which however needs hardware to run."
+  },
+  "compito-del-kernel": {
+    "titolo": "The heart of the system",
+    "domanda": "What is the main job of the kernel?",
+    "opzioni": {
+      "finestre": "Drawing windows and icons on the screen",
+      "hardware": "Managing the hardware and letting programs use it in an orderly way",
+      "internet": "Browsing the internet",
+      "virus": "Acting as an antivirus"
+    },
+    "feedback": {
+      "finestre": "Windows and icons are handled by other programs of the operating system, not by the kernel.",
+      "internet": "To browse you need a browser. The kernel manages the network card, but it doesn't browse.",
+      "virus": "An antivirus is a separate program. The kernel protects programs from each other, but it isn't an antivirus."
+    },
+    "suggerimenti": [
+      "In the restaurant analogy, the kernel is the most central part of the manager.",
+      "The kernel is the piece of the operating system that talks directly to processor, memory and disk.",
+      "The right answer is: managing the hardware and letting programs use it in an orderly way."
+    ],
+    "spiegazione": "The kernel is the heart of the operating system: it talks to the hardware and every program has to go through it to use it. This is exactly what will let Docker isolate containers."
+  },
+  "numero-del-processo": {
+    "titolo": "Every process's number",
+    "domanda": "Complete the sentence with the right acronym.",
+    "modello": "The kernel gives each process a unique number, called the ___ .",
+    "feedbackSpazi": ["It's a three-letter acronym for Process IDentifier."],
+    "suggerimenti": [
+      "The answer is in the lesson “Programs and processes”.",
+      "It's a three-letter acronym: Process IDentifier.",
+      "The answer is PID."
+    ],
+    "spiegazione": "PID stands for Process IDentifier. The kernel uses it to tell processes apart, and there can be hundreds of them even when the computer seems to be doing nothing."
+  },
+  "percorso-della-foto": {
+    "titolo": "Reading a path",
+    "domanda": "To reach the file /home/studente/foto/mare.jpg, in which order do you go through the folders and the file? Put them in order from first to last.",
+    "opzioni": {
+      "radice": "/ (the root)",
+      "home": "home",
+      "studente": "studente",
+      "foto": "foto",
+      "mare": "mare.jpg"
+    },
+    "suggerimenti": [
+      "A path is read from left to right.",
+      "Every path that starts with / starts from the root of the file system.",
+      "The order is: / (root), home, studente, foto, mare.jpg."
+    ],
+    "spiegazione": "A path is read from left to right: you start from the root /, go into home, then into studente, then into foto, and there's the file mare.jpg."
+  },
+  "versione-correzione": {
+    "titolo": "Which version?",
+    "domanda": "A library that follows Semantic Versioning is at version 2.4.1. A new version comes out that only fixes a bug, with nothing new. What number will it have?",
+    "modello": "The new version will be ___ .",
+    "feedbackSpazi": ["A fix only changes the last number: the other two stay the same."],
+    "suggerimenti": [
+      "Remember the form MAJOR.MINOR.PATCH.",
+      "Only the part that indicates bug fixes changes.",
+      "The answer is 2.4.2."
+    ],
+    "spiegazione": "With Semantic Versioning a fix only increases the last number: from 2.4.1 you go to 2.4.2. People using the library can update safely."
+  },
+  "sul-mio-computer-funziona": {
+    "titolo": "“It works on my computer”",
+    "domanda": "An application works on the computer of the person who wrote it, but not on the server. Which of these can be the causes? Choose all the right answers.",
+    "opzioni": {
+      "libreria-mancante": "The server is missing a library the application depends on.",
+      "versione-diversa": "The server has the same library, but in a different version.",
+      "schermo-diverso": "The server has a smaller screen.",
+      "sistema-diverso": "The server has a different operating system or distribution.",
+      "nome-file": "The application's file has a name that is too long."
+    },
+    "feedback": {
+      "schermo-diverso": "Servers usually don't even have a screen: the application doesn't depend on it.",
+      "nome-file": "The file name isn't a typical problem: the classic causes are different dependencies and environments."
+    },
+    "suggerimenti": [
+      "Think about what an application needs to work, besides its own code.",
+      "Three of the five answers are about dependencies or the environment the application runs in.",
+      "The right answers are: missing library, different library version, different operating system or distribution."
+    ],
+    "spiegazione": "An application depends on its environment: libraries, versions, operating system. If even one of these is different on the server, the application may not work. It's exactly the problem Docker solves."
+  }
+}

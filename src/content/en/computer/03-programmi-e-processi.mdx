@@ -1,0 +1,63 @@
+---
+id: programmi-e-processi
+titolo: Programs and processes
+durata: 6
+tipo: tecnica
+concetti_richiesti: [sistema-operativo, kernel, processore, memoria-ram, disco, linux]
+concetti_introdotti: [programma, processo, pid]
+fonti:
+  - titolo: "Linux man-pages – ps(1)"
+    url: https://man7.org/linux/man-pages/man1/ps.1.html
+verificata_il: "2026-10-11"
+---
+
+## Why you need it
+
+A Docker container is, deep down, a **process** that the kernel only shows part of the computer to. Before we get there, we need a distinction that is often taken for granted: the one between a program and a process.
+
+## Program: the written recipe
+
+A <Termine id="programma">program</Termine> is a set of instructions saved on the disk, ready to be executed. Until someone starts it, it's just a file taking up space: it uses neither the processor nor RAM.
+
+## Process: the recipe while you're cooking it
+
+When you start a program, the operating system copies it into RAM and the processor starts executing its instructions. That running program is called a <Termine id="processo">process</Termine>.
+
+<Analogia>
+The recipe book on the shelf is the program. When a cook opens the book and starts cooking, that preparation in progress is a process: it has its ingredients on the worktop, it's at a certain point in the recipe and sooner or later it will end. Two cooks can follow the same recipe at the same time: one program, two processes.
+</Analogia>
+
+This distinction has practical consequences:
+
+- **The same program can have several processes.** If you open two windows of the same text editor, there are two processes of the same program, each with its own data.
+- **A process is born and dies.** When you close a program, its process ends and the RAM it used becomes free again. The program, instead, stays on the disk.
+- **A process can freeze** without the program being "broken": just close it and start it again.
+
+## The PID: every process's number
+
+A computer always has dozens or hundreds of processes, many of them working in the background without windows. To tell them apart, the kernel gives each one a unique number: the <Termine id="pid">PID</Termine>, short for *Process IDentifier*.
+
+On Linux the `ps` command shows a list of running processes, each with its PID. Its manual page describes it as a "snapshot" of the processes at that moment. The result looks like this:
+
+```
+    PID TTY          TIME CMD
+   1234 pts/0    00:00:00 bash
+   1301 pts/0    00:00:00 ps
+```
+
+You don't need to understand every column yet: just notice that each line is a process, and the first column is its PID. You will learn to use these commands in the next levels.
+
+<Callout tipo="info">
+The process with PID 1 is special: it's the first one the kernel starts when the computer boots, and almost all the others descend from it. Every container has a "PID 1" too, and in World 2 you'll see why that matters.
+</Callout>
+
+## What this has to do with Docker
+
+When you start your first container with Docker, you will be starting one or more processes. The kernel will keep them separate from the computer's other processes, as if they were on a machine of their own. That's why Docker's commands talk about starting, stopping and killing: they are the same actions you perform on processes.
+
+## In short
+
+- A **program** is a set of instructions saved on the disk.
+- A **process** is a running program: it uses processor and RAM, it starts and it ends.
+- The same program can have several processes at the same time.
+- Every process has a unique number, the **PID**, assigned by the kernel.

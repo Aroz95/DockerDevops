@@ -1,0 +1,81 @@
+---
+id: file-e-cartelle
+titolo: Files, folders and the file system
+durata: 7
+tipo: tecnica
+concetti_richiesti: [disco, sistema-operativo, linux, programma]
+concetti_introdotti: [file, cartella, file-system]
+fonti:
+  - titolo: "Linux man-pages – hier(7)"
+    url: https://man7.org/linux/man-pages/man7/hier.7.html
+verificata_il: "2026-10-11"
+---
+
+## Why you need it
+
+Docker works with files and folders all the time: images are made of files, containers have their own folders, and one of the most important questions will be "where does my data end up?". First of all you need to know how Linux organizes files.
+
+## Files
+
+A <Termine id="file">file</Termine> is a set of data saved on the disk with a name. A photo, a document, a song, a program: they are all files.
+
+A file name often ends with an **extension**, such as `.jpg` or `.txt`, that tells what kind of content is inside. On Linux the extension is just a convention: it helps people and programs understand, but it isn't required.
+
+## Folders
+
+A <Termine id="cartella">folder</Termine> (also called a *directory*) is a container for files and other folders. It's there to keep things tidy. Folders can contain other folders, which contain other folders, and so on.
+
+<Analogia>
+Think of a wardrobe with drawers. Inside the drawers there are boxes, and inside the boxes, documents. To tell someone where to find a document you say: "wardrobe, third drawer, blue box, document".
+</Analogia>
+
+## The file system: an upside-down tree
+
+The <Termine id="file-system">file system</Termine> is the way the operating system organizes files and folders on the disk. On Linux it's shaped like an **upside-down tree**: everything starts from a single folder at the top, called the **root** and written with the symbol `/`.
+
+The other folders branch out from the root, and more folders branch out from those:
+
+```
+/
+├── home
+│   └── studente
+│       ├── documenti
+│       └── foto
+│           └── mare.jpg
+├── etc
+├── tmp
+└── usr
+```
+
+To say where a file is, you write its **path**: the folders to go through starting from the root, separated by `/`. The path of the photo above is:
+
+```
+/home/studente/foto/mare.jpg
+```
+
+You read it like this: from the root `/`, go into `home`, then into `studente`, then into `foto`, and there you'll find `mare.jpg`.
+
+<Callout tipo="attenzione">
+On Linux capital letters matter: `Foto` and `foto` are two different folders. Also, you use the forward slash `/`, not the backslash `\` used by Windows.
+</Callout>
+
+## Linux's main folders
+
+The folders under the root have short names and a precise role, described in the official manual page `hier` (short for *hierarchy*). The ones you'll meet most often:
+
+| Folder | What it's for |
+|---|---|
+| `/home` | Holds the users' personal folders, for example `/home/studente`. |
+| `/etc` | Configuration files: the settings of the system and of programs. |
+| `/tmp` | Temporary files, which the system may delete at any time, for example when it restarts. |
+| `/usr` | Most installed programs and their data. |
+| `/bin` | Essential programs, needed even to start or repair the system. |
+
+You don't need to memorize them now: you'll meet them many times, inside containers too.
+
+## In short
+
+- A **file** is a set of data with a name; a **folder** contains files and other folders.
+- The Linux **file system** is a tree that starts from the root `/`.
+- A **path** such as `/home/studente/foto/mare.jpg` tells where a file is.
+- The folders under `/` have precise roles: `/home` for users, `/etc` for settings, `/tmp` for temporary files.

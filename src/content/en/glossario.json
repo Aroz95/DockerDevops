@@ -18,5 +18,81 @@
   "codespaces": {
     "termine": "GitHub Codespaces",
     "definizione": "A GitHub service that gives you, in a few seconds, a ready-made computer in the cloud to use inside your browser."
+  },
+  "hardware": {
+    "termine": "Hardware",
+    "definizione": "The physical part of a computer: everything you can touch, such as processor, memory, disk, screen and keyboard."
+  },
+  "software": {
+    "termine": "Software",
+    "definizione": "The set of instructions that tell the hardware what to do: programs, apps, operating systems."
+  },
+  "processore": {
+    "termine": "Processor (CPU)",
+    "definizione": "The component that executes programs' instructions. It can have several cores working in parallel."
+  },
+  "memoria-ram": {
+    "termine": "RAM",
+    "definizione": "The fast memory where the computer keeps the data it is working on right now. It empties when the computer turns off."
+  },
+  "disco": {
+    "termine": "Disk",
+    "definizione": "The component that keeps data and programs even when the computer is off. Today it's usually an SSD, an electronic memory."
+  },
+  "sistema-operativo": {
+    "termine": "Operating system",
+    "definizione": "The software that manages the hardware and makes it available to other programs in an orderly and safe way, such as Linux, Windows or macOS."
+  },
+  "kernel": {
+    "termine": "Kernel",
+    "definizione": "The heart of the operating system: it talks directly to the hardware, and every program has to go through it to use processor, memory and disk."
+  },
+  "linux": {
+    "termine": "Linux",
+    "definizione": "A free Unix-style kernel; by extension, the operating system built around it. It's the system containers were born on."
+  },
+  "distribuzione": {
+    "termine": "Linux distribution",
+    "definizione": "A complete operating system based on the Linux kernel, with its own programs and settings, such as Ubuntu or Debian."
+  },
+  "programma": {
+    "termine": "Program",
+    "definizione": "A set of instructions saved on the disk, ready to be executed."
+  },
+  "processo": {
+    "termine": "Process",
+    "definizione": "A running program: it uses processor and memory, it starts when you launch it and ends when it finishes or you close it."
+  },
+  "pid": {
+    "termine": "PID",
+    "definizione": "Process IDentifier: the unique number the kernel assigns to each process to recognize it."
+  },
+  "file": {
+    "termine": "File",
+    "definizione": "A set of data saved on the disk with a name, such as a photo, a document or a program."
+  },
+  "cartella": {
+    "termine": "Folder (directory)",
+    "definizione": "A container for files and other folders, used to keep them tidy."
+  },
+  "file-system": {
+    "termine": "File system",
+    "definizione": "The way the operating system organizes files and folders. On Linux it's a tree that starts from the root /."
+  },
+  "applicazione": {
+    "termine": "Application",
+    "definizione": "A program, or a set of programs, designed to do a job for people."
+  },
+  "libreria": {
+    "termine": "Library",
+    "definizione": "A set of already-written functions that programs can use instead of rewriting them from scratch."
+  },
+  "dipendenza": {
+    "termine": "Dependency",
+    "definizione": "A library or program an application needs in order to work, often in a precise version."
+  },
+  "versione": {
+    "termine": "Version",
+    "definizione": "The number that identifies a published state of a piece of software, for example 2.4.1 (major.minor.patch)."
   }
 }

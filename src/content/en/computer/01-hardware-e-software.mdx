@@ -1,0 +1,68 @@
+---
+id: hardware-e-software
+titolo: Hardware and software
+durata: 6
+tipo: tecnica
+concetti_richiesti: []
+concetti_introdotti: [hardware, software, processore, memoria-ram, disco]
+fonti:
+  - titolo: "Linux man-pages – free(1)"
+    url: https://man7.org/linux/man-pages/man1/free.1.html
+  - titolo: "Linux man-pages – lscpu(1)"
+    url: https://man7.org/linux/man-pages/man1/lscpu.1.html
+verificata_il: "2026-10-11"
+---
+
+## Why you need it
+
+Docker exists to make programs run the same way on different computers. To understand **why** a program sometimes works on one computer and not on another, you first need to know what a computer is made of. Let's start here.
+
+## Two worlds: things and instructions
+
+Every computer, from a phone to the biggest server, is made of two parts.
+
+<Termine id="hardware">Hardware</Termine> is the physical part: everything you could touch with your hands. The screen, the keyboard, the circuits inside the box.
+
+<Termine id="software">Software</Termine> is the set of instructions that tell the hardware what to do. You can't touch it: it's written down, like a recipe. The browser you are reading this with is software, and so is a game or a messaging app.
+
+<Analogia>
+A kitchen is the hardware: stoves, pans, fridge. Recipes are the software. The same kitchen can make very different dishes depending on the recipe it follows, and the same recipe works in different kitchens, as long as they have the right tools.
+</Analogia>
+
+## The three pieces of hardware that matter to us
+
+A computer has many parts, but for this course three are enough.
+
+**The processor** (*CPU*). The <Termine id="processore">processor</Termine> executes the software's instructions, one after another, at enormous speed. It's the cook. A modern processor has several *cores*: several cooks working in parallel.
+
+**RAM memory**. <Termine id="memoria-ram">RAM</Termine> is where the computer keeps the data it is working on right now. It's very fast, but it empties when you turn the computer off. It's the worktop: you put the ingredients there while you cook, and at the end of the day you clear it.
+
+**The disk**. The <Termine id="disco">disk</Termine> keeps data even when the computer is off: documents, photos, installed programs. It's slower than RAM, but it remembers everything. It's the pantry: things stay there until you throw them away.
+
+<Callout tipo="info">
+Today the "disk" usually has no spinning parts: it's called an SSD and it's an electronic memory. Its role is the same, though, and out of habit we still call it a disk.
+</Callout>
+
+## How they work together
+
+When you open a program, this happens:
+
+1. The program is saved on the **disk**.
+2. The computer copies it into **RAM**, because working there is faster.
+3. The **processor** reads the instructions from RAM and executes them.
+4. When you save a file, the data goes from RAM to the disk, so it isn't lost when the computer turns off.
+
+That's why an unsaved document is lost during a power cut: it was only in RAM.
+
+## What this has to do with Docker
+
+Later you will see that Docker lets you start many isolated programs on the same computer. Each of them uses a bit of processor, a bit of RAM and a bit of disk. Knowing these three resources will help you understand how many programs a computer can handle, and what to do when memory runs out.
+
+On Linux systems there are commands to look at these resources: `free` shows how much RAM is used and how much is free, `lscpu` describes the processor. You will use them later, once you have learned to use the terminal.
+
+## In short
+
+- **Hardware** is the physical part of the computer; **software** is the instructions.
+- The **processor** executes the instructions.
+- **RAM** holds the data for the work in progress and is fast, but empties when the computer turns off.
+- The **disk** keeps data even when the computer is off.

@@ -112,7 +112,7 @@ describe('Missioni', () => {
 });
 
 describe('Fine del livello', () => {
-  it('a livello completato dice che il prossimo è in preparazione', () => {
+  it('a livello completato porta al livello successivo', () => {
     const lessons = ['benvenuto', 'punti-e-progressi', 'prepararsi-ai-laboratori'];
     const missions = ['sfida-fine-mondo', 'struttura-corso', 'quando-riparti-da-zero', 'costo-suggerimento', 'quota-codespaces', 'sito-account'];
     const progress = missions.reduce(
@@ -121,6 +121,6 @@ describe('Fine del livello', () => {
     );
     renderApp({ route: paths.livello(LIVELLO), progress });
     expect(screen.getByText('Livello completato!')).toBeInTheDocument();
-    expect(screen.getByText(/Il prossimo livello \(Livello 1: Il computer dietro le quinte\) è ancora in preparazione/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Vai al Livello 1: Il computer dietro le quinte →' })).toBeInTheDocument();
   });
 });

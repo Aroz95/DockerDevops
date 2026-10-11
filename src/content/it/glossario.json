@@ -18,5 +18,81 @@
   "codespaces": {
     "termine": "GitHub Codespaces",
     "definizione": "Un servizio di GitHub che fornisce in pochi secondi un computer nel cloud già preparato, da usare dentro il browser."
+  },
+  "hardware": {
+    "termine": "Hardware",
+    "definizione": "La parte fisica di un computer: tutto quello che si può toccare, come processore, memoria, disco, schermo e tastiera."
+  },
+  "software": {
+    "termine": "Software",
+    "definizione": "L'insieme delle istruzioni che dicono all'hardware cosa fare: programmi, app, sistemi operativi."
+  },
+  "processore": {
+    "termine": "Processore (CPU)",
+    "definizione": "Il componente che esegue le istruzioni dei programmi. Può avere più core, che lavorano in parallelo."
+  },
+  "memoria-ram": {
+    "termine": "Memoria RAM",
+    "definizione": "La memoria veloce in cui il computer tiene i dati su cui sta lavorando in quel momento. Si svuota quando il computer si spegne."
+  },
+  "disco": {
+    "termine": "Disco",
+    "definizione": "Il componente che conserva dati e programmi anche a computer spento. Oggi è di solito un SSD, una memoria elettronica."
+  },
+  "sistema-operativo": {
+    "termine": "Sistema operativo",
+    "definizione": "Il software che gestisce l'hardware e lo mette a disposizione degli altri programmi in modo ordinato e sicuro, come Linux, Windows o macOS."
+  },
+  "kernel": {
+    "termine": "Kernel",
+    "definizione": "Il cuore del sistema operativo: parla direttamente con l'hardware, e ogni programma deve passare da lui per usare processore, memoria e disco."
+  },
+  "linux": {
+    "termine": "Linux",
+    "definizione": "Un kernel libero in stile Unix; per estensione, il sistema operativo costruito attorno a lui. È il sistema su cui sono nati i container."
+  },
+  "distribuzione": {
+    "termine": "Distribuzione Linux",
+    "definizione": "Un sistema operativo completo basato sul kernel Linux, con i suoi programmi e le sue impostazioni, come Ubuntu o Debian."
+  },
+  "programma": {
+    "termine": "Programma",
+    "definizione": "Un insieme di istruzioni salvato sul disco, pronto per essere eseguito."
+  },
+  "processo": {
+    "termine": "Processo",
+    "definizione": "Un programma in esecuzione: usa processore e memoria, nasce quando lo avvii e termina quando finisce o lo chiudi."
+  },
+  "pid": {
+    "termine": "PID",
+    "definizione": "Process IDentifier: il numero unico che il kernel assegna a ogni processo per riconoscerlo."
+  },
+  "file": {
+    "termine": "File",
+    "definizione": "Un insieme di dati salvato sul disco con un nome, come una foto, un documento o un programma."
+  },
+  "cartella": {
+    "termine": "Cartella (directory)",
+    "definizione": "Un contenitore di file e di altre cartelle, che serve a tenerli in ordine."
+  },
+  "file-system": {
+    "termine": "File system",
+    "definizione": "Il modo in cui il sistema operativo organizza file e cartelle. Su Linux è un albero che parte dalla radice /."
+  },
+  "applicazione": {
+    "termine": "Applicazione",
+    "definizione": "Un programma, o un insieme di programmi, pensato per svolgere un compito per le persone."
+  },
+  "libreria": {
+    "termine": "Libreria",
+    "definizione": "Un insieme di funzioni già scritte che i programmi possono usare invece di riscriverle da zero."
+  },
+  "dipendenza": {
+    "termine": "Dipendenza",
+    "definizione": "Una libreria o un programma di cui un'applicazione ha bisogno per funzionare, spesso in una versione precisa."
+  },
+  "versione": {
+    "termine": "Versione",
+    "definizione": "Il numero che identifica uno stato pubblicato di un software, per esempio 2.4.1 (maggiore.minore.correzione)."
   }
 }

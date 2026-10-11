@@ -1,0 +1,81 @@
+---
+id: file-e-cartelle
+titolo: File, cartelle e file system
+durata: 7
+tipo: tecnica
+concetti_richiesti: [disco, sistema-operativo, linux, programma]
+concetti_introdotti: [file, cartella, file-system]
+fonti:
+  - titolo: "Linux man-pages – hier(7)"
+    url: https://man7.org/linux/man-pages/man7/hier.7.html
+verificata_il: "2026-10-11"
+---
+
+## Perché ti serve
+
+Docker lavora continuamente con file e cartelle: le immagini sono fatte di file, i container hanno le loro cartelle, e una delle domande più importanti sarà "dove finiscono i miei dati?". Prima di tutto bisogna sapere come Linux organizza i file.
+
+## File
+
+Un <Termine id="file">file</Termine> è un insieme di dati salvato sul disco con un nome. Una foto, un documento, una canzone, un programma: sono tutti file.
+
+Il nome di un file spesso finisce con un'**estensione**, come `.jpg` o `.txt`, che indica che tipo di contenuto c'è dentro. Su Linux l'estensione è solo una convenzione: aiuta le persone e i programmi a capire, ma non è obbligatoria.
+
+## Cartelle
+
+Una <Termine id="cartella">cartella</Termine> (in inglese *directory*) è un contenitore di file e di altre cartelle. Serve a tenere ordine. Le cartelle possono contenere altre cartelle, che contengono altre cartelle, e così via.
+
+<Analogia>
+Pensa a un armadio con dei cassetti. Dentro i cassetti ci sono delle scatole, e dentro le scatole i documenti. Per indicare a qualcuno dove trovare un documento gli dici: "armadio, terzo cassetto, scatola blu, documento".
+</Analogia>
+
+## Il file system: un albero rovesciato
+
+Il <Termine id="file-system">file system</Termine> è il modo in cui il sistema operativo organizza file e cartelle sul disco. Su Linux ha la forma di un **albero rovesciato**: tutto parte da un'unica cartella in cima, chiamata **radice** e indicata con il simbolo `/`.
+
+Dalla radice partono le altre cartelle, e da quelle altre ancora:
+
+```
+/
+├── home
+│   └── studente
+│       ├── documenti
+│       └── foto
+│           └── mare.jpg
+├── etc
+├── tmp
+└── usr
+```
+
+Per indicare dove si trova un file si scrive il suo **percorso**: le cartelle da attraversare partendo dalla radice, separate da `/`. Il percorso della foto qui sopra è:
+
+```
+/home/studente/foto/mare.jpg
+```
+
+Si legge così: dalla radice `/`, entra in `home`, poi in `studente`, poi in `foto`, e lì trovi `mare.jpg`.
+
+<Callout tipo="attenzione">
+Su Linux le maiuscole contano: `Foto` e `foto` sono due cartelle diverse. Inoltre si usa la barra `/`, non la barra rovesciata `\` di Windows.
+</Callout>
+
+## Le cartelle principali di Linux
+
+Le cartelle sotto la radice hanno nomi brevi e un ruolo preciso, descritto nella pagina di manuale ufficiale `hier` (dall'inglese *hierarchy*, gerarchia). Quelle che incontrerai più spesso:
+
+| Cartella | A cosa serve |
+|---|---|
+| `/home` | Contiene le cartelle personali degli utenti, per esempio `/home/studente`. |
+| `/etc` | File di configurazione: le impostazioni del sistema e dei programmi. |
+| `/tmp` | File temporanei, che il sistema può cancellare in qualunque momento, per esempio al riavvio. |
+| `/usr` | La maggior parte dei programmi installati e dei loro dati. |
+| `/bin` | Programmi essenziali, necessari anche per avviare o riparare il sistema. |
+
+Non serve impararle a memoria adesso: le ritroverai tante volte, anche dentro i container.
+
+## In breve
+
+- Un **file** è un insieme di dati con un nome; una **cartella** contiene file e altre cartelle.
+- Il **file system** di Linux è un albero che parte dalla radice `/`.
+- Un **percorso** come `/home/studente/foto/mare.jpg` indica dove si trova un file.
+- Le cartelle sotto `/` hanno ruoli precisi: `/home` per gli utenti, `/etc` per le impostazioni, `/tmp` per i file temporanei.

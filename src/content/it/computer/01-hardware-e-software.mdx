@@ -1,0 +1,68 @@
+---
+id: hardware-e-software
+titolo: Hardware e software
+durata: 6
+tipo: tecnica
+concetti_richiesti: []
+concetti_introdotti: [hardware, software, processore, memoria-ram, disco]
+fonti:
+  - titolo: "Linux man-pages – free(1)"
+    url: https://man7.org/linux/man-pages/man1/free.1.html
+  - titolo: "Linux man-pages – lscpu(1)"
+    url: https://man7.org/linux/man-pages/man1/lscpu.1.html
+verificata_il: "2026-10-11"
+---
+
+## Perché ti serve
+
+Docker serve a far funzionare i programmi allo stesso modo su computer diversi. Per capire **perché** un programma a volte funziona su un computer e su un altro no, bisogna prima sapere di cosa è fatto un computer. Partiamo da qui.
+
+## Due mondi: le cose e le istruzioni
+
+Ogni computer, dal telefono al server più grande, è fatto di due parti.
+
+L'<Termine id="hardware">hardware</Termine> è la parte fisica: tutto quello che potresti toccare con le mani. Lo schermo, la tastiera, i circuiti dentro la scatola.
+
+Il <Termine id="software">software</Termine> è l'insieme delle istruzioni che dicono all'hardware cosa fare. Non si tocca: è scritto, come una ricetta. Il browser con cui stai leggendo è software, così come un gioco o un'app di messaggi.
+
+<Analogia>
+Una cucina è l'hardware: fornelli, pentole, frigorifero. Le ricette sono il software. La stessa cucina può preparare piatti diversissimi a seconda della ricetta che segue, e la stessa ricetta riesce in cucine diverse, purché abbiano gli attrezzi giusti.
+</Analogia>
+
+## I tre pezzi di hardware che contano per noi
+
+Dentro un computer ci sono molte parti, ma per questo corso ne bastano tre.
+
+**Il processore** (in inglese *CPU*). Il <Termine id="processore">processore</Termine> esegue le istruzioni del software, una dopo l'altra, a velocità enorme. È il cuoco. Un processore moderno ha più *core*: più cuochi che lavorano in parallelo.
+
+**La memoria RAM**. La <Termine id="memoria-ram">memoria RAM</Termine> è lo spazio dove il computer tiene i dati su cui sta lavorando in questo momento. È velocissima, ma si svuota quando spegni il computer. È il piano di lavoro: ci appoggi gli ingredienti mentre cucini, poi a fine giornata lo pulisci.
+
+**Il disco**. Il <Termine id="disco">disco</Termine> conserva i dati anche a computer spento: documenti, foto, programmi installati. È più lento della RAM, ma ricorda tutto. È la dispensa: lì le cose restano finché non le butti via.
+
+<Callout tipo="info">
+Oggi il "disco" di solito non ha più parti che girano: si chiama SSD ed è una memoria elettronica. Il ruolo però è lo stesso, e per abitudine si continua a chiamarlo disco.
+</Callout>
+
+## Come lavorano insieme
+
+Quando apri un programma succede questo:
+
+1. Il programma è salvato sul **disco**.
+2. Il computer lo copia nella **RAM**, perché lì si lavora più in fretta.
+3. Il **processore** legge le istruzioni dalla RAM e le esegue.
+4. Quando salvi un file, i dati passano dalla RAM al disco, così non si perdono allo spegnimento.
+
+Ecco perché un documento non salvato si perde se manca la corrente: era solo nella RAM.
+
+## Cosa c'entra con Docker
+
+Più avanti vedrai che Docker permette di avviare molti programmi isolati sullo stesso computer. Ognuno di loro usa un po' di processore, un po' di RAM e un po' di disco. Sapere cosa sono queste tre risorse ti servirà per capire quanti programmi può reggere un computer, e cosa fare quando la memoria finisce.
+
+Sui sistemi Linux esistono comandi per vedere queste risorse: `free` mostra quanta RAM è usata e quanta è libera, `lscpu` descrive il processore. Li userai più avanti, quando avrai imparato a usare il terminale.
+
+## In breve
+
+- L'**hardware** è la parte fisica del computer; il **software** sono le istruzioni.
+- Il **processore** esegue le istruzioni.
+- La **RAM** tiene i dati del lavoro in corso ed è veloce, ma si svuota allo spegnimento.
+- Il **disco** conserva i dati anche a computer spento.

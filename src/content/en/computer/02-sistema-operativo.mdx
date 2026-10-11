@@ -1,0 +1,70 @@
+---
+id: sistema-operativo
+titolo: The operating system and the kernel
+durata: 7
+tipo: tecnica
+concetti_richiesti: [hardware, software, processore, memoria-ram, disco]
+concetti_introdotti: [sistema-operativo, kernel, linux, distribuzione]
+fonti:
+  - titolo: "The Linux Kernel documentation – Linux kernel release 6.x (What is Linux?)"
+    url: https://docs.kernel.org/admin-guide/README.html
+verificata_il: "2026-10-11"
+---
+
+## Why you need it
+
+Docker containers are, as you will see, a way of using one specific part of the operating system: the **kernel**. If you don't know what the kernel is, Docker looks like magic. If you do, it becomes logical.
+
+## The problem: many programs, one computer
+
+Your computer has many programs open at the same time: the browser, music, notifications. They all want to use the same processor, the same RAM, the same disk.
+
+Who decides who uses what, and when? If every program did whatever it wanted, they would step on each other's toes: one could delete another's data, or take all the memory.
+
+## The operating system: the restaurant manager
+
+The <Termine id="sistema-operativo">operating system</Termine> is the software that manages the hardware and makes it available to other programs, in an orderly and safe way. Windows, macOS, Android and Linux are operating systems.
+
+<Analogia>
+Think of a restaurant. The cooks (the programs) don't go into the storeroom and take whatever they want: they ask the manager, who knows what's available, assigns the stoves and makes sure nobody steals anyone else's ingredients. The manager is the operating system.
+</Analogia>
+
+Among other things, the operating system:
+
+- **shares the processor** among programs, giving each a very short turn, so short that they seem to work all at once;
+- **assigns RAM**, so each program has its own space and can't read anyone else's;
+- **manages the disk**, that is where and how data is saved;
+- **lets programs talk to devices**: screen, keyboard, network.
+
+## The kernel: the heart of the operating system
+
+An operating system is made of many pieces: the kernel, but also windows, settings, basic programs.
+
+The <Termine id="kernel">kernel</Termine> is the central piece, the one that talks directly to the hardware. It is always running and no program can go around it: to use the disk or memory, every program has to ask the kernel.
+
+<Callout tipo="consiglio">
+This idea is the key to understanding Docker: every program goes through the kernel. If the kernel decides to show a program only part of the computer, that program will only see that part. We'll come back to this in Level 5.
+</Callout>
+
+## Linux
+
+<Termine id="linux">Linux</Termine>, strictly speaking, is a **kernel**. Its official documentation describes it as a Unix-style system, born from the work of Linus Torvalds together with programmers all over the world, and released under a free license: anyone can use it, study it and modify it.
+
+In everyday use, though, "Linux" means a complete operating system built around that kernel. Linux runs the vast majority of servers on the internet, lots of devices, and also Android, which uses the Linux kernel.
+
+## Distributions
+
+The kernel alone isn't enough to use a computer: you also need basic programs, tools to install software, settings. Whoever puts all this together creates a Linux <Termine id="distribuzione">distribution</Termine>.
+
+The most common distributions on servers are **Ubuntu** and **Debian**; there are many others. They all use the Linux kernel, but they choose different programs and settings.
+
+<Callout tipo="info">
+Why do we care so much about Linux? Because Docker was born on Linux and containers are, in practice, Linux programs. Even when you use Docker on Windows or macOS, there is a small Linux underneath doing the work for you.
+</Callout>
+
+## In short
+
+- The **operating system** manages the hardware and shares it in an orderly way among programs.
+- The **kernel** is the heart of the operating system: it talks to the hardware and every program has to go through it.
+- **Linux** is a free kernel; the same name is used for the operating system built around it.
+- A **distribution** (such as Ubuntu or Debian) is a complete operating system based on the Linux kernel.

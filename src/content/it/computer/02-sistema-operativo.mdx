@@ -1,0 +1,70 @@
+---
+id: sistema-operativo
+titolo: Il sistema operativo e il kernel
+durata: 7
+tipo: tecnica
+concetti_richiesti: [hardware, software, processore, memoria-ram, disco]
+concetti_introdotti: [sistema-operativo, kernel, linux, distribuzione]
+fonti:
+  - titolo: "The Linux Kernel documentation – Linux kernel release 6.x (What is Linux?)"
+    url: https://docs.kernel.org/admin-guide/README.html
+verificata_il: "2026-10-11"
+---
+
+## Perché ti serve
+
+I container di Docker sono, come vedrai, un modo di usare una parte precisa del sistema operativo: il **kernel**. Se non sai cos'è il kernel, Docker sembra magia. Se lo sai, diventa logico.
+
+## Il problema: tanti programmi, un solo computer
+
+Sul tuo computer ci sono tanti programmi aperti nello stesso momento: il browser, la musica, le notifiche. Tutti vogliono usare lo stesso processore, la stessa RAM, lo stesso disco.
+
+Chi decide chi usa cosa, e quando? Se ogni programma facesse quello che vuole, si pesterebbero i piedi: uno potrebbe cancellare i dati di un altro, o prendersi tutta la memoria.
+
+## Il sistema operativo: il direttore di sala
+
+Il <Termine id="sistema-operativo">sistema operativo</Termine> è il software che gestisce l'hardware e lo mette a disposizione degli altri programmi, in modo ordinato e sicuro. Windows, macOS, Android e Linux sono sistemi operativi.
+
+<Analogia>
+Pensa a un ristorante. I cuochi (i programmi) non vanno in magazzino a prendersi quello che vogliono: chiedono al direttore di sala, che sa cosa c'è, assegna i fornelli e controlla che nessuno rubi gli ingredienti degli altri. Il direttore è il sistema operativo.
+</Analogia>
+
+Il sistema operativo si occupa, tra le altre cose, di:
+
+- **dividere il processore** tra i programmi, dando a ciascuno un turno brevissimo, tanto che sembrano lavorare tutti insieme;
+- **assegnare la RAM**, in modo che ogni programma abbia il suo spazio e non legga quello degli altri;
+- **gestire il disco**, cioè dove e come vengono salvati i dati;
+- **far parlare i programmi con le periferiche**: schermo, tastiera, rete.
+
+## Il kernel: il cuore del sistema operativo
+
+Un sistema operativo è fatto di molti pezzi: il kernel, ma anche finestre, impostazioni, programmi di base.
+
+Il <Termine id="kernel">kernel</Termine> è il pezzo centrale, quello che parla direttamente con l'hardware. È sempre in funzione e nessun programma può scavalcarlo: per usare il disco o la memoria, ogni programma deve chiedere al kernel.
+
+<Callout tipo="consiglio">
+Questa idea è la chiave per capire Docker: tutti i programmi passano dal kernel. Se il kernel decide di mostrare a un programma solo una parte del computer, quel programma vedrà solo quella parte. Ci torneremo nel Livello 5.
+</Callout>
+
+## Linux
+
+<Termine id="linux">Linux</Termine>, in senso stretto, è un **kernel**. La sua documentazione ufficiale lo descrive come un sistema in stile Unix, nato dal lavoro di Linus Torvalds insieme a programmatori sparsi per il mondo, e distribuito con una licenza libera: chiunque può usarlo, studiarlo e modificarlo.
+
+Nell'uso di tutti i giorni, però, "Linux" indica un sistema operativo completo costruito attorno a quel kernel. Linux fa funzionare la grande maggioranza dei server su internet, tantissimi dispositivi e anche Android, che usa il kernel Linux.
+
+## Le distribuzioni
+
+Il kernel da solo non basta per usare un computer: servono anche programmi di base, strumenti per installare software, impostazioni. Chi mette insieme tutto questo crea una <Termine id="distribuzione">distribuzione</Termine> Linux.
+
+Le distribuzioni più diffuse sui server sono **Ubuntu** e **Debian**; ce ne sono molte altre. Tutte usano il kernel Linux, ma scelgono programmi e impostazioni diverse.
+
+<Callout tipo="info">
+Perché ci interessa così tanto Linux? Perché Docker è nato su Linux e i container sono, in pratica, programmi Linux. Anche quando usi Docker su Windows o macOS, sotto c'è un piccolo Linux che lavora per te.
+</Callout>
+
+## In breve
+
+- Il **sistema operativo** gestisce l'hardware e lo divide in modo ordinato tra i programmi.
+- Il **kernel** è il cuore del sistema operativo: parla con l'hardware e ogni programma deve passare da lui.
+- **Linux** è un kernel libero; con lo stesso nome si indica il sistema operativo costruito attorno a lui.
+- Una **distribuzione** (come Ubuntu o Debian) è un sistema operativo completo basato sul kernel Linux.

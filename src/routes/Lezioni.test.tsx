@@ -10,7 +10,8 @@ describe('Mappa, livelli e lezioni', () => {
     renderApp({ route: paths.mappa });
     expect(screen.getByRole('link', { name: /Livello 0 · disponibile/ })).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: /Livello 1 ·/ })).not.toBeInTheDocument();
-    expect(screen.getByText(/Livello 1 · in preparazione/)).toBeInTheDocument();
+    expect(screen.getByText(/Livello 1 · bloccato/)).toBeInTheDocument();
+    expect(screen.getByText(/Livello 2 · in preparazione/)).toBeInTheDocument();
   });
 
   it('si legge una lezione, si guadagnano XP e si passa alla sua missione', async () => {
@@ -55,6 +56,11 @@ describe('Mappa, livelli e lezioni', () => {
 
   it('un livello bloccato spiega perché non si può entrare', () => {
     renderApp({ route: paths.livello('computer') });
+    expect(screen.getByText(/si sblocca quando completi quello precedente/)).toBeInTheDocument();
+  });
+
+  it('un livello senza contenuti dice che è in preparazione', () => {
+    renderApp({ route: paths.livello('terminale') });
     expect(screen.getByText(/ancora in preparazione/)).toBeInTheDocument();
   });
 

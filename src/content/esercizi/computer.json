@@ -1,0 +1,52 @@
+{
+  "missioni": [
+    {
+      "id": "dove-resta-il-documento",
+      "tipo": "scelta",
+      "dopoLezione": "hardware-e-software",
+      "opzioni": ["ram", "disco", "processore", "schermo"],
+      "corretta": "disco"
+    },
+    {
+      "id": "cosa-e-hardware",
+      "tipo": "scelta-multipla",
+      "dopoLezione": "hardware-e-software",
+      "opzioni": ["tastiera", "processore", "browser", "memoria", "gioco"],
+      "corrette": ["tastiera", "processore", "memoria"]
+    },
+    {
+      "id": "compito-del-kernel",
+      "tipo": "scelta",
+      "dopoLezione": "sistema-operativo",
+      "opzioni": ["finestre", "hardware", "internet", "virus"],
+      "corretta": "hardware"
+    },
+    {
+      "id": "numero-del-processo",
+      "tipo": "completa",
+      "dopoLezione": "programmi-e-processi",
+      "risposte": [["PID"]],
+      "ignoraMaiuscole": true
+    },
+    {
+      "id": "percorso-della-foto",
+      "tipo": "ordina",
+      "dopoLezione": "file-e-cartelle",
+      "elementi": ["radice", "home", "studente", "foto", "mare"]
+    },
+    {
+      "id": "versione-correzione",
+      "tipo": "completa",
+      "dopoLezione": "applicazioni-librerie-versioni",
+      "risposte": [["2.4.2"]],
+      "ignoraMaiuscole": true
+    },
+    {
+      "id": "sul-mio-computer-funziona",
+      "tipo": "scelta-multipla",
+      "dopoLezione": "applicazioni-librerie-versioni",
+      "opzioni": ["libreria-mancante", "versione-diversa", "schermo-diverso", "sistema-diverso", "nome-file"],
+      "corrette": ["libreria-mancante", "versione-diversa", "sistema-diverso"]
+    }
+  ]
+}

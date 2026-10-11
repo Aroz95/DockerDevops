@@ -1,0 +1,127 @@
+{
+  "dove-resta-il-documento": {
+    "titolo": "Dove resta il documento?",
+    "domanda": "Scrivi una lettera, la salvi e spegni il computer. In quale componente resta la lettera?",
+    "opzioni": {
+      "ram": "Nella memoria RAM",
+      "disco": "Nel disco",
+      "processore": "Nel processore",
+      "schermo": "Nello schermo"
+    },
+    "feedback": {
+      "ram": "La RAM si svuota quando il computer si spegne: serve per il lavoro in corso, non per conservare.",
+      "processore": "Il processore esegue le istruzioni, ma non conserva i documenti.",
+      "schermo": "Lo schermo mostra le cose, non le conserva."
+    },
+    "suggerimenti": [
+      "Il computer è spento: quale componente ricorda le cose anche senza corrente?",
+      "Nell'analogia della cucina, cosa resta pieno anche quando il cuoco va a casa?",
+      "Nel disco: è l'unico dei tre componenti che conserva i dati a computer spento. Per questo «salvare» vuol dire copiare dalla RAM al disco."
+    ],
+    "spiegazione": "Salvare significa copiare i dati dalla RAM al disco. La RAM si svuota allo spegnimento, il disco no: per questo un documento salvato si ritrova alla riaccensione."
+  },
+  "cosa-e-hardware": {
+    "titolo": "Si può toccare?",
+    "domanda": "Quali di questi sono hardware? Scegli tutte le risposte giuste.",
+    "opzioni": {
+      "tastiera": "La tastiera",
+      "processore": "Il processore",
+      "browser": "Il browser",
+      "memoria": "La memoria RAM",
+      "gioco": "Un videogioco"
+    },
+    "feedback": {
+      "browser": "Il browser è un programma: è fatto di istruzioni, non si può toccare. È software.",
+      "gioco": "Un videogioco è fatto di istruzioni: è software, anche se lo usi con un controller (che invece è hardware)."
+    },
+    "suggerimenti": [
+      "L'hardware è tutto quello che potresti toccare con le mani.",
+      "Due delle risposte sono programmi, cioè istruzioni.",
+      "Sono hardware la tastiera, il processore e la memoria RAM. Il browser e il videogioco sono software."
+    ],
+    "spiegazione": "Tastiera, processore e RAM sono oggetti fisici: hardware. Browser e videogioco sono istruzioni: software, che però ha bisogno dell'hardware per funzionare."
+  },
+  "compito-del-kernel": {
+    "titolo": "Il cuore del sistema",
+    "domanda": "Qual è il compito principale del kernel?",
+    "opzioni": {
+      "finestre": "Disegnare le finestre e le icone sullo schermo",
+      "hardware": "Gestire l'hardware e farlo usare ai programmi in modo ordinato",
+      "internet": "Navigare su internet",
+      "virus": "Fare da antivirus"
+    },
+    "feedback": {
+      "finestre": "Finestre e icone sono gestite da altri programmi del sistema operativo, non dal kernel.",
+      "internet": "Per navigare serve un browser. Il kernel gestisce la scheda di rete, ma non naviga.",
+      "virus": "L'antivirus è un programma a parte. Il kernel protegge i programmi l'uno dall'altro, ma non è un antivirus."
+    },
+    "suggerimenti": [
+      "Nell'analogia del ristorante, il kernel è la parte più centrale del direttore di sala.",
+      "Il kernel è il pezzo del sistema operativo che parla direttamente con processore, memoria e disco.",
+      "La risposta giusta è: gestire l'hardware e farlo usare ai programmi in modo ordinato."
+    ],
+    "spiegazione": "Il kernel è il cuore del sistema operativo: parla con l'hardware e ogni programma deve passare da lui per usarlo. Proprio questo permetterà a Docker di isolare i container."
+  },
+  "numero-del-processo": {
+    "titolo": "Il numero di ogni processo",
+    "domanda": "Completa la frase con la sigla giusta.",
+    "modello": "Il kernel assegna a ogni processo un numero unico, chiamato ___ .",
+    "feedbackSpazi": ["È una sigla di tre lettere, dall'inglese Process IDentifier."],
+    "suggerimenti": [
+      "La risposta è nella lezione «Programmi e processi».",
+      "È una sigla di tre lettere: Process IDentifier.",
+      "La risposta è PID."
+    ],
+    "spiegazione": "PID significa Process IDentifier. Il kernel lo usa per distinguere i processi, che possono essere centinaia anche quando sembra che il computer non stia facendo nulla."
+  },
+  "percorso-della-foto": {
+    "titolo": "Leggere un percorso",
+    "domanda": "Per arrivare al file /home/studente/foto/mare.jpg, in che ordine si attraversano cartelle e file? Mettili in ordine dal primo all'ultimo.",
+    "opzioni": {
+      "radice": "/ (la radice)",
+      "home": "home",
+      "studente": "studente",
+      "foto": "foto",
+      "mare": "mare.jpg"
+    },
+    "suggerimenti": [
+      "Un percorso si legge da sinistra a destra.",
+      "Ogni percorso che inizia con / parte dalla radice del file system.",
+      "L'ordine è: / (radice), home, studente, foto, mare.jpg."
+    ],
+    "spiegazione": "Il percorso si legge da sinistra a destra: si parte dalla radice /, si entra in home, poi in studente, poi in foto, e lì c'è il file mare.jpg."
+  },
+  "versione-correzione": {
+    "titolo": "Quale versione?",
+    "domanda": "Una libreria che segue il Semantic Versioning è alla versione 2.4.1. Esce una nuova versione che corregge solo un errore, senza novità. Che numero avrà?",
+    "modello": "La nuova versione sarà ___ .",
+    "feedbackSpazi": ["Una correzione cambia solo l'ultimo numero: gli altri due restano uguali."],
+    "suggerimenti": [
+      "Ricorda la forma MAGGIORE.MINORE.CORREZIONE.",
+      "Cambia solo la parte che indica le correzioni di errori.",
+      "La risposta è 2.4.2."
+    ],
+    "spiegazione": "Con il Semantic Versioning una correzione aumenta solo l'ultimo numero: da 2.4.1 si passa a 2.4.2. Chi usa la libreria può aggiornare tranquillo."
+  },
+  "sul-mio-computer-funziona": {
+    "titolo": "«Sul mio computer funziona»",
+    "domanda": "Un'applicazione funziona sul computer di chi l'ha scritta, ma non sul server. Quali di queste possono essere le cause? Scegli tutte le risposte giuste.",
+    "opzioni": {
+      "libreria-mancante": "Sul server manca una libreria da cui l'applicazione dipende.",
+      "versione-diversa": "Sul server c'è la stessa libreria, ma in una versione diversa.",
+      "schermo-diverso": "Il server ha uno schermo più piccolo.",
+      "sistema-diverso": "Il server ha un sistema operativo o una distribuzione diversa.",
+      "nome-file": "Il file dell'applicazione ha un nome troppo lungo."
+    },
+    "feedback": {
+      "schermo-diverso": "I server di solito non hanno nemmeno uno schermo: l'applicazione non dipende da quello.",
+      "nome-file": "Il nome del file non è un problema tipico: le cause classiche sono dipendenze e ambiente diversi."
+    },
+    "suggerimenti": [
+      "Pensa a cosa serve a un'applicazione per funzionare, oltre al suo codice.",
+      "Tre delle cinque risposte riguardano le dipendenze o l'ambiente in cui gira l'applicazione.",
+      "Le risposte giuste sono: libreria mancante, versione diversa della libreria, sistema operativo o distribuzione diversa."
+    ],
+    "spiegazione": "Un'applicazione dipende dal suo ambiente: librerie, versioni, sistema operativo. Se sul server anche una sola di queste cose è diversa, l'applicazione può non funzionare. È esattamente il problema che Docker risolve."
+  }
+}

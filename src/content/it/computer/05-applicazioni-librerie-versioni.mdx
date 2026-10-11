@@ -1,0 +1,80 @@
+---
+id: applicazioni-librerie-versioni
+titolo: Applicazioni, librerie e versioni
+durata: 8
+tipo: tecnica
+concetti_richiesti: [programma, file, sistema-operativo, linux, distribuzione]
+concetti_introdotti: [applicazione, libreria, dipendenza, versione]
+fonti:
+  - titolo: "Linux man-pages – libc(7)"
+    url: https://man7.org/linux/man-pages/man7/libc.7.html
+  - titolo: "The Debian GNU/Linux FAQ – Basics of the Debian package management system"
+    url: https://www.debian.org/doc/manuals/debian-faq/pkg-basics.en.html
+  - titolo: "Semantic Versioning 2.0.0"
+    url: https://semver.org/
+verificata_il: "2026-10-11"
+---
+
+## Perché ti serve
+
+Questa è la lezione più importante del livello, perché spiega il problema che Docker risolve: **"sul mio computer funziona, sul tuo no"**. Quasi sempre il colpevole è una libreria mancante o di una versione sbagliata.
+
+## Applicazione
+
+Un'<Termine id="applicazione">applicazione</Termine> è un programma, o un gruppo di programmi, pensato per svolgere un compito per le persone: un sito di prenotazioni, un gestionale, un'app per le note. In questo corso userai spesso **applicazione web**: un'applicazione che si usa attraverso il browser.
+
+Un'applicazione quasi mai è fatta da un unico file. Di solito è fatta del codice scritto apposta per lei e di tanti pezzi già pronti scritti da altri.
+
+## Librerie: pezzi già pronti
+
+Una <Termine id="libreria">libreria</Termine> è un insieme di funzioni già scritte che i programmi possono usare invece di riscriverle da zero: leggere un'immagine, collegarsi a internet, fare calcoli con le date.
+
+Un esempio che riguarda quasi tutto il software su Linux è la **libreria standard del C**: la pagina di manuale ufficiale `libc` spiega che quella più diffusa, la GNU C Library, è usata da tutte le principali distribuzioni Linux.
+
+<Analogia>
+Per fare una torta non coltivi il grano e non macini la farina: compri la farina già pronta. Le librerie sono gli ingredienti già pronti dei programmi. Ma se la ricetta dice "farina di riso" e in dispensa hai solo farina di grano, la torta non viene come previsto.
+</Analogia>
+
+## Dipendenze
+
+Quando un'applicazione ha bisogno di una libreria per funzionare, si dice che ha una <Termine id="dipendenza">dipendenza</Termine> da quella libreria.
+
+Le distribuzioni Linux gestiscono le dipendenze in modo esplicito. La documentazione di Debian spiega, per esempio, che un pacchetto può dichiarare di **dipendere** da un altro pacchetto: il secondo deve essere installato perché il primo funzioni, a volte in una versione minima precisa.
+
+Le dipendenze possono a loro volta avere dipendenze, formando una catena lunga. Un'applicazione moderna può dipendere, direttamente o indirettamente, da centinaia di librerie.
+
+## Versioni
+
+Le librerie cambiano nel tempo: si correggono errori, si aggiungono funzioni, a volte si cambia il modo di usarle. Ogni stato pubblicato di un software ha un numero di <Termine id="versione">versione</Termine>.
+
+Molti progetti seguono una regola chiamata **Semantic Versioning** (versionamento semantico). La versione ha la forma `MAGGIORE.MINORE.CORREZIONE`, per esempio `2.4.1`:
+
+| Parte | Quando aumenta | Cosa significa per chi la usa |
+|---|---|---|
+| `MAGGIORE` (2) | Cambiamenti incompatibili | Il vecchio codice potrebbe non funzionare più. |
+| `MINORE` (4) | Nuove funzioni compatibili | Tutto continua a funzionare, con qualcosa in più. |
+| `CORREZIONE` (1) | Solo correzioni di errori | Tutto continua a funzionare, con meno errori. |
+
+Quindi passare da `2.4.1` a `2.4.2` dovrebbe essere sicuro, mentre passare da `2.4.1` a `3.0.0` potrebbe rompere qualcosa.
+
+## Il problema: "sul mio computer funziona"
+
+Ora puoi capire la scena più classica dell'informatica:
+
+1. Una sviluppatrice scrive un'applicazione sul suo computer, dove ha la libreria X in versione **3**.
+2. L'applicazione viene installata su un server dove la libreria X è in versione **2**, oppure non c'è proprio.
+3. L'applicazione non parte, o si comporta in modo strano. Ma sul computer della sviluppatrice funziona perfettamente.
+
+Lo stesso succede con la versione del sistema operativo, con le impostazioni, con i programmi installati. Più l'applicazione è grande, più cose possono essere diverse tra un computer e l'altro.
+
+<Callout tipo="consiglio">
+Tieni a mente questo problema: nel Livello 5 vedrai come Docker lo risolve, impacchettando l'applicazione **insieme** alle sue dipendenze, nelle versioni giuste.
+</Callout>
+
+## In breve
+
+- Un'**applicazione** è un programma pensato per un compito; spesso è fatta di molti pezzi.
+- Una **libreria** è un insieme di funzioni già pronte, usate dai programmi.
+- Un'applicazione ha una **dipendenza** da ogni libreria di cui ha bisogno.
+- La **versione** indica lo stato di un software; con il Semantic Versioning il primo numero cambia quando ci sono cambiamenti incompatibili.
+- Dipendenze mancanti o di versioni diverse sono la causa tipica del "sul mio computer funziona".

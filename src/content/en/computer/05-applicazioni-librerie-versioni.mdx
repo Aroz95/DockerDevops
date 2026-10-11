@@ -1,0 +1,80 @@
+---
+id: applicazioni-librerie-versioni
+titolo: Applications, libraries and versions
+durata: 8
+tipo: tecnica
+concetti_richiesti: [programma, file, sistema-operativo, linux, distribuzione]
+concetti_introdotti: [applicazione, libreria, dipendenza, versione]
+fonti:
+  - titolo: "Linux man-pages – libc(7)"
+    url: https://man7.org/linux/man-pages/man7/libc.7.html
+  - titolo: "The Debian GNU/Linux FAQ – Basics of the Debian package management system"
+    url: https://www.debian.org/doc/manuals/debian-faq/pkg-basics.en.html
+  - titolo: "Semantic Versioning 2.0.0"
+    url: https://semver.org/
+verificata_il: "2026-10-11"
+---
+
+## Why you need it
+
+This is the most important lesson of the level, because it explains the problem Docker solves: **"it works on my computer, not on yours"**. Almost always the culprit is a missing library or one with the wrong version.
+
+## Application
+
+An <Termine id="applicazione">application</Termine> is a program, or a group of programs, designed to do a job for people: a booking site, a management system, a notes app. In this course you'll often see **web application**: an application you use through the browser.
+
+An application is almost never made of a single file. Usually it's made of the code written specifically for it and lots of ready-made pieces written by others.
+
+## Libraries: ready-made pieces
+
+A <Termine id="libreria">library</Termine> is a set of already-written functions that programs can use instead of rewriting them from scratch: reading an image, connecting to the internet, doing date calculations.
+
+An example that concerns almost all software on Linux is the **C standard library**: the official `libc` manual page explains that the most widespread one, the GNU C Library, is used by all major Linux distributions.
+
+<Analogia>
+To bake a cake you don't grow wheat and grind flour: you buy ready-made flour. Libraries are the ready-made ingredients of programs. But if the recipe says "rice flour" and your pantry only has wheat flour, the cake won't come out as expected.
+</Analogia>
+
+## Dependencies
+
+When an application needs a library to work, we say it has a <Termine id="dipendenza">dependency</Termine> on that library.
+
+Linux distributions handle dependencies explicitly. Debian's documentation explains, for example, that a package can declare that it **depends** on another package: the second one must be installed for the first to work, sometimes in a precise minimum version.
+
+Dependencies can have dependencies of their own, forming a long chain. A modern application can depend, directly or indirectly, on hundreds of libraries.
+
+## Versions
+
+Libraries change over time: bugs are fixed, features are added, sometimes the way to use them changes. Every published state of a piece of software has a <Termine id="versione">version</Termine> number.
+
+Many projects follow a rule called **Semantic Versioning**. The version has the form `MAJOR.MINOR.PATCH`, for example `2.4.1`:
+
+| Part | When it goes up | What it means for users |
+|---|---|---|
+| `MAJOR` (2) | Incompatible changes | Old code might stop working. |
+| `MINOR` (4) | New compatible features | Everything keeps working, with something extra. |
+| `PATCH` (1) | Bug fixes only | Everything keeps working, with fewer bugs. |
+
+So going from `2.4.1` to `2.4.2` should be safe, while going from `2.4.1` to `3.0.0` might break something.
+
+## The problem: "it works on my computer"
+
+Now you can understand the most classic scene in computing:
+
+1. A developer writes an application on her computer, where she has library X in version **3**.
+2. The application is installed on a server where library X is in version **2**, or isn't there at all.
+3. The application doesn't start, or behaves strangely. But on the developer's computer it works perfectly.
+
+The same happens with the operating system version, with settings, with installed programs. The bigger the application, the more things can differ from one computer to another.
+
+<Callout tipo="consiglio">
+Keep this problem in mind: in Level 5 you'll see how Docker solves it, by packaging the application **together** with its dependencies, in the right versions.
+</Callout>
+
+## In short
+
+- An **application** is a program designed for a job; it's often made of many pieces.
+- A **library** is a set of ready-made functions used by programs.
+- An application has a **dependency** on every library it needs.
+- The **version** tells the state of a piece of software; with Semantic Versioning the first number changes when there are incompatible changes.
+- Missing dependencies or different versions are the typical cause of "it works on my computer".
