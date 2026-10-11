@@ -159,7 +159,9 @@
     "missionMeta": "Mission {{number}} · {{status}}",
     "missionPassed": "passed (+{{xp}} XP)",
     "missionOpen": "to do",
-    "missionLocked": "opens after the lesson “{{lesson}}”"
+    "missionLocked": "opens after the lesson “{{lesson}}”",
+    "goToNext": "Go to Level {{number}}: {{title}} →",
+    "nextComingSoon": "The next level (Level {{number}}: {{title}}) is still being written. You'll find it on the map as soon as it's published: your progress stays saved."
   },
   "lesson": {
     "backToLevel": "← {{level}}",

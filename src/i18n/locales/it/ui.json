@@ -159,7 +159,9 @@
     "missionMeta": "Missione {{number}} · {{status}}",
     "missionPassed": "superata (+{{xp}} XP)",
     "missionOpen": "da fare",
-    "missionLocked": "si apre dopo la lezione «{{lesson}}»"
+    "missionLocked": "si apre dopo la lezione «{{lesson}}»",
+    "goToNext": "Vai al Livello {{number}}: {{title}} →",
+    "nextComingSoon": "Il prossimo livello (Livello {{number}}: {{title}}) è ancora in preparazione. Lo troverai sulla mappa appena sarà pubblicato: i tuoi progressi restano salvati."
   },
   "lesson": {
     "backToLevel": "← {{level}}",

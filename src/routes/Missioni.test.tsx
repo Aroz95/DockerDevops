@@ -110,3 +110,17 @@ describe('Missioni', () => {
     expect(screen.getAllByText(/si apre dopo la lezione «Prepararsi ai laboratori»/)).toHaveLength(2);
   });
 });
+
+describe('Fine del livello', () => {
+  it('a livello completato dice che il prossimo è in preparazione', () => {
+    const lessons = ['benvenuto', 'punti-e-progressi', 'prepararsi-ai-laboratori'];
+    const missions = ['sfida-fine-mondo', 'struttura-corso', 'quando-riparti-da-zero', 'costo-suggerimento', 'quota-codespaces', 'sito-account'];
+    const progress = missions.reduce(
+      (state, missionId) => progressReducer(state, { type: 'missionCompleted', missionId, baseXp: 50, at: AT }),
+      withLessons(...lessons),
+    );
+    renderApp({ route: paths.livello(LIVELLO), progress });
+    expect(screen.getByText('Livello completato!')).toBeInTheDocument();
+    expect(screen.getByText(/Il prossimo livello \(Livello 1: Il computer dietro le quinte\) è ancora in preparazione/)).toBeInTheDocument();
+  });
+});

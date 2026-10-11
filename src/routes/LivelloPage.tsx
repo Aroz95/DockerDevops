@@ -13,7 +13,7 @@ import { paths } from './paths';
 export function LivelloPage() {
   const { t } = useTranslation();
   const { livelloId = '' } = useParams();
-  const { getLevel } = useCourse();
+  const { getLevel, levels } = useCourse();
   const { progress } = useProgress();
   const level = getLevel(livelloId);
   useDocumentTitle(level?.titolo);
@@ -52,6 +52,7 @@ export function LivelloPage() {
   const passedCount = level.missions.filter((mission) => progress.missions[mission.id]).length;
   const totalSteps = level.lessons.length + level.missions.length;
   // Primo passo ancora da fare, nell'ordine del percorso (lezione, sue missioni, lezione…).
+  const nextLevel = levels[levels.findIndex((l) => l.id === level.id) + 1];
   const nextTodo = level.steps.find((step) =>
     step.kind === 'lesson' ? !progress.lessonsRead[step.id] : !progress.missions[step.id],
   );
@@ -75,7 +76,19 @@ export function LivelloPage() {
           label={t('level.progressLabel')}
         />
         {level.status === 'completed' ? (
-          <p className="font-semibold text-teal-700 dark:text-teal-400">{t('level.completed')}</p>
+          <div className="space-y-3">
+            <p className="font-semibold text-teal-700 dark:text-teal-400">{t('level.completed')}</p>
+            {nextLevel && nextLevel.status === 'available' && (
+              <ButtonLink to={paths.livello(nextLevel.id)}>
+                {t('level.goToNext', { number: nextLevel.numero, title: nextLevel.titolo })}
+              </ButtonLink>
+            )}
+            {nextLevel && nextLevel.status === 'comingSoon' && (
+              <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900 dark:bg-amber-950/40 dark:text-amber-200">
+                {t('level.nextComingSoon', { number: nextLevel.numero, title: nextLevel.titolo })}
+              </p>
+            )}
+          </div>
         ) : (
           nextTodo && (
             <ButtonLink to={paths.passo(level.id, nextTodo)}>
