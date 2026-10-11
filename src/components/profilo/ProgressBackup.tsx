@@ -9,6 +9,7 @@ import {
   type ImportError,
 } from '@/state/progress-storage';
 import type { ProgressState } from '@/types/progress';
+import { readFileAsText } from '@/utils/readFileAsText';
 
 type Status =
   | { kind: 'idle' }
@@ -47,7 +48,7 @@ export function ProgressBackup() {
     event.target.value = ''; // permette di riscegliere lo stesso file
     if (!file) return;
     try {
-      const result = parseImport(await file.text());
+      const result = parseImport(await readFileAsText(file));
       setStatus(
         result.ok
           ? { kind: 'confirmImport', progress: result.progress }
