@@ -65,7 +65,7 @@ Prima di Docker servono le basi su cui Docker poggia.
 | 0 | Come funziona questo corso | Navigazione, XP, missioni, come funzionano i controlli, salvataggio locale ed esportazione dei progressi |
 | 1 | Il computer dietro le quinte | Hardware vs software, sistema operativo, kernel, programma vs processo, file e cartelle, cos'è un'"applicazione", dipendenze e librerie, versioni |
 | 2 | Il terminale | Cos'è una shell, prompt, comando/argomenti/opzioni (flag), percorsi assoluti e relativi, `pwd` `ls` `cd` `mkdir` `cp` `mv` `rm` `cat`, `--help` e `man`, frecce e Tab |
-| 3 | Linux essenziale | Perché Linux (i container sono Linux), struttura delle cartelle (`/etc`, `/var`, `/home`…), utenti e root, permessi, `sudo`, gestore pacchetti (`apt`), variabili d'ambiente, pipe e redirezione, editor `nano`, processi (`ps`, `kill`) |
+| 3 | Linux essenziale | Perché Linux (i container sono Linux), struttura delle cartelle (`/etc`, `/var`, `/home`…), utenti e root, permessi, `sudo`, gestore pacchetti (`apt`), variabili d'ambiente, pipe e redirezione, processi (`ps`, `kill`, `free`). L'editor `nano` è spostato al livello 29 «Il server», dove serve davvero |
 | 4 | Reti per principianti | Indirizzo IP, porta, `localhost`, client e server, DNS, HTTP e richieste/risposte, codici di stato, `curl` |
 | 5 | Il problema che Docker risolve | "Sul mio PC funziona", conflitti di dipendenze, macchine virtuali, container vs VM, cos'è Docker, immagine vs container (analogia: ricetta e piatto / stampo e oggetto) |
 
@@ -126,7 +126,7 @@ Prima di Docker servono le basi su cui Docker poggia.
 | Livello | Titolo | Contenuti |
 |---|---|---|
 | 28 | Sicurezza dei container | Utente non root, privilegi minimi, capabilities, file system in sola lettura, scansione vulnerabilità (Trivy / Docker Scout), aggiornare le immagini base |
-| 29 | Il server | Cos'è un VPS, SSH e chiavi, installare Docker su un server, firewall di base |
+| 29 | Il server | Cos'è un VPS, SSH e chiavi, modificare file sul server con l'editor `nano`, installare Docker su un server, firewall di base |
 | 30 | Reverse proxy e HTTPS | Cos'è un reverse proxy, Traefik o nginx, domini, certificati con Let's Encrypt |
 | 31 | Osservabilità | Log (driver, rotazione), `docker stats`, healthcheck, metriche di base, avvisi |
 | 32 | Metodo di troubleshooting | Procedura passo per passo: leggere l'errore, `logs`, `inspect`, `exec`, rete, permessi; esercizi su guasti reali |
