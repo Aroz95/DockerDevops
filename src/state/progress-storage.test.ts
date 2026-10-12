@@ -53,6 +53,19 @@ describe('sanitizeProgress', () => {
     expect(result.progress.pending).toEqual({});
   });
 
+  it('converte i progressi della versione 1', () => {
+    const result = sanitizeProgress({
+      version: 1,
+      lessonsRead: { l1: AT },
+      missions: {},
+      pending: {},
+      badges: {},
+      activityDays: [],
+      drafts: {},
+    });
+    expect(result).toMatchObject({ ok: true, progress: { version: 2, lessonsRead: { l1: AT }, levelsCompleted: {} } });
+  });
+
   it('rifiuta dati senza versione o di una versione futura', () => {
     expect(sanitizeProgress({})).toEqual({ ok: false, error: 'invalidData' });
     expect(sanitizeProgress(null)).toEqual({ ok: false, error: 'invalidData' });

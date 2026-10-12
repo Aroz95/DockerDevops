@@ -45,7 +45,8 @@ export function levelStatuses(
       statuses[level.id] = 'locked';
       continue;
     }
-    const done = isLevelDone(level, progress);
+    // Completato adesso, oppure già completato in passato (anche se poi sono arrivati contenuti nuovi).
+    const done = isLevelDone(level, progress) || Boolean(progress.levelsCompleted[level.id]);
     statuses[level.id] = done ? 'completed' : 'available';
     previousDone = done;
   }

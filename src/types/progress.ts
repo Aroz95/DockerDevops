@@ -6,7 +6,7 @@
  * 2. aggiungere una migrazione in src/state/progress-storage.ts (MIGRATIONS),
  *    così i progressi già salvati dagli studenti vengono convertiti e non persi.
  */
-export const PROGRESS_SCHEMA_VERSION = 1 as const;
+export const PROGRESS_SCHEMA_VERSION = 2 as const;
 
 /** Una missione superata. Il primo superamento è quello che conta per gli XP. */
 export interface MissionRecord {
@@ -38,4 +38,9 @@ export interface ProgressState {
   activityDays: string[];
   /** id missione → ultimo testo scritto dallo studente negli editor. */
   drafts: Record<string, string>;
+  /**
+   * id livello → data e ora del completamento. Un livello completato resta tale anche se in futuro
+   * gli vengono aggiunte lezioni o missioni: così i livelli successivi non si richiudono.
+   */
+  levelsCompleted: Record<string, string>;
 }

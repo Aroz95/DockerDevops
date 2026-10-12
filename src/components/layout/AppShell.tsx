@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, useLocation } from 'react-router';
+import { useRecordCompletedLevels } from '@/hooks/useRecordCompletedLevels';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { UpdateBanner } from './UpdateBanner';
@@ -11,6 +12,7 @@ const MAIN_ID = 'contenuto';
 export function AppShell() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
+  useRecordCompletedLevels();
 
   // Cambiando pagina si riparte dall'alto, come in un sito tradizionale.
   useEffect(() => {

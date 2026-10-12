@@ -1,0 +1,120 @@
+---
+id: pipe-e-redirezione
+titolo: Pipe e redirezione
+durata: 9
+tipo: tecnica
+concetti_richiesti: [comando, programma, file, opzione, argomento]
+concetti_introdotti: [standard-output, standard-error, redirezione, pipe]
+fonti:
+  - titolo: "GNU Bash Reference Manual – Redirections"
+    url: https://www.gnu.org/software/bash/manual/html_node/Redirections.html
+  - titolo: "Linux man-pages – bash(1) (Pipelines)"
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+  - titolo: "Linux man-pages – grep(1)"
+    url: https://man7.org/linux/man-pages/man1/grep.1.html
+  - titolo: "Linux man-pages – wc(1)"
+    url: https://man7.org/linux/man-pages/man1/wc.1.html
+verificata_il: "2026-10-12"
+---
+
+## Perché ti serve
+
+Un'idea centrale di Linux è combinare programmi piccoli, ciascuno bravo in una cosa sola. Con Docker la userai di continuo: per cercare un errore tra migliaia di righe di log, per contare i container, per salvare un risultato in un file.
+
+## Dove va l'output
+
+Ogni programma ha due «uscite» separate per il testo che produce:
+
+- lo <Termine id="standard-output">standard output</Termine> (*stdout*), per i risultati normali;
+- lo <Termine id="standard-error">standard error</Termine> (*stderr*), per i messaggi d'errore.
+
+Di solito entrambi finiscono sullo schermo, quindi sembrano la stessa cosa. Ma sono due canali diversi, e si possono mandare in posti diversi. Il manuale di Bash li indica anche con dei numeri: 1 per lo standard output, 2 per lo standard error.
+
+## La redirezione: mandare l'output in un file
+
+La <Termine id="redirezione">redirezione</Termine> manda l'output di un comando in un file invece che sullo schermo:
+
+| Scrittura | Effetto |
+|---|---|
+| `comando > file` | Scrive lo standard output nel file. Se il file esiste, lo **svuota** prima. |
+| `comando >> file` | Aggiunge lo standard output in fondo al file. |
+| `comando 2> file` | Scrive gli errori (standard error) nel file. |
+| `comando > file 2>&1` | Manda nel file sia l'output sia gli errori. |
+
+Esempio:
+
+```
+echo "prima riga" > diario.txt
+echo "seconda riga" >> diario.txt
+cat diario.txt
+```
+
+C'è anche un file speciale, `/dev/null`: tutto ciò che ci finisce viene buttato via. `comando 2> /dev/null` nasconde i messaggi d'errore.
+
+<Callout tipo="attenzione">
+`>` svuota il file senza chiedere. Se volevi aggiungere e hai scritto `>` invece di `>>`, il contenuto precedente è perso.
+</Callout>
+
+## La pipe: collegare i programmi
+
+La <Termine id="pipe">pipe</Termine>, il simbolo `|`, collega due comandi: lo standard output del primo diventa l'**input** del secondo.
+
+<Analogia>
+È una catena di montaggio. Il primo operaio prende il materiale, fa il suo lavoro e lo passa al secondo con un nastro trasportatore, che fa il suo e lo passa al terzo. Nessuno dei due deve sapere cosa fa l'altro.
+</Analogia>
+
+```
+cat registro.log | grep ERRORE | wc -l
+```
+
+Riga per riga:
+
+| Pezzo | Cosa fa |
+|---|---|
+| `cat registro.log` | Stampa tutte le righe del file. |
+| `\| grep ERRORE` | Tiene solo le righe che contengono «ERRORE». |
+| `\| wc -l` | Conta le righe che riceve (`wc` da *word count*, `-l` da *lines*). |
+
+Il risultato è un solo numero: quanti errori ci sono nel registro. Molti comandi accettano direttamente un file, quindi la stessa cosa si scrive anche `grep ERRORE registro.log | wc -l`.
+
+Comandi che si usano spesso nelle pipe:
+
+| Comando | Cosa fa |
+|---|---|
+| `grep testo` | Tiene le righe che contengono il testo (`-i` ignora le maiuscole, `-v` tiene quelle che **non** lo contengono, `-n` mostra il numero di riga). |
+| `wc -l` | Conta le righe. |
+| `sort` | Mette le righe in ordine alfabetico. |
+| `head -n 5` / `tail -n 5` | Tiene le prime / le ultime 5 righe. |
+
+## Cosa vedrai
+
+Con la redirezione dello standard output, gli errori continuano ad arrivare sullo schermo:
+
+```
+ls documenti nulla > elenco.txt
+```
+
+```
+ls: cannot access 'nulla': No such file or directory
+```
+
+L'elenco di `documenti` è finito nel file, l'errore no: sono due canali diversi.
+
+Prova con il registro di un'applicazione: cerca gli errori, contali, salvali in un file.
+
+<Terminale file={{ "registro.log": "10:00 INFO avvio completato\n10:05 INFO utente collegato\n10:07 ERRORE database non raggiungibile\n10:08 INFO nuovo tentativo\n10:09 ERRORE disco pieno\n10:12 INFO utente scollegato\n" }} />
+
+## Errori comuni
+
+**Il file di destinazione è vuoto**. Hai usato `>` con un comando che ha dato solo errori: lo standard output era vuoto. Guarda il messaggio sullo schermo.
+
+**`bash: /etc/prova: Permission denied` anche con sudo**. In `sudo echo ciao > /etc/prova`, sudo vale solo per `echo`: la redirezione la fa la tua shell, con il tuo utente, che non può scrivere in `/etc`.
+
+**`grep` non trova nulla**. Controlla maiuscole e minuscole, oppure usa `grep -i`.
+
+## In breve
+
+- Ogni programma ha due uscite: **standard output** per i risultati e **standard error** per gli errori.
+- La **redirezione** manda l'output in un file: `>` sovrascrive, `>>` aggiunge, `2>` è per gli errori.
+- La **pipe** `|` passa l'output di un comando come input al successivo.
+- `grep`, `wc -l`, `sort`, `head` e `tail` sono i compagni tipici delle pipe.

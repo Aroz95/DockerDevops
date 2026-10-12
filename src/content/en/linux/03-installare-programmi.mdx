@@ -1,0 +1,81 @@
+---
+id: installare-programmi
+titolo: Installing programs with apt
+durata: 8
+tipo: tecnica
+concetti_richiesti: [dipendenza, versione, distribuzione, sudo, root, comando, opzione]
+concetti_introdotti: [pacchetto, gestore-pacchetti, repository]
+fonti:
+  - titolo: "Debian Reference – Chapter 2. Debian package management"
+    url: https://www.debian.org/doc/manuals/debian-reference/ch02.en.html
+  - titolo: "The Debian GNU/Linux FAQ – Basics of the Debian package management system"
+    url: https://www.debian.org/doc/manuals/debian-faq/pkg-basics.en.html
+verificata_il: "2026-10-12"
+---
+
+## Why you need it
+
+On Linux you don't download programs from a website and install them with a double click: you install them with a command, which also takes care of everything they need. You'll need it to install Docker on a server, and you'll meet it again inside Dockerfiles, where images are prepared by installing programs exactly like this.
+
+## Packages and repositories
+
+A <Termine id="pacchetto">package</Termine> is an archive containing a program ready to install, together with the information needed to do it: name, version and **dependencies**, that is the other packages it needs in order to work.
+
+Packages live in a <Termine id="repository">repository</Termine>: a big online archive, run by the people who maintain the distribution, holding thousands of checked packages that work together.
+
+The <Termine id="gestore-pacchetti">package manager</Termine> is the program that downloads packages from the repository, installs them, resolves dependencies and updates them. On Debian and Ubuntu it's called **APT**, and the command is `apt`.
+
+<Analogia>
+It's like the app store on your phone, but for the terminal. The repository is the store's catalog; apt is the shop assistant who fetches the program, also brings the accessories it needs (the dependencies) and fits it in the right place.
+</Analogia>
+
+## The main commands
+
+Installing and removing programs changes the system, so these commands must be run with `sudo`.
+
+| Command | What it does |
+|---|---|
+| `sudo apt update` | Downloads the up-to-date list of available packages. It doesn't install anything. |
+| `sudo apt install tree` | Installs the `tree` package and its dependencies. |
+| `sudo apt upgrade` | Updates already installed packages to their newest versions. |
+| `sudo apt remove tree` | Uninstalls the package (its configuration files stay). |
+
+<Callout tipo="consiglio">
+Before installing something it's always worth running `sudo apt update`: that way apt knows which versions are the newest. You'll see it done inside Dockerfiles too.
+</Callout>
+
+## What you'll see
+
+Installing `tree`, a program that draws folders as a tree, produces an output like this (shortened):
+
+```
+Reading package lists... Done
+Building dependency tree... Done
+The following NEW packages will be installed:
+  tree
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Get:1 http://archive.ubuntu.com/ubuntu noble/universe amd64 tree amd64 2.1.1-2ubuntu3 [47.1 kB]
+Unpacking tree (2.1.1-2ubuntu3) ...
+Setting up tree (2.1.1-2ubuntu3) ...
+```
+
+Piece by piece: apt reads the package list, works out the dependencies, announces what it will install, downloads the package from the repository (`Get:`), unpacks it (`Unpacking`) and configures it (`Setting up`). Version numbers change over time.
+
+Before installing tree, try typing `tree`: Ubuntu tells you the command isn't there and how to install it.
+
+<Terminale cartelle={["progetto/codice", "progetto/documenti"]} file={{ "progetto/codice/app.py": "print('ciao')\n", "progetto/leggimi.txt": "Il mio progetto\n" }} />
+
+## Common errors
+
+**`E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)`** followed by **`are you root?`**. You forgot `sudo`: installing programs is an administrator operation.
+
+**`E: Unable to locate package packagename`**. No package has that name, or the list is old: check the name and try `sudo apt update`.
+
+**`Do you want to continue? [Y/n]`**. It's not an error: apt asks for confirmation, for example before removing something. Answer `y`, or add the `-y` option to answer yes automatically. In the course terminal the answer is always "no", so to remove use `-y`.
+
+## In short
+
+- A **package** contains a program, its version and the list of its dependencies.
+- Packages live in the distribution's **repositories**.
+- The **package manager** (on Debian and Ubuntu, `apt`) installs them with their dependencies.
+- `sudo apt update` refreshes the list, `sudo apt install` installs, `sudo apt remove` removes.

@@ -30,7 +30,20 @@ const goalSchema: z.ZodType<Goal> = z.lazy(() =>
       programma: z.string().min(1),
       argomenti: z.array(z.string()).optional(),
       opzioni: z.array(z.string().regex(/^[A-Za-z0-9](\|[a-z0-9-]+)?$/)).optional(),
+      utente: z.string().optional(),
     }),
+    z.object({ tipo: z.literal('permessi'), percorso: path, modo: z.string().regex(/^[0-7]{3,4}$/) }),
+    z.object({ tipo: z.literal('eseguibile'), percorso: path }),
+    z.object({ tipo: z.literal('proprietario'), percorso: path, utente: z.string().min(1) }),
+    z.object({ tipo: z.literal('pacchetto-installato'), nome: z.string().min(1) }),
+    z.object({ tipo: z.literal('pacchetto-assente'), nome: z.string().min(1) }),
+    z.object({
+      tipo: z.literal('variabile'),
+      nome: z.string().regex(/^[A-Za-z_][A-Za-z0-9_]*$/),
+      valore: z.string().optional(),
+      esportata: z.boolean().optional(),
+    }),
+    z.object({ tipo: z.literal('processo-assente'), comando: z.string().min(1) }),
     z.object({ tipo: z.literal('uno-tra'), obiettivi: z.array(goalSchema).min(2) }),
     z.object({ tipo: z.literal('immagine-presente'), immagine: z.string().min(1) }),
     z.object({ tipo: z.literal('immagine-assente'), immagine: z.string().min(1) }),
@@ -55,6 +68,20 @@ const machineSetupSchema = z.object({
   cartella: z.string().optional(),
   cartelle: z.array(path).optional(),
   file: z.record(z.string(), z.string()).optional(),
+  permessi: z.record(z.string(), z.string().regex(/^[0-7]{3,4}$/)).optional(),
+  proprietari: z.record(z.string(), z.string().regex(/^[a-z_][a-z0-9_-]*(:[a-z_][a-z0-9_-]*)?$/)).optional(),
+  pacchetti: z.array(z.string()).optional(),
+  processi: z
+    .array(
+      z.object({
+        comando: z.string().min(1),
+        utente: z.string().optional(),
+        cpu: z.number().min(0).max(100).optional(),
+        mem: z.number().min(0).max(100).optional(),
+        ignoraTerm: z.boolean().optional(),
+      }),
+    )
+    .optional(),
   immagini: z.array(z.string()).optional(),
 });
 

@@ -1,0 +1,120 @@
+---
+id: pipe-e-redirezione
+titolo: Pipes and redirection
+durata: 9
+tipo: tecnica
+concetti_richiesti: [comando, programma, file, opzione, argomento]
+concetti_introdotti: [standard-output, standard-error, redirezione, pipe]
+fonti:
+  - titolo: "GNU Bash Reference Manual – Redirections"
+    url: https://www.gnu.org/software/bash/manual/html_node/Redirections.html
+  - titolo: "Linux man-pages – bash(1) (Pipelines)"
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+  - titolo: "Linux man-pages – grep(1)"
+    url: https://man7.org/linux/man-pages/man1/grep.1.html
+  - titolo: "Linux man-pages – wc(1)"
+    url: https://man7.org/linux/man-pages/man1/wc.1.html
+verificata_il: "2026-10-12"
+---
+
+## Why you need it
+
+A central idea of Linux is combining small programs, each good at one thing. With Docker you'll use it all the time: to find an error among thousands of log lines, to count containers, to save a result in a file.
+
+## Where output goes
+
+Every program has two separate "outputs" for the text it produces:
+
+- <Termine id="standard-output">standard output</Termine> (*stdout*), for normal results;
+- <Termine id="standard-error">standard error</Termine> (*stderr*), for error messages.
+
+Usually both end up on the screen, so they look like the same thing. But they're two different channels, and they can be sent to different places. The Bash manual also refers to them by number: 1 for standard output, 2 for standard error.
+
+## Redirection: sending output to a file
+
+<Termine id="redirezione">Redirection</Termine> sends a command's output to a file instead of the screen:
+
+| Syntax | Effect |
+|---|---|
+| `command > file` | Writes standard output to the file. If the file exists, it **empties** it first. |
+| `command >> file` | Appends standard output to the end of the file. |
+| `command 2> file` | Writes errors (standard error) to the file. |
+| `command > file 2>&1` | Sends both output and errors to the file. |
+
+Example:
+
+```
+echo "prima riga" > diario.txt
+echo "seconda riga" >> diario.txt
+cat diario.txt
+```
+
+There's also a special file, `/dev/null`: everything that ends up there is thrown away. `command 2> /dev/null` hides error messages.
+
+<Callout tipo="attenzione">
+`>` empties the file without asking. If you meant to append and typed `>` instead of `>>`, the previous contents are lost.
+</Callout>
+
+## The pipe: connecting programs
+
+The <Termine id="pipe">pipe</Termine>, the `|` symbol, connects two commands: the first one's standard output becomes the second one's **input**.
+
+<Analogia>
+It's an assembly line. The first worker takes the material, does their job and passes it to the second on a conveyor belt, who does theirs and passes it to the third. Neither has to know what the other does.
+</Analogia>
+
+```
+cat registro.log | grep ERRORE | wc -l
+```
+
+Piece by piece:
+
+| Piece | What it does |
+|---|---|
+| `cat registro.log` | Prints all the lines of the file. |
+| `\| grep ERRORE` | Keeps only the lines containing "ERRORE" (error). |
+| `\| wc -l` | Counts the lines it receives (`wc` from *word count*, `-l` from *lines*). |
+
+The result is a single number: how many errors there are in the log. Many commands accept a file directly, so the same thing can also be written `grep ERRORE registro.log | wc -l`.
+
+Commands often used in pipes:
+
+| Command | What it does |
+|---|---|
+| `grep text` | Keeps lines containing the text (`-i` ignores case, `-v` keeps those that **don't** contain it, `-n` shows the line number). |
+| `wc -l` | Counts lines. |
+| `sort` | Sorts lines alphabetically. |
+| `head -n 5` / `tail -n 5` | Keeps the first / last 5 lines. |
+
+## What you'll see
+
+When you redirect standard output, errors still reach the screen:
+
+```
+ls documenti nulla > elenco.txt
+```
+
+```
+ls: cannot access 'nulla': No such file or directory
+```
+
+The listing of `documenti` went into the file, the error didn't: they're two different channels.
+
+Try it with an application's log: find the errors, count them, save them in a file.
+
+<Terminale file={{ "registro.log": "10:00 INFO avvio completato\n10:05 INFO utente collegato\n10:07 ERRORE database non raggiungibile\n10:08 INFO nuovo tentativo\n10:09 ERRORE disco pieno\n10:12 INFO utente scollegato\n" }} />
+
+## Common errors
+
+**The destination file is empty**. You used `>` with a command that only gave errors: standard output was empty. Look at the message on screen.
+
+**`bash: /etc/prova: Permission denied` even with sudo**. In `sudo echo ciao > /etc/prova`, sudo only applies to `echo`: the redirection is done by your shell, as your user, who can't write to `/etc`.
+
+**`grep` finds nothing**. Check upper and lower case, or use `grep -i`.
+
+## In short
+
+- Every program has two outputs: **standard output** for results and **standard error** for errors.
+- **Redirection** sends output to a file: `>` overwrites, `>>` appends, `2>` is for errors.
+- The **pipe** `|` passes one command's output as input to the next.
+- `grep`, `wc -l`, `sort`, `head` and `tail` are typical pipe companions.

@@ -44,6 +44,10 @@ export function ProgressProvider({ initialProgress, children }: ProgressProvider
     (missionId: string, content: string) => dispatch({ type: 'draftSaved', missionId, content }),
     [],
   );
+  const markLevelCompleted = useCallback(
+    (levelId: string) => dispatch({ type: 'levelCompleted', levelId, at: now() }),
+    [],
+  );
   const importProgress = useCallback(
     (imported: ProgressState) => dispatch({ type: 'imported', progress: imported }),
     [],
@@ -63,6 +67,7 @@ export function ProgressProvider({ initialProgress, children }: ProgressProvider
       takeHint,
       completeMission,
       saveDraft,
+      markLevelCompleted,
       importProgress,
       resetProgress,
     };
@@ -74,6 +79,7 @@ export function ProgressProvider({ initialProgress, children }: ProgressProvider
     takeHint,
     completeMission,
     saveDraft,
+    markLevelCompleted,
     importProgress,
     resetProgress,
   ]);

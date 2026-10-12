@@ -1,0 +1,113 @@
+---
+id: utenti-e-root
+titolo: Utenti, gruppi e root
+durata: 8
+tipo: tecnica
+concetti_richiesti: [sistema-operativo, linux, file, cartella, comando, cartella-personale, kernel]
+concetti_introdotti: [utente, gruppo, root, sudo]
+fonti:
+  - titolo: "Linux man-pages – passwd(5)"
+    url: https://man7.org/linux/man-pages/man5/passwd.5.html
+  - titolo: "Linux man-pages – capabilities(7)"
+    url: https://man7.org/linux/man-pages/man7/capabilities.7.html
+  - titolo: "Linux man-pages – sudo(8)"
+    url: https://man7.org/linux/man-pages/man8/sudo.8.html
+verificata_il: "2026-10-12"
+---
+
+## Perché ti serve
+
+Linux è nato per essere usato da più persone sullo stesso computer, e ancora oggi ogni programma gira «a nome di» qualcuno. Con Docker incontrerai spesso domande come «con quale utente gira questo container?» e messaggi come `Permission denied`. Per capirli serve sapere chi sono gli utenti e perché uno di loro, root, è speciale.
+
+## Gli utenti
+
+Un <Termine id="utente">utente</Termine> è un'identità con cui si usa il computer: ha un nome, un numero, una cartella personale e possiede dei file. Anche molti programmi di sistema hanno un loro utente, così non possono toccare i file delle persone.
+
+Gli utenti sono elencati nel file `/etc/passwd`. Ogni riga è un utente, con sette campi separati da due punti:
+
+```
+studente:x:1000:1000:Studente:/home/studente:/bin/bash
+```
+
+| Campo | Valore | Significato |
+|---|---|---|
+| 1 | `studente` | Il nome dell'utente. |
+| 2 | `x` | Segnaposto: la password (cifrata) sta in un altro file, `/etc/shadow`, leggibile solo dall'amministratore. |
+| 3 | `1000` | Il numero dell'utente (UID, *user identifier*). È questo che il kernel usa davvero. |
+| 4 | `1000` | Il numero del suo gruppo principale. |
+| 5 | `Studente` | Una descrizione, spesso il nome completo. |
+| 6 | `/home/studente` | La cartella personale. |
+| 7 | `/bin/bash` | La shell che parte quando l'utente accede. |
+
+## I gruppi
+
+Un <Termine id="gruppo">gruppo</Termine> è un insieme di utenti. Serve a dare gli stessi permessi a più persone insieme: per esempio, tutti quelli del gruppo `contabili` possono leggere i file della contabilità.
+
+Ogni utente ha un gruppo principale e può far parte di altri gruppi. Il comando `id` mostra tutto:
+
+```
+id
+```
+
+```
+uid=1000(studente) gid=1000(studente) groups=1000(studente),27(sudo)
+```
+
+Lo studente ha numero 1000, il suo gruppo principale si chiama come lui e fa parte anche del gruppo `sudo`: tra poco vedrai a cosa serve.
+
+## root: l'amministratore
+
+Su ogni sistema Linux c'è un utente speciale, <Termine id="root">root</Termine>, con numero 0. Le pagine di manuale di Linux lo chiamano *superutente*: i processi di root saltano tutti i controlli dei permessi, quindi root può leggere, modificare e cancellare qualsiasi cosa.
+
+<Analogia>
+In un albergo ogni ospite ha la chiave della sua stanza. Il direttore ha il passe-partout: apre tutte le porte. Comodo, ma pericoloso: se lo perdi, o se sbagli porta, i danni li fai ovunque. root è il passe-partout del computer.
+</Analogia>
+
+Per questo non si lavora mai come root per abitudine. Si usa un utente normale e si diventa amministratori solo per il singolo comando che lo richiede.
+
+Prova a creare un file nella cartella `/etc`, che contiene le impostazioni del sistema e appartiene a root:
+
+```
+touch /etc/prova
+```
+
+```
+touch: cannot touch '/etc/prova': Permission denied
+```
+
+*Permission denied* significa «permesso negato»: lo studente non può scrivere lì. È una protezione, non un guasto.
+
+## sudo: un comando da amministratore
+
+<Termine id="sudo">sudo</Termine> esegue **un solo comando** come root. Si scrive davanti al comando:
+
+```
+sudo touch /etc/prova
+```
+
+La prima volta sudo chiede una password: è **la tua** password, non quella di root. Serve a confermare che sia davvero tu a dare l'ordine. Mentre la scrivi non compare nulla, nemmeno gli asterischi: è normale. Poi sudo la ricorda per qualche minuto.
+
+Non tutti possono usare sudo: lo decide un file di configurazione, `/etc/sudoers`. Nel computer del corso possono farlo gli utenti del gruppo `sudo`, come lo studente.
+
+<Callout tipo="attenzione">
+Con sudo non ci sono reti di sicurezza: un `sudo rm -r` sbagliato può cancellare il sistema. Prima di premere Invio su un comando con sudo, rileggilo.
+</Callout>
+
+Prova: confronta `whoami` e `sudo whoami`, poi leggi `/etc/passwd` e prova a leggere `/etc/shadow` con e senza sudo.
+
+<Terminale />
+
+## Errori comuni
+
+**`Permission denied`**. Il tuo utente non ha il permesso di fare quell'operazione. Chiediti se è giusto farla: se sì, e riguarda il sistema, probabilmente serve sudo.
+
+**`sudo: cd: command not found`**. `cd` non è un programma ma un comando interno della shell: sudo non lo trova. sudo funziona con i programmi, come `ls`, `cat` o `apt`.
+
+**`studente is not in the sudoers file`**. Su un altro computer potresti trovare questo messaggio: il tuo utente non è autorizzato a usare sudo, e serve l'amministratore.
+
+## In breve
+
+- Ogni **utente** ha un nome, un numero (UID), una cartella personale e una shell; sono elencati in `/etc/passwd`.
+- Un **gruppo** riunisce più utenti per dar loro gli stessi permessi; `id` mostra utente e gruppi.
+- **root** (UID 0) è l'amministratore: supera ogni controllo dei permessi.
+- **sudo** esegue un singolo comando come root, chiedendo la tua password.

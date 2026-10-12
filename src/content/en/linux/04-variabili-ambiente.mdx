@@ -1,0 +1,110 @@
+---
+id: variabili-ambiente
+titolo: Variables and the environment
+durata: 8
+tipo: tecnica
+concetti_richiesti: [shell, processo, programma, comando, cartella-personale, cartella-corrente]
+concetti_introdotti: [variabile, variabile-ambiente, path]
+fonti:
+  - titolo: "Linux man-pages – environ(7)"
+    url: https://man7.org/linux/man-pages/man7/environ.7.html
+  - titolo: "Linux man-pages – bash(1) (Parameters, Shell Variables)"
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+  - titolo: "Linux man-pages – printenv(1)"
+    url: https://man7.org/linux/man-pages/man1/printenv.1.html
+verificata_il: "2026-10-12"
+---
+
+## Why you need it
+
+Applications need information that changes from one computer to another: the database address, a password, the language. Instead of writing it into the code, it's passed through **environment variables**. With Docker it's the standard way to configure a container: the `-e` option of `docker run`, which you'll use in World 1, sets exactly an environment variable.
+
+## Shell variables
+
+A <Termine id="variabile">variable</Termine> is a name associated with a value. In the shell you create one by writing the name, an equals sign and the value, **with no spaces**:
+
+```
+CITTA=Roma
+```
+
+To use its value you write the name preceded by `$`. The shell replaces `$CITTA` with its value before running the command:
+
+```
+echo "Abito a $CITTA"
+```
+
+```
+Abito a Roma
+```
+
+By convention environment variable names are uppercase. Case matters: `$CITTA` and `$citta` are two different variables.
+
+## The environment
+
+Every process carries a set of variables with it: its <Termine id="variabile-ambiente">environment</Termine>. When a program starts another one, it passes it a copy of its own environment. That's how settings reach programs.
+
+A variable created with `NAME=value`, though, stays in the shell: the programs you start don't see it. To put it in the environment you use `export`:
+
+```
+export CITTA=Roma
+```
+
+<Analogia>
+A shell variable is a note you keep for yourself in your notebook. An environment variable is a note you photocopy and hand to anyone you send to do a job for you: every program started receives its own copy.
+</Analogia>
+
+Useful commands:
+
+| Command | What it does |
+|---|---|
+| `env` or `printenv` | Lists all environment variables. |
+| `printenv CITTA` | Shows the value of an environment variable. |
+| `echo $CITTA` | Shows the value of a variable, environment or shell. |
+| `unset CITTA` | Deletes the variable. |
+
+## Ready-made variables
+
+Some variables are set when you log in. The `environ` manual page describes their meaning:
+
+| Variable | Meaning |
+|---|---|
+| `HOME` | The home folder. It's the value used by `cd` with no arguments and by the `~` symbol. |
+| `USER` | The user's name. |
+| `SHELL` | The user's shell. |
+| `PWD` | The current folder. |
+| `PATH` | Where to look for programs (see below). |
+
+## PATH: where the shell looks for programs
+
+When you type `ls`, how does the shell know where the `ls` program is? It looks at the <Termine id="path">PATH</Termine> variable: a list of folders separated by colons, which the shell checks in order until it finds a program with that name.
+
+```
+echo $PATH
+```
+
+```
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+```
+
+If a program is in a folder that isn't in the PATH, the shell doesn't find it and answers `command not found`, even though the program exists. It's one of the most common reasons for that error after installing something by hand.
+
+Try creating variables, exporting them and comparing `echo` and `printenv`.
+
+<Terminale />
+
+## Common errors
+
+**`CITTA: command not found`** after typing `CITTA = Roma`. There are spaces around the equals sign: the shell read `CITTA` as a command. You write `CITTA=Roma`, all together.
+
+**`echo $CITTA` prints an empty line**. The variable doesn't exist (or is written with different case). A variable that doesn't exist is worth "nothing", with no error.
+
+**`printenv CITTA` prints nothing, but `echo $CITTA` does**. The variable only exists in the shell: the `export` is missing.
+
+**Values with spaces**. `MESSAGGIO=Ciao a tutti` doesn't work as you'd expect: you need quotes, `MESSAGGIO="Ciao a tutti"`.
+
+## In short
+
+- A **variable** is created with `NAME=value` (no spaces) and used with `$NAME`.
+- The **environment** is the set of variables every process passes to the programs it starts; you add a variable to it with `export`.
+- `env` and `printenv` show the environment; `unset` deletes a variable.
+- **PATH** lists the folders where the shell looks for programs.

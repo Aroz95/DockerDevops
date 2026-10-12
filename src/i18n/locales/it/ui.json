@@ -267,7 +267,10 @@
       "helpIntro": "Benvenuto nel terminale simulato! Scrivi un comando e premi Invio. Con help vedi i comandi disponibili; con nome-comando --help scopri come si usa (per esempio: ls --help).",
       "helpFooter": "Il simulatore riproduce i comandi reali in versione ridotta: per tutte le opzioni consulta la documentazione ufficiale.",
       "manReduced": "Questa è una versione ridotta del manuale di {{command}}. Quella completa è su man7.org (in inglese).",
-      "promptAnsweredNo": "Qui il computer aspetterebbe la tua risposta: «y» (sì) per cancellare, «n» (no) per lasciare il file. Il simulatore risponde sempre «no», quindi non è stato cancellato nulla."
+      "promptAnsweredNo": "Qui il computer aspetterebbe la tua risposta: «y» (sì) per cancellare, «n» (no) per lasciare il file. Il simulatore risponde sempre «no», quindi non è stato cancellato nulla.",
+      "sudoPassword": "Qui sudo chiede la TUA password (non quella di root), per essere sicuro che sia davvero tu. Mentre la scrivi non compare nulla, nemmeno gli asterischi. Il simulatore salta questo passaggio; sudo poi la ricorda per qualche minuto.",
+      "subshell": "Qui si aprirebbe una nuova shell dentro quella attuale. Il simulatore non la apre: usa bash nome-script.sh per eseguire uno script.",
+      "shellProtected": "Questo è il processo della tua shell: una shell interattiva ignora il segnale TERM. Con kill -9 chiuderesti il terminale stesso, quindi il simulatore non lo fa."
     }
   },
   "update": {

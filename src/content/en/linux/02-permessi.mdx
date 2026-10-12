@@ -1,0 +1,130 @@
+---
+id: permessi
+titolo: File permissions
+durata: 10
+tipo: tecnica
+concetti_richiesti: [utente, gruppo, root, file, cartella, opzione, sudo]
+concetti_introdotti: [permessi, script]
+fonti:
+  - titolo: "Linux man-pages – chmod(1)"
+    url: https://man7.org/linux/man-pages/man1/chmod.1.html
+  - titolo: "Linux man-pages – ls(1)"
+    url: https://man7.org/linux/man-pages/man1/ls.1.html
+  - titolo: "Linux man-pages – bash(1)"
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+verificata_il: "2026-10-12"
+---
+
+## Why you need it
+
+Every file on Linux says **who** can do **what** with it. When a script won't start, when a container can't write to a folder, when a configuration file with passwords is readable by everyone: the answer almost always lies in the permissions.
+
+## Reading permissions
+
+<Termine id="permessi">Permissions</Termine> are shown by `ls -l`, in the first column:
+
+```
+-rw-r----- 1 studente contabili 2048 Oct 12 10:30 bilancio.txt
+```
+
+Piece by piece, the first ten characters `-rw-r-----` read like this:
+
+| Piece | Value | Meaning |
+|---|---|---|
+| 1st character | `-` | The type: `-` is a file, `d` a folder. |
+| characters 2-4 | `rw-` | What the **owner** can do (here `studente`). |
+| characters 5-7 | `r--` | What the file's **group** can do (here `contabili`). |
+| characters 8-10 | `---` | What **everyone else** can do. |
+
+Each triplet uses three letters, always in this order; a dash means "no":
+
+| Letter | On a file | On a folder |
+|---|---|---|
+| `r` (*read*) | read its contents | see the list of files |
+| `w` (*write*) | modify it | create and delete files inside it |
+| `x` (*execute*) | run it as a program | enter it and go through it |
+
+So `bilancio.txt` can be read and modified by studente, only read by people in the contabili group, and nobody else can even open it.
+
+After the permissions come the file's owner (`studente`) and group (`contabili`). To decide, Linux looks at **one triplet only**: the owner's if you're the owner, otherwise the group's if you belong to it, otherwise the others'.
+
+<Analogia>
+Think of a gym locker with three different locks: one for whoever rented it, one for their team, one for everyone else. Each lock can allow looking inside (r), putting things in and taking them out (w), using what's there (x).
+</Analogia>
+
+## Changing permissions: chmod
+
+`chmod` (from *change mode*) changes permissions. Only the file's owner, or root, can do it. There are two ways to write them.
+
+**With letters.** You say *who* (`u` owner, *user*; `g` group; `o` others; `a` all), *what to do* (`+` add, `-` remove, `=` set exactly) and *which permissions*:
+
+```
+chmod u+x saluta.sh
+chmod go-r segreto.txt
+```
+
+The first adds execute permission for the owner; the second removes read permission from group and others.
+
+**With numbers.** Each triplet becomes a digit, adding `r` = 4, `w` = 2, `x` = 1:
+
+| Triplet | Sum | Digit |
+|---|---|---|
+| `rwx` | 4 + 2 + 1 | 7 |
+| `r-x` | 4 + 0 + 1 | 5 |
+| `rw-` | 4 + 2 + 0 | 6 |
+| `r--` | 4 + 0 + 0 | 4 |
+
+Three digits, one per triplet, in the order owner, group, others. The two most common cases:
+
+```
+chmod 755 saluta.sh
+chmod 644 note.txt
+```
+
+`755` is `rwxr-xr-x`: everyone can read and run it, only the owner can modify it. `644` is `rw-r--r--`: everyone reads, only the owner modifies.
+
+## Scripts and execute permission
+
+A <Termine id="script">script</Termine> is a text file containing a series of commands, to be run one after the other as if you typed them. It's the first step towards automating work, and you'll see many of them with Docker.
+
+```
+#!/bin/bash
+echo "Ciao dal mio primo script!"
+```
+
+Piece by piece: the first line, starting with `#!`, tells the system which program must run the script (here Bash). The lines after it are normal commands.
+
+To start a script from the folder it's in, you write `./` in front of its name: the dot is the current folder.
+
+```
+./saluta.sh
+```
+
+If the file doesn't have the `x` permission, the system refuses:
+
+```
+bash: ./saluta.sh: Permission denied
+```
+
+Just add it with `chmod u+x saluta.sh` (or `chmod 755 saluta.sh`) and try again. Alternatively, `bash saluta.sh` has Bash read the file: in that case read permission is enough.
+
+Try it here: look at the permissions with `ls -l`, try starting the script, fix it and try again.
+
+<Terminale file={{ "saluta.sh": "#!/bin/bash\necho \"Ciao dal mio primo script!\"\n", "segreto.txt": "password del wifi: 1234\n" }} />
+
+## Common errors
+
+**`bash: ./saluta.sh: Permission denied`**. Execute permission is missing: `chmod u+x saluta.sh`.
+
+**`chmod: changing permissions of 'file': Operation not permitted`**. You're not the file's owner: only they, or root with sudo, can change its permissions.
+
+**`chmod: invalid mode: ‘u+z’`**. The mode is written wrong: the valid letters are `r`, `w` and `x`, and numbers go from 0 to 7.
+
+**`chmod 777`** gives no errors, but it's almost always a bad idea: anyone can modify the file. If something doesn't work, look for the permission that's really missing instead of opening everything.
+
+## In short
+
+- **Permissions** are three triplets (owner, group, others) of three letters: `r` read, `w` write, `x` execute.
+- `ls -l` shows them; `chmod` changes them, with letters (`u+x`, `go-r`) or numbers (`755`, `644`).
+- A **script** is a file of commands; to start it with `./name` it needs the `x` permission.
+- Only a file's owner, or root, can change its permissions.

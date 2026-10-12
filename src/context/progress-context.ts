@@ -16,6 +16,7 @@ export interface ProgressContextValue {
   takeHint: (missionId: string) => void;
   completeMission: (missionId: string, baseXp: number) => void;
   saveDraft: (missionId: string, content: string) => void;
+  markLevelCompleted: (levelId: string) => void;
   importProgress: (progress: ProgressState) => void;
   resetProgress: () => void;
 }

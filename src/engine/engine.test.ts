@@ -97,6 +97,16 @@ describe('sblocco dei livelli', () => {
     expect(levelStatuses(levels, withMission).b).toBe('completed');
   });
 
+  it('un livello già completato resta completato anche con contenuti nuovi', () => {
+    const progress = {
+      ...emptyProgress(),
+      lessonsRead: read('a1', 'a2'),
+      levelsCompleted: { a: '2026-10-11T12:00:00.000Z' },
+    };
+    const withNewLesson = [{ ...levels[0]!, lessonIds: ['a1', 'a2', 'a3'] }, ...levels.slice(1)];
+    expect(levelStatuses(withNewLesson, progress)).toMatchObject({ a: 'completed', b: 'available' });
+  });
+
   it('un livello senza contenuti blocca quelli dopo', () => {
     const progress = { ...emptyProgress(), lessonsRead: read('a1', 'a2', 'b1', 'd1') };
     expect(levelStatuses(levels, progress).d).toBe('locked');

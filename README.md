@@ -155,9 +155,17 @@ si supera raggiungendo degli **obiettivi sullo stato finale**, non digitando un 
 
 Nei testi, `obiettivi` contiene la descrizione di ogni obiettivo (stesso ordine): si spuntano mentre lo
 studente lavora. Obiettivi disponibili: `cartella-corrente`, `esiste`, `non-esiste`, `file-contiene`,
-`comando-eseguito` (con `argomenti` e `opzioni`, dove `"a|all"` accetta `-a`, `-la` o `--all`),
-`uno-tra` (basta una delle alternative), `immagine-presente`, `immagine-assente`, `container`,
-`nessun-container` (dettagli in `src/engine/sim/goals.ts`).
+`comando-eseguito` (con `argomenti`, `opzioni`, dove `"a|all"` accetta `-a`, `-la` o `--all`, e `utente`,
+ad esempio `"root"` per un comando lanciato con sudo), `uno-tra` (basta una delle alternative),
+`permessi` (modo ottale, es. `"600"`), `eseguibile`, `proprietario`, `pacchetto-installato`,
+`pacchetto-assente`, `variabile` (con `valore` ed `esportata`), `processo-assente`,
+`immagine-presente`, `immagine-assente`, `container`, `nessun-container`
+(dettagli in `src/engine/sim/goals.ts`).
+
+In `inizio` (e nel componente `<Terminale />` delle lezioni) si possono preparare anche `permessi`
+(`{ "percorso": "755" }`), `proprietari` (`{ "percorso": "utente:gruppo" }`), `pacchetti` già installati
+e `processi` (`{ "comando": "...", "utente": "root", "cpu": 98.7, "ignoraTerm": true }`; i PID partono da
+1301). Lo studente è `studente` (gruppi `studente` e `sudo`); con `sudo` i comandi girano come `root`.
 
 Ogni missione nel terminale deve avere la sua soluzione in `src/content/terminal-missions.test.ts`:
 il test la esegue sul simulatore e controlla che gli obiettivi si raggiungano davvero.

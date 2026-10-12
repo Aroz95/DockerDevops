@@ -16,7 +16,25 @@ export type Goal =
    * - argomenti: parole che devono comparire tra gli argomenti;
    * - opzioni: opzioni da usare, scritte come "a" o "a|all": vale -a, -la (opzioni unite) oppure --all.
    */
-  | { tipo: 'comando-eseguito'; programma: string; argomenti?: string[]; opzioni?: string[] }
+  | {
+      tipo: 'comando-eseguito';
+      programma: string;
+      argomenti?: string[];
+      opzioni?: string[];
+      /** "root": il comando deve essere stato eseguito con sudo. */
+      utente?: string;
+    }
+  /** Permessi esatti di un file o cartella, in ottale: "755", "640"… */
+  | { tipo: 'permessi'; percorso: string; modo: string }
+  /** Il proprietario può eseguire il file (permesso x). */
+  | { tipo: 'eseguibile'; percorso: string }
+  | { tipo: 'proprietario'; percorso: string; utente: string }
+  | { tipo: 'pacchetto-installato'; nome: string }
+  | { tipo: 'pacchetto-assente'; nome: string }
+  /** Una variabile con un certo valore; con esportata: true deve far parte dell'ambiente. */
+  | { tipo: 'variabile'; nome: string; valore?: string; esportata?: boolean }
+  /** Nessun processo il cui comando contiene questo testo. */
+  | { tipo: 'processo-assente'; comando: string }
   /** Basta raggiungere uno degli obiettivi elencati (più strade corrette). */
   | { tipo: 'uno-tra'; obiettivi: Goal[] }
   | { tipo: 'immagine-presente'; immagine: string }
@@ -63,12 +81,35 @@ export function checkGoal(goal: Goal, machine: Machine): boolean {
     }
     case 'comando-eseguito':
       return machine.executed.some(
-        ({ argv, code }) =>
+        ({ argv, code, user }) =>
           code === 0 &&
           argv[0] === goal.programma &&
+          (goal.utente === undefined || user === goal.utente) &&
           (goal.argomenti ?? []).every((wanted) => argv.slice(1).includes(wanted)) &&
           (goal.opzioni ?? []).every((wanted) => hasOption(argv.slice(1), wanted)),
       );
+    case 'permessi': {
+      const node = machine.fs.get(resolvePath(HOME, goal.percorso));
+      return Boolean(node) && ((node?.mode ?? 0) & 0o7777) === parseInt(goal.modo, 8);
+    }
+    case 'eseguibile': {
+      const node = machine.fs.get(resolvePath(HOME, goal.percorso));
+      return node?.type === 'file' && (node.mode & 0o100) !== 0;
+    }
+    case 'proprietario':
+      return machine.fs.get(resolvePath(HOME, goal.percorso))?.owner === goal.utente;
+    case 'pacchetto-installato':
+      return machine.packages.has(goal.nome);
+    case 'pacchetto-assente':
+      return !machine.packages.has(goal.nome);
+    case 'variabile': {
+      const value = machine.getVar(goal.nome);
+      if (value === undefined) return false;
+      if (goal.valore !== undefined && value !== goal.valore) return false;
+      return !goal.esportata || machine.exported.has(goal.nome);
+    }
+    case 'processo-assente':
+      return !machine.processes.some((p) => p.command.includes(goal.comando));
     case 'uno-tra':
       return goal.obiettivi.some((alternative) => checkGoal(alternative, machine));
     case 'immagine-presente':

@@ -18,6 +18,12 @@ const SOLUTIONS: Record<string, string[]> = {
     'rm scrivania/vecchio.tmp',
   ],
   scorciatoie: ['cd progetto-docker-del-corso/esercizi', 'history'],
+  'chi-comanda': ['id', 'cat /etc/shadow', 'sudo whoami', 'sudo cat /etc/shadow'],
+  'primo-script': ['./saluta.sh', 'chmod u+x saluta.sh', './saluta.sh', 'chmod 600 segreto.txt'],
+  'installa-tree': ['tree', 'apt update', 'sudo apt update', 'sudo apt install tree', 'tree'],
+  'crea-variabile': ['COLORE=blu', 'printenv COLORE', 'export COLORE', 'printenv COLORE'],
+  'caccia-agli-errori': ['grep ERRORE registro.log > errori.txt', 'wc -l errori.txt'],
+  'ferma-il-ribelle': ['ps aux', 'kill 1301', 'kill -9 1301'],
 };
 
 const terminalMissions = Object.values(getMissionData().logic)

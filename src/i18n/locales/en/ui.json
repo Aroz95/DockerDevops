@@ -267,7 +267,10 @@
       "helpIntro": "Welcome to the simulated terminal! Type a command and press Enter. Type help to see the available commands; type command-name --help to learn how to use it (for example: ls --help).",
       "helpFooter": "The simulator reproduces real commands in a reduced version: for all the options check the official documentation.",
       "manReduced": "This is a reduced version of the {{command}} manual. The full one is on man7.org.",
-      "promptAnsweredNo": "Here the computer would wait for your answer: “y” (yes) to delete, “n” (no) to keep the file. The simulator always answers “no”, so nothing was deleted."
+      "promptAnsweredNo": "Here the computer would wait for your answer: “y” (yes) to delete, “n” (no) to keep the file. The simulator always answers “no”, so nothing was deleted.",
+      "sudoPassword": "Here sudo asks for YOUR password (not root's), to make sure it's really you. Nothing appears while you type it, not even asterisks. The simulator skips this step; sudo then remembers it for a few minutes.",
+      "subshell": "Here a new shell would open inside the current one. The simulator doesn't open it: use bash script-name.sh to run a script.",
+      "shellProtected": "This is your shell's process: an interactive shell ignores the TERM signal. With kill -9 you'd close the terminal itself, so the simulator doesn't do it."
     }
   },
   "update": {

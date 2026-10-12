@@ -347,3 +347,106 @@ describe('opzioni e conferme', () => {
   });
 });
 
+
+describe('Linux essenziale: utenti, permessi e sistema', () => {
+  it('lo studente non può toccare i file di root, con sudo sì', () => {
+    const { run, machine } = setup();
+    expect(run('id')).toBe('uid=1000(studente) gid=1000(studente) groups=1000(studente),27(sudo)');
+    expect(run('cat /etc/shadow')).toBe('cat: /etc/shadow: Permission denied');
+    expect(run('touch /etc/prova')).toBe("touch: cannot touch '/etc/prova': Permission denied");
+    expect(run('chmod 777 /etc/hostname')).toBe(
+      "chmod: changing permissions of '/etc/hostname': Operation not permitted",
+    );
+    const sudo = machine.exec('sudo whoami').lines;
+    expect(hints(sudo)).toContain('sudoPassword');
+    expect(text(sudo)).toContain('root');
+    expect(run('sudo cd /tmp')).toBe('sudo: cd: command not found');
+  });
+
+  it('la redirezione la fa la shell, non sudo', () => {
+    const { run } = setup();
+    expect(run('sudo echo ciao > /etc/prova')).toContain('bash: /etc/prova: Permission denied');
+  });
+
+  it('chmod numerico e simbolico, script eseguibili', () => {
+    const { run, machine } = setup({ file: { 'a.txt': 'x\n', 'ciao.sh': 'echo ciao\n' } });
+    run('chmod go-r a.txt');
+    expect(run('ls -l a.txt')).toMatch(/^-rw------- 1 studente studente 2 /);
+    expect(run('./ciao.sh')).toBe('bash: ./ciao.sh: Permission denied');
+    run('chmod 755 ciao.sh');
+    expect(run('ls -l ciao.sh')).toMatch(/^-rwxr-xr-x /);
+    expect(run('./ciao.sh')).toBe('ciao');
+    const goals: Goal[] = [
+      { tipo: 'permessi', percorso: '~/a.txt', modo: '600' },
+      { tipo: 'eseguibile', percorso: '~/ciao.sh' },
+    ];
+    expect(checkGoals(goals, machine)).toEqual([true, true]);
+  });
+
+  it('apt: senza root non si installa, con sudo sì', () => {
+    const { run, machine } = setup();
+    expect(run('tree')).toContain("Command 'tree' not found, but can be installed with:");
+    expect(run('apt update')).toContain('E: Could not open lock file /var/lib/apt/lists/lock - open (13: Permission denied)');
+    run('sudo apt update');
+    expect(run('sudo apt install tree')).toContain('Setting up tree (2.1.1-2ubuntu3) ...');
+    expect(checkGoals([{ tipo: 'pacchetto-installato', nome: 'tree' }], machine)).toEqual([true]);
+    expect(run('tree')).toContain('directories');
+  });
+
+  it('variabili di shell e d\'ambiente', () => {
+    const { run, machine } = setup();
+    run('CITTA=Roma');
+    expect(run('echo "Abito a $CITTA"')).toBe('Abito a Roma');
+    expect(run('printenv CITTA')).toBe('');
+    run('export CITTA');
+    expect(run('printenv CITTA')).toBe('Roma');
+    expect(checkGoals([{ tipo: 'variabile', nome: 'CITTA', valore: 'Roma', esportata: true }], machine)).toEqual([true]);
+    run('unset CITTA');
+    expect(run('echo $CITTA')).toBe('');
+    expect(run('CITTA = Roma')).toBe('CITTA: command not found');
+  });
+
+  it('PATH decide dove la shell cerca i programmi', () => {
+    const { run } = setup();
+    expect(run('echo $PATH')).toBe('/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin');
+    run('PATH=/nessuna');
+    expect(run('ls')).toContain('ls: command not found');
+    run('PATH=/usr/bin:/bin');
+    expect(run('ls')).toBe('');
+  });
+
+  it('separa standard output e standard error', () => {
+    const { run } = setup({ file: { 'a.txt': 'x\n' } });
+    expect(run('ls a.txt nulla 2> err.txt')).toBe('a.txt');
+    expect(run('cat err.txt')).toBe("ls: cannot access 'nulla': No such file or directory");
+    expect(run('ls a.txt nulla > tutto.txt 2>&1')).toBe('');
+    expect(run('cat tutto.txt')).toBe("a.txt\nls: cannot access 'nulla': No such file or directory");
+    expect(run('ls nulla 2> /dev/null')).toBe('');
+    expect(run('cat registro 2>/dev/null; echo fatto')).toBe('fatto');
+  });
+
+  it('espande le variabili segmento per segmento', () => {
+    const { run } = setup();
+    expect(run('cd /tmp && echo $PWD')).toBe('/tmp');
+  });
+
+  it('ps e kill: TERM, KILL e permessi', () => {
+    const { run, machine } = setup({
+      processi: [{ comando: 'python3 lento.py', cpu: 50, ignoraTerm: true }],
+    });
+    expect(run('ps aux')).toContain('python3 lento.py');
+    expect(run('kill 640')).toBe('bash: kill: (640) - Operation not permitted');
+    expect(run('kill 99999')).toBe('bash: kill: (99999) - No such process');
+    expect(hints(machine.exec('kill 1234').lines)).toContain('shellProtected');
+    run('kill 1301');
+    expect(run('ps aux')).toContain('python3 lento.py');
+    run('kill -9 1301');
+    expect(run('ps aux')).not.toContain('python3 lento.py');
+    expect(checkGoals([{ tipo: 'processo-assente', comando: 'lento' }], machine)).toEqual([true]);
+  });
+
+  it('free -h mostra la memoria', () => {
+    const { run } = setup();
+    expect(run('free -h')).toContain('available');
+  });
+});

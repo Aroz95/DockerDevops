@@ -1,0 +1,110 @@
+---
+id: variabili-ambiente
+titolo: Variabili e ambiente
+durata: 8
+tipo: tecnica
+concetti_richiesti: [shell, processo, programma, comando, cartella-personale, cartella-corrente]
+concetti_introdotti: [variabile, variabile-ambiente, path]
+fonti:
+  - titolo: "Linux man-pages – environ(7)"
+    url: https://man7.org/linux/man-pages/man7/environ.7.html
+  - titolo: "Linux man-pages – bash(1) (Parameters, Shell Variables)"
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+  - titolo: "Linux man-pages – printenv(1)"
+    url: https://man7.org/linux/man-pages/man1/printenv.1.html
+verificata_il: "2026-10-12"
+---
+
+## Perché ti serve
+
+Le applicazioni hanno bisogno di informazioni che cambiano da un computer all'altro: l'indirizzo del database, una password, la lingua. Invece di scriverle nel codice, si passano con le **variabili d'ambiente**. Con Docker è il modo standard di configurare un container: l'opzione `-e` di `docker run`, che userai nel Mondo 1, imposta proprio una variabile d'ambiente.
+
+## Le variabili della shell
+
+Una <Termine id="variabile">variabile</Termine> è un nome a cui è associato un valore. Nella shell si crea scrivendo nome, segno uguale e valore, **senza spazi**:
+
+```
+CITTA=Roma
+```
+
+Per usarne il valore si scrive il nome preceduto da `$`. La shell sostituisce `$CITTA` con il suo valore prima di eseguire il comando:
+
+```
+echo "Abito a $CITTA"
+```
+
+```
+Abito a Roma
+```
+
+Per convenzione i nomi delle variabili d'ambiente sono in maiuscolo. Le maiuscole contano: `$CITTA` e `$citta` sono due variabili diverse.
+
+## L'ambiente
+
+Ogni processo porta con sé un insieme di variabili: il suo <Termine id="variabile-ambiente">ambiente</Termine>. Quando un programma ne avvia un altro, gli passa una copia del proprio ambiente. È così che le impostazioni arrivano ai programmi.
+
+Una variabile creata con `NOME=valore` resta però nella shell: i programmi avviati non la vedono. Per metterla nell'ambiente si usa `export`:
+
+```
+export CITTA=Roma
+```
+
+<Analogia>
+Una variabile della shell è un appunto che tieni per te sul tuo quaderno. Una variabile d'ambiente è un appunto che fotocopi e dai a chiunque mandi a fare un lavoro per te: ogni programma avviato riceve la sua copia.
+</Analogia>
+
+Comandi utili:
+
+| Comando | Cosa fa |
+|---|---|
+| `env` oppure `printenv` | Elenca tutte le variabili d'ambiente. |
+| `printenv CITTA` | Mostra il valore di una variabile d'ambiente. |
+| `echo $CITTA` | Mostra il valore di una variabile, d'ambiente o della shell. |
+| `unset CITTA` | Cancella la variabile. |
+
+## Variabili già pronte
+
+Alcune variabili sono impostate al momento dell'accesso. La pagina di manuale `environ` ne descrive il significato:
+
+| Variabile | Significato |
+|---|---|
+| `HOME` | La cartella personale. È il valore che usano `cd` senza argomenti e il simbolo `~`. |
+| `USER` | Il nome dell'utente. |
+| `SHELL` | La shell dell'utente. |
+| `PWD` | La cartella corrente. |
+| `PATH` | Dove cercare i programmi (vedi sotto). |
+
+## PATH: dove la shell cerca i programmi
+
+Quando scrivi `ls`, come fa la shell a sapere dov'è il programma `ls`? Guarda la variabile <Termine id="path">PATH</Termine>: un elenco di cartelle separate da due punti, che la shell controlla in ordine finché trova un programma con quel nome.
+
+```
+echo $PATH
+```
+
+```
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+```
+
+Se un programma sta in una cartella che non è nel PATH, la shell non lo trova e risponde `command not found`, anche se il programma esiste. È uno dei motivi più comuni di quell'errore dopo aver installato qualcosa a mano.
+
+Prova a creare variabili, esportarle e confrontare `echo` e `printenv`.
+
+<Terminale />
+
+## Errori comuni
+
+**`CITTA: command not found`** dopo aver scritto `CITTA = Roma`. Ci sono spazi intorno all'uguale: la shell ha letto `CITTA` come un comando. Si scrive `CITTA=Roma`, tutto attaccato.
+
+**`echo $CITTA` stampa una riga vuota**. La variabile non esiste (o è scritta con maiuscole diverse). Una variabile che non esiste vale «niente», senza errori.
+
+**`printenv CITTA` non stampa nulla, ma `echo $CITTA` sì**. La variabile esiste solo nella shell: manca l'`export`.
+
+**Valori con spazi**. `MESSAGGIO=Ciao a tutti` non funziona come ti aspetti: servono le virgolette, `MESSAGGIO="Ciao a tutti"`.
+
+## In breve
+
+- Una **variabile** si crea con `NOME=valore` (senza spazi) e si usa con `$NOME`.
+- L'**ambiente** è l'insieme di variabili che ogni processo passa ai programmi che avvia; ci si aggiunge una variabile con `export`.
+- `env` e `printenv` mostrano l'ambiente; `unset` cancella una variabile.
+- **PATH** elenca le cartelle in cui la shell cerca i programmi.

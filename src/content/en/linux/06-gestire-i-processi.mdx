@@ -1,0 +1,115 @@
+---
+id: gestire-i-processi
+titolo: Managing processes
+durata: 8
+tipo: tecnica
+concetti_richiesti: [processo, pid, utente, root, sudo, memoria-ram, processore, pipe]
+concetti_introdotti: [segnale]
+fonti:
+  - titolo: "Linux man-pages – ps(1)"
+    url: https://man7.org/linux/man-pages/man1/ps.1.html
+  - titolo: "Linux man-pages – kill(1)"
+    url: https://man7.org/linux/man-pages/man1/kill.1.html
+  - titolo: "Linux man-pages – signal(7)"
+    url: https://man7.org/linux/man-pages/man7/signal.7.html
+  - titolo: "Linux man-pages – free(1)"
+    url: https://man7.org/linux/man-pages/man1/free.1.html
+  - titolo: "Docker Docs – docker container stop"
+    url: https://docs.docker.com/reference/cli/docker/container/stop/
+verificata_il: "2026-10-12"
+---
+
+## Why you need it
+
+In Level 1 you saw that a running program is a process, with its PID. Now you'll learn to see them and stop them. With Docker it's essential: stopping a container means, in practice, sending a signal to its main process.
+
+## Seeing processes: ps
+
+The `ps` command (from *process status*) shows a snapshot of processes. On its own it only shows those of your terminal:
+
+```
+    PID TTY          TIME CMD
+   1234 pts/0    00:00:00 bash
+   1301 pts/0    00:00:00 ps
+```
+
+To see **all** of them, for every user, with more details, you use `ps aux`:
+
+```
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.3  22132 13184 ?        Ss   09:58   0:01 /sbin/init
+root         640  0.2  2.1 2283764 86016 ?       Ssl  09:58   0:03 /usr/bin/dockerd -H fd:// ...
+studente    1234  0.0  0.1   8820  5376 pts/0    Ss   10:00   0:00 -bash
+```
+
+The most useful columns:
+
+| Column | Meaning |
+|---|---|
+| `USER` | The user the process runs as. |
+| `PID` | The process number. |
+| `%CPU` | How much of the processor it's using. |
+| `%MEM` | How much of the RAM it's using. |
+| `COMMAND` | The command that started it. |
+
+Did you notice `dockerd`? It's Docker's process, running as root: you'll meet it in the next world.
+
+With a pipe you can look for a specific process: `ps aux | grep python`.
+
+## Stopping processes: kill and signals
+
+Processes are stopped by sending them a <Termine id="segnale">signal</Termine>: a short message from the kernel telling the process to do something, for example to terminate. The `kill` command does it, followed by the PID:
+
+```
+kill 1301
+```
+
+The two most important signals:
+
+| Signal | How it's sent | What happens |
+|---|---|---|
+| `TERM` (number 15) | `kill PID` | It's a **request** to close. The process can save its work and close in an orderly way. It's the default signal. |
+| `KILL` (number 9) | `kill -9 PID` | The kernel ends the process **immediately**. The process can't ignore it, but it has no time to save either. |
+
+<Analogia>
+TERM is telling someone "please, wrap up and go home": they finish what they're doing, turn off the lights and leave. KILL is pulling the plug: everything stops instantly, even what was half done.
+</Analogia>
+
+Always use `kill PID` first, and `kill -9` only if the process doesn't respond.
+
+A normal user can only send signals to their own processes; for other users' processes you need sudo.
+
+<Callout tipo="info">
+Remember Ctrl+C? It sends a signal (INT, *interrupt*, number 2) to the program running in the terminal. When you stop a container with `docker stop`, Docker will first send TERM and, if the container doesn't stop within 10 seconds, KILL.
+</Callout>
+
+## How much memory there is: free
+
+`free -h` shows total, used and available RAM, with readable units:
+
+```
+               total        used        free      shared  buff/cache   available
+Mem:           3.8Gi       1.2Gi       1.1Gi        12Mi       1.7Gi       2.6Gi
+Swap:          2.0Gi          0B       2.0Gi
+```
+
+The column to look at is `available`: how much memory is really available for new programs. Memory used as cache (`buff/cache`) is also freed when needed.
+
+Try it: in this terminal there's a program eating the whole processor. Find it with `ps aux` and try to stop it.
+
+<Terminale processi={[{ "comando": "python3 calcolo-infinito.py", "cpu": 98.7, "mem": 1.4, "ignoraTerm": true }]} />
+
+## Common errors
+
+**`bash: kill: (1234) - No such process`**. There's no process with that PID: maybe it has already ended, or the number is wrong. Check again with `ps`.
+
+**`bash: kill: (640) - Operation not permitted`**. The process belongs to another user (here root). You need sudo, and above all you need to be sure you want to stop it.
+
+**The process doesn't stop with `kill`**. It ignored the TERM request. Wait a few seconds; if it doesn't close, use `kill -9`.
+
+## In short
+
+- `ps` shows the terminal's processes; `ps aux` all processes, with user, PID, CPU, memory and command.
+- A **signal** is a message telling a process what to do; `kill PID` sends TERM (a request to close).
+- `kill -9 PID` sends KILL: the process ends immediately, without being able to save.
+- `free -h` shows memory; the important column is `available`.

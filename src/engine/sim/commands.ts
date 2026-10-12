@@ -1,6 +1,6 @@
-import type { FsError, FsNode } from './fs';
+import { modeString, type FsError, type FsNode } from './fs';
 import type { Machine } from './machine';
-import { basename, HOSTNAME, resolvePath, USER } from './path';
+import { basename, HOSTNAME, resolvePath } from './path';
 import { fail, hint, ok, type CommandOutput, type OutputLine } from './types';
 
 /**
@@ -63,13 +63,14 @@ function badOption(
   return null;
 }
 
-const ERROR_TEXT: Record<FsError, string> = {
+export const ERROR_TEXT: Record<FsError, string> = {
   missing: 'No such file or directory',
   noParent: 'No such file or directory',
   exists: 'File exists',
   notDir: 'Not a directory',
   isDir: 'Is a directory',
   notEmpty: 'Directory not empty',
+  denied: 'Permission denied',
 };
 
 /** Testo d'uso mostrato con --help (prima riga dell'help reale). */
@@ -91,11 +92,17 @@ const USAGE: Record<string, string> = {
   tail: 'Usage: tail [OPTION]... [FILE]...\nPrint the last 10 lines of each FILE to standard output.\n\n  -n NUM   output the last NUM lines, instead of the last 10\n',
   sort: 'Usage: sort [OPTION]... [FILE]...\nWrite sorted concatenation of all FILE(s) to standard output.\n\n  -r   reverse the result of comparisons\n',
   whoami: 'Usage: whoami [OPTION]...\nPrint the user name associated with the current effective user ID.\n',
+  chmod: 'Usage: chmod [OPTION]... MODE[,MODE]... FILE...\n  or:  chmod [OPTION]... OCTAL-MODE FILE...\nChange the mode of each FILE to MODE.\n\n  -R, --recursive   change files and directories recursively\n\nEach MODE is of the form \'[ugoa]*([-+=]([rwxXst]*|[ugo]))+|[-+=][0-7]+\'.\n',
+  chown: 'Usage: chown [OPTION]... [OWNER][:[GROUP]] FILE...\nChange the owner and/or group of each FILE to OWNER and/or GROUP.\n',
+  id: 'Usage: id [OPTION]... [USER]...\nPrint user and group information for each specified USER,\nor (when USER omitted) for the current process.\n',
+  ps: 'Usage:\n ps [options]\n\n Basic options:\n  -A, -e               all processes\n  a                    all with tty, including other users\n  x                    processes without controlling ttys\n  u                    user-oriented format\n',
+  kill: 'kill: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]\n    Send a signal to a job.\n',
+  sudo: 'usage: sudo [-u user] command [arg ...]\nexecute a command as another user (by default root)\n',
+  env: 'Usage: env [OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]\nSet each NAME to VALUE in the environment and run COMMAND.\nIf no COMMAND, print the resulting environment.\n',
+  printenv: 'Usage: printenv [OPTION]... [VARIABLE]...\nPrint the values of the specified environment VARIABLE(s).\nIf no VARIABLE is specified, print name and value pairs for them all.\n',
+  free: 'Usage:\n free [options]\n\nOptions:\n -h, --human         show human-readable output\n',
+  apt: 'Usage: apt [options] command\n\nMost used commands:\n  install - install packages\n  remove - remove packages\n  update - update list of available packages\n  upgrade - upgrade the system by installing/upgrading packages\n',
 };
-
-function permissions(node: FsNode): string {
-  return node.type === 'dir' ? 'drwxr-xr-x' : '-rw-r--r--';
-}
 
 function formatDate(time: number): string {
   const date = new Date(time);
@@ -138,11 +145,10 @@ const ls: CommandFn = (m, args) => {
 
   const render = (dir: string, names: string[]) => {
     if (!longFormat) return names.length ? [names.join('  ')] : [];
-    const entries = names.map((name) => {
-      const node = name === '.' || name === '..' ? m.fs.get(resolvePath(dir, name)) : m.fs.get(resolvePath(dir, name));
-      return { name, node: node as FsNode };
-    });
+    const entries = names.map((name) => ({ name, node: m.fs.get(resolvePath(dir, name)) as FsNode }));
     const width = Math.max(1, ...entries.map((e) => shownSize(e.node).length));
+    const ownerWidth = Math.max(...entries.map((e) => e.node.owner.length));
+    const groupWidth = Math.max(...entries.map((e) => e.node.group.length));
     const total = entries.reduce(
       (sum, e) => sum + (e.node.type === 'dir' ? 4 : Math.ceil(size(e.node) / 4096) * 4),
       0,
@@ -151,18 +157,17 @@ const ls: CommandFn = (m, args) => {
       `total ${total}`,
       ...entries.map(({ name, node }) => {
         const links = node.type === 'dir' ? 2 + [...node.children.values()].filter((c) => c.type === 'dir').length : 1;
-        return `${permissions(node)} ${links} ${USER} ${USER} ${shownSize(node).padStart(width)} ${formatDate(node.mtime)} ${name}`;
+        return `${modeString(node)} ${links} ${node.owner.padEnd(ownerWidth)} ${node.group.padEnd(groupWidth)} ${shownSize(node).padStart(width)} ${formatDate(node.mtime)} ${name}`;
       }),
     ];
   };
 
-  const files = targets.filter((t) => m.fs.get(resolvePath(m.cwd, t))?.type === 'file');
-  const dirs = targets.filter((t) => m.fs.get(resolvePath(m.cwd, t))?.type === 'dir');
-  for (const target of targets) {
-    if (!m.fs.get(resolvePath(m.cwd, target))) {
-      errors.push(`ls: cannot access '${target}': No such file or directory`);
-    }
+  const found = targets.map((target) => ({ target, ...m.fs.lookup(resolvePath(m.cwd, target)) }));
+  for (const { target, error } of found) {
+    if (error) errors.push(`ls: cannot access '${target}': ${ERROR_TEXT[error]}`);
   }
+  const files = found.filter((f) => f.node?.type === 'file').map((f) => f.target);
+  const dirs = found.filter((f) => f.node?.type === 'dir');
 
   if (files.length) {
     out.push(
@@ -171,7 +176,11 @@ const ls: CommandFn = (m, args) => {
         : [files.join('  ')]),
     );
   }
-  dirs.forEach((target, index) => {
+  dirs.forEach(({ target, node }, index) => {
+    if (!node || !m.fs.can(node, 'r')) {
+      errors.push(`ls: cannot open directory '${target}': Permission denied`);
+      return;
+    }
     const path = resolvePath(m.cwd, target);
     const names = m.fs.list(path).filter((name) => showAll || !name.startsWith('.'));
     const all = showAll ? ['.', '..', ...names] : names;
@@ -199,9 +208,12 @@ const cd: CommandFn = (m, args) => {
     return ok(`${previous}\n`);
   }
   const target = resolvePath(m.cwd, arg ?? '~');
-  const node = m.fs.get(target);
-  if (!node) return fail(1, `bash: cd: ${arg}: No such file or directory`);
-  if (node.type !== 'dir') return fail(1, `bash: cd: ${arg}: Not a directory`);
+  const { node, error } = m.fs.lookup(target);
+  const shown = arg ?? target;
+  if (error) return fail(1, `bash: cd: ${shown}: ${ERROR_TEXT[error]}`);
+  if (!node) return fail(1, `bash: cd: ${shown}: No such file or directory`);
+  if (node.type !== 'dir') return fail(1, `bash: cd: ${shown}: Not a directory`);
+  if (!m.fs.can(node, 'x')) return fail(1, `bash: cd: ${shown}: Permission denied`);
   m.oldPwd = m.cwd;
   m.cwd = target;
   return ok();
@@ -239,10 +251,9 @@ const cat: CommandFn = (m, args, stdin) => {
   let stdout = '';
   const errors: string[] = [];
   for (const name of rest) {
-    const node = m.fs.get(resolvePath(m.cwd, name));
-    if (!node) errors.push(`cat: ${name}: No such file or directory`);
-    else if (node.type === 'dir') errors.push(`cat: ${name}: Is a directory`);
-    else stdout += node.content;
+    const { content, error } = m.fs.read(resolvePath(m.cwd, name));
+    if (error) errors.push(`cat: ${name}: ${ERROR_TEXT[error]}`);
+    else stdout += content ?? '';
   }
   return { stdout, extra: toErr(errors), code: errors.length ? 1 : 0 };
 };
@@ -290,7 +301,7 @@ const rm: CommandFn = (m, args) => {
     }
     const error = m.fs.remove(path, recursive);
     if (error === 'missing' && !force) errors.push(`rm: cannot remove '${name}': No such file or directory`);
-    if (error === 'isDir') errors.push(`rm: cannot remove '${name}': Is a directory`);
+    else if (error && error !== 'missing') errors.push(`rm: cannot remove '${name}': ${ERROR_TEXT[error]}`);
   }
   return { stdout: '', extra: toErr(errors), code: errors.length ? 1 : 0 };
 };
@@ -336,9 +347,13 @@ function copyOrMove(name: 'cp' | 'mv'): CommandFn {
     const errors: string[] = [];
     for (const source of sources) {
       const sourcePath = resolvePath(m.cwd, source);
-      const node = m.fs.get(sourcePath);
+      const { node, error: lookupError } = m.fs.lookup(sourcePath);
       if (!node) {
-        errors.push(`${name}: cannot stat '${source}': No such file or directory`);
+        errors.push(`${name}: cannot stat '${source}': ${ERROR_TEXT[lookupError ?? 'missing']}`);
+        continue;
+      }
+      if (name === 'cp' && node.type === 'file' && !m.fs.can(node, 'r')) {
+        errors.push(`cp: cannot open '${source}' for reading: Permission denied`);
         continue;
       }
       if (name === 'cp' && node.type === 'dir' && !recursive) {
@@ -360,12 +375,22 @@ function copyOrMove(name: 'cp' | 'mv'): CommandFn {
         prompts.push(`${name}: overwrite '${dest}'? `);
         continue;
       }
-      const error = m.fs.place(target, name === 'cp' ? m.fs.clone(node) : node);
-      if (error) {
-        errors.push(`${name}: cannot create regular file '${dest}': ${ERROR_TEXT[error]}`);
+      if (name === 'mv') {
+        // Spostare richiede di poter togliere il file dalla cartella di origine.
+        const removable = m.fs.remove(sourcePath, true);
+        if (removable) {
+          errors.push(`mv: cannot move '${source}' to '${dest}': ${ERROR_TEXT[removable]}`);
+          continue;
+        }
+        const error = m.fs.place(target, node);
+        if (error) {
+          m.fs.place(sourcePath, node); // rimette il file dov'era
+          errors.push(`mv: cannot move '${source}' to '${dest}': ${ERROR_TEXT[error]}`);
+        }
         continue;
       }
-      if (name === 'mv') m.fs.remove(sourcePath, true);
+      const error = m.fs.place(target, m.fs.clone(node));
+      if (error) errors.push(`cp: cannot create regular file '${dest}': ${ERROR_TEXT[error]}`);
     }
     return {
       stdout: '',
@@ -385,10 +410,9 @@ function readInputs(m: Machine, files: string[], stdin: string | null, command: 
   const texts: { name: string; text: string }[] = [];
   const errors: string[] = [];
   for (const file of files) {
-    const node = m.fs.get(resolvePath(m.cwd, file));
-    if (!node) errors.push(`${command}: ${file}: No such file or directory`);
-    else if (node.type === 'dir') errors.push(`${command}: ${file}: Is a directory`);
-    else texts.push({ name: file, text: node.content });
+    const { content, error } = m.fs.read(resolvePath(m.cwd, file));
+    if (error) errors.push(`${command}: ${file}: ${ERROR_TEXT[error]}`);
+    else texts.push({ name: file, text: content ?? '' });
   }
   return { texts, errors };
 }
@@ -484,7 +508,9 @@ const sort: CommandFn = (m, args, stdin) => {
 
 const HELP_COMMANDS = [
   'pwd', 'ls', 'cd', 'mkdir', 'touch', 'cat', 'echo', 'cp', 'mv', 'rm', 'rmdir',
-  'grep', 'wc', 'head', 'tail', 'sort', 'whoami', 'hostname', 'history', 'clear', 'docker',
+  'grep', 'wc', 'head', 'tail', 'sort', 'whoami', 'id', 'hostname', 'history', 'clear',
+  'chmod', 'chown', 'sudo', 'apt', 'env', 'printenv', 'export', 'unset', 'ps', 'kill', 'free',
+  'docker',
 ];
 
 export const COMMANDS: Record<string, CommandFn> = {
@@ -504,7 +530,7 @@ export const COMMANDS: Record<string, CommandFn> = {
   head: headOrTail('head'),
   tail: headOrTail('tail'),
   sort,
-  whoami: () => ok(`${USER}\n`),
+  whoami: (m) => ok(`${m.fs.actor.user}\n`),
   hostname: () => ok(`${HOSTNAME}\n`),
   date: (m) => ok(`${new Date(m.now()).toUTCString().replace(/^(\w+), (\d+) (\w+) (\d+) ([\d:]+) GMT$/, '$1 $3 $2 $5 UTC $4')}\n`),
   history: (m) =>

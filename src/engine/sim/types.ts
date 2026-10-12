@@ -16,7 +16,10 @@ export type HintKey =
   | 'helpIntro'
   | 'helpFooter'
   | 'manReduced'
-  | 'promptAnsweredNo';
+  | 'promptAnsweredNo'
+  | 'sudoPassword'
+  | 'subshell'
+  | 'shellProtected';
 
 export type OutputLine =
   | { kind: 'out' | 'err'; text: string }
@@ -28,6 +31,8 @@ export type OutputLine =
 export interface ExecutedCommand {
   argv: string[];
   code: number;
+  /** Utente con cui è stato eseguito: "root" se lanciato con sudo. */
+  user: string;
 }
 
 export interface CommandOutput {

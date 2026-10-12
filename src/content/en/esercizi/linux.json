@@ -1,0 +1,221 @@
+{
+  "chi-comanda": {
+    "titolo": "Who's in charge here?",
+    "domanda": "Find out who you are and which groups you belong to. Then use sudo to act as root: ask who you are and read the file of encrypted passwords.",
+    "obiettivi": [
+      "Show user and groups with id",
+      "Run whoami as root",
+      "Read /etc/shadow as root"
+    ],
+    "suggerimenti": [
+      "The first command has two letters. For the other two you need to write sudo in front of the command.",
+      "Try cat /etc/shadow without sudo first: you'll see permission denied. Then add sudo in front.",
+      "Run id, then sudo whoami (it answers root), then sudo cat /etc/shadow."
+    ],
+    "spiegazione": "With sudo the command runs as root, which passes every permission check: that's why sudo whoami answers root and sudo cat /etc/shadow can read a file forbidden to other users."
+  },
+  "porta-chiusa": {
+    "titolo": "Permission denied",
+    "domanda": "You type touch /etc/prova and get: touch: cannot touch '/etc/prova': Permission denied. Why?",
+    "opzioni": {
+      "di-root": "The /etc folder belongs to root and a normal user can't create files in it.",
+      "non-esiste": "The /etc folder doesn't exist.",
+      "disco-pieno": "The disk is full.",
+      "nome-sbagliato": "The name “prova” isn't allowed on Linux."
+    },
+    "feedback": {
+      "non-esiste": "If /etc didn't exist the message would say No such file or directory.",
+      "disco-pieno": "With a full disk the message would be No space left on device.",
+      "nome-sbagliato": "“prova” is a valid name: the problem is where you're trying to create it."
+    },
+    "suggerimenti": [
+      "Permission denied means you're not allowed.",
+      "Who owns system folders like /etc?",
+      "/etc belongs to root: the student can't create files in it. With sudo touch /etc/prova it would work."
+    ],
+    "spiegazione": "System folders belong to root. A normal user can read them but not change them: it's a protection. To change something there you need sudo."
+  },
+  "leggi-permessi": {
+    "titolo": "Who can read it?",
+    "domanda": "A file has these permissions: -rw-r----- 1 studente contabili ... bilancio.txt. Who can read it?",
+    "opzioni": {
+      "proprietario-gruppo": "The student (owner) and anyone in the contabili group.",
+      "tutti": "Every user on the computer.",
+      "solo-proprietario": "Only the student.",
+      "nessuno": "Nobody, because the x permission is missing."
+    },
+    "feedback": {
+      "tutti": "The last triplet, the others', is ---: anyone who isn't the owner or in the group can't do anything.",
+      "solo-proprietario": "The group triplet is r--: people in the contabili group can read.",
+      "nessuno": "x is for running a program, not for reading a file."
+    },
+    "suggerimenti": [
+      "Split the permissions into three triplets after the first character: rw- / r-- / ---.",
+      "The first triplet is the owner's, the second the group's, the third the others'. Where does the r appear?",
+      "The r is in the owner's triplet and the group's: the student and the contabili group can read."
+    ],
+    "spiegazione": "rw- (owner: reads and writes), r-- (group: reads), --- (others: nothing). So the owner and the contabili group can read."
+  },
+  "numero-permessi": {
+    "titolo": "Permissions as numbers",
+    "domanda": "Complete with the three digits.",
+    "modello": "The permissions rwxr-xr-x written as numbers are ___ .",
+    "feedbackSpazi": ["Work out one digit per triplet: r = 4, w = 2, x = 1."],
+    "suggerimenti": [
+      "Split into three triplets: rwx, r-x, r-x.",
+      "rwx = 4 + 2 + 1. r-x = 4 + 0 + 1.",
+      "The answer is 755."
+    ],
+    "spiegazione": "rwx = 7, r-x = 5, r-x = 5: 755. It's the typical permission of programs and scripts: everyone can run them, only the owner modifies them."
+  },
+  "primo-script": {
+    "titolo": "Your first script",
+    "domanda": "Your folder has the saluta.sh script, but it won't start. Make it executable and run it. Then protect segreto.txt so only you can read and modify it.",
+    "obiettivi": [
+      "Give saluta.sh execute permission",
+      "Run the script with ./saluta.sh",
+      "Set segreto.txt's permissions to rw------- (600)"
+    ],
+    "suggerimenti": [
+      "Look at the permissions with ls -l. To change them you need chmod.",
+      "chmod u+x saluta.sh adds execute for the owner. For segreto.txt: rw- = 6, --- = 0.",
+      "Type chmod u+x saluta.sh, then ./saluta.sh, then chmod 600 segreto.txt (or chmod go-r segreto.txt)."
+    ],
+    "spiegazione": "A script needs the x permission to be started with ./. With 600 (rw-------) a file can be read and modified only by its owner: it's the right permission for files with passwords and keys."
+  },
+  "installa-tree": {
+    "titolo": "Install your first program",
+    "domanda": "The tree command isn't installed. Update the package list, install it and use it to see the structure of your folders.",
+    "obiettivi": [
+      "Update the package list (as root)",
+      "Install the tree package",
+      "Use the tree command"
+    ],
+    "suggerimenti": [
+      "Installing programs is an administrator operation: you need sudo.",
+      "The commands are sudo apt update and sudo apt install followed by the package name.",
+      "Type sudo apt update, then sudo apt install tree, then tree."
+    ],
+    "spiegazione": "apt update refreshes the list, apt install downloads and installs the package from the repository. Both need sudo; using the installed program doesn't."
+  },
+  "ordine-apt": {
+    "titolo": "In the right order",
+    "domanda": "Put in order the steps to install and use a new program.",
+    "opzioni": {
+      "aggiorna": "sudo apt update",
+      "installa": "sudo apt install tree",
+      "usa": "tree"
+    },
+    "suggerimenti": [
+      "Before choosing from the catalog, it's worth having an up-to-date catalog.",
+      "A program can only be used after it's installed.",
+      "The order is: sudo apt update, sudo apt install tree, tree."
+    ],
+    "spiegazione": "First you refresh the package list, then you install, finally you use the program. You'll find the same order again in Dockerfiles."
+  },
+  "crea-variabile": {
+    "titolo": "A variable for everyone",
+    "domanda": "Create a COLORE variable with the value blu, put it in the environment and check it with printenv.",
+    "obiettivi": [
+      "The environment variable COLORE is blu",
+      "Show its value with printenv COLORE"
+    ],
+    "suggerimenti": [
+      "Remember: name, equals and value, all together. To put it in the environment you need one more command.",
+      "export COLORE=blu creates the variable and exports it at the same time.",
+      "Type export COLORE=blu and then printenv COLORE (it must print blu)."
+    ],
+    "spiegazione": "export puts the variable in the environment, so programs started by the shell, such as printenv, receive it too. Without export, printenv wouldn't have seen it."
+  },
+  "cosa-e-path": {
+    "titolo": "What is PATH for?",
+    "domanda": "What does the PATH variable contain?",
+    "opzioni": {
+      "cartelle-programmi": "The list of folders where the shell looks for programs.",
+      "cartella-corrente": "The path of the folder you're in.",
+      "cronologia": "The list of commands already run.",
+      "password": "The user's password."
+    },
+    "feedback": {
+      "cartella-corrente": "The current folder is in PWD, not in PATH.",
+      "cronologia": "History is shown with history and saved in .bash_history.",
+      "password": "Passwords are never kept in system environment variables."
+    },
+    "suggerimenti": [
+      "Try echo $PATH in the lesson's terminal: what do you see?",
+      "They're folder paths separated by colons.",
+      "PATH contains the folders where the shell looks for programs when you type a command."
+    ],
+    "spiegazione": "When you type a command, the shell looks for it in the folders listed in PATH, in order. If the program is somewhere else, you get command not found."
+  },
+  "caccia-agli-errori": {
+    "titolo": "Error hunt",
+    "domanda": "An application's log contains INFO and ERRORE (error) messages. Save only the error lines in a file errori.txt and count how many there are.",
+    "obiettivi": [
+      "Save the lines with ERRORE to the file ~/errori.txt",
+      "Count the lines with wc -l"
+    ],
+    "suggerimenti": [
+      "grep keeps only the lines containing some text. With > you send the result to a file.",
+      "grep ERRORE registro.log > errori.txt saves the errors. To count them use wc -l on the file, or a pipe.",
+      "Type grep ERRORE registro.log > errori.txt and then wc -l errori.txt (or grep ERRORE registro.log | wc -l)."
+    ],
+    "spiegazione": "grep filters lines, > saves output to a file, wc -l counts lines. By connecting simple programs with redirection and pipes you do complex analyses: that's how container logs are read."
+  },
+  "dove-va-errore": {
+    "titolo": "Two channels",
+    "domanda": "You run ls documenti nulla > elenco.txt. The documenti folder exists, nulla doesn't. Where does the error message about nulla appear?",
+    "opzioni": {
+      "schermo": "On the screen, because > only redirects standard output.",
+      "file": "In the elenco.txt file, together with the listing.",
+      "nessuno": "Nowhere: it's thrown away.",
+      "entrambi": "Both on the screen and in the file."
+    },
+    "feedback": {
+      "file": "> only concerns standard output: errors travel on standard error.",
+      "nessuno": "To throw them away you'd need 2> /dev/null.",
+      "entrambi": "Each message goes on one channel only: the error is on standard error."
+    },
+    "suggerimenti": [
+      "Every program has two separate outputs: one for results and one for errors.",
+      "> only redirects one of the two. Which one?",
+      "On the screen: > only sends standard output to the file, while the error travels on standard error."
+    ],
+    "spiegazione": "Standard output (the listing) ends up in the file, standard error (the message about nulla) stays on the screen. To send errors to the file too you add 2>&1."
+  },
+  "ferma-il-ribelle": {
+    "titolo": "Stop the rogue process",
+    "domanda": "The computer is very slow: a program is using almost the whole processor. Find it and stop it.",
+    "obiettivi": [
+      "List the processes with ps",
+      "The calcolo-infinito process must no longer be running"
+    ],
+    "suggerimenti": [
+      "ps aux shows all processes with the %CPU column: look for the one with the highest value and note its PID.",
+      "Try kill followed by the PID first. If the process is still there, check with ps aux and use the stronger signal.",
+      "With ps aux you'll find python3 calcolo-infinito.py and its PID. kill PID isn't enough, because it ignores TERM: you need kill -9 PID."
+    ],
+    "spiegazione": "kill sends TERM, a request to close that this process ignores. kill -9 sends KILL, which the kernel enforces anyway: it's the remedy to use only when the polite request doesn't work."
+  },
+  "segnale-giusto": {
+    "titolo": "The right signal",
+    "domanda": "You need to stop a program that is saving data. What's the right way to proceed?",
+    "opzioni": {
+      "prima-term": "First kill PID (TERM), and kill -9 only if it doesn't close.",
+      "subito-kill": "Straight away kill -9 PID, it's faster.",
+      "ctrl-c": "Press Ctrl+C in any terminal.",
+      "riavvia": "Restart the computer."
+    },
+    "feedback": {
+      "subito-kill": "KILL doesn't give the program time to finish saving: you risk half-written data.",
+      "ctrl-c": "Ctrl+C only sends a signal to the foreground program in that terminal.",
+      "riavvia": "Restarting stops everything, even what was working: it's far more drastic than needed."
+    },
+    "suggerimenti": [
+      "Think of the difference between asking to close and pulling the plug.",
+      "Which signal lets the program finish what it's doing?",
+      "First kill PID, which sends TERM and lets it close in an orderly way; kill -9 only if it doesn't respond."
+    ],
+    "spiegazione": "TERM asks the process to close and gives it time to save. KILL stops it instantly. Docker does the same with docker stop: first TERM, then KILL after 10 seconds."
+  }
+}

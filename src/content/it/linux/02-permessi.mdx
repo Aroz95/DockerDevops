@@ -1,0 +1,130 @@
+---
+id: permessi
+titolo: I permessi dei file
+durata: 10
+tipo: tecnica
+concetti_richiesti: [utente, gruppo, root, file, cartella, opzione, sudo]
+concetti_introdotti: [permessi, script]
+fonti:
+  - titolo: "Linux man-pages – chmod(1)"
+    url: https://man7.org/linux/man-pages/man1/chmod.1.html
+  - titolo: "Linux man-pages – ls(1)"
+    url: https://man7.org/linux/man-pages/man1/ls.1.html
+  - titolo: "Linux man-pages – bash(1)"
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+verificata_il: "2026-10-12"
+---
+
+## Perché ti serve
+
+Ogni file su Linux dice **chi** può fare **cosa** con lui. Quando uno script non parte, quando un container non riesce a scrivere in una cartella, quando un file di configurazione con delle password è leggibile da tutti: la risposta sta quasi sempre nei permessi.
+
+## Leggere i permessi
+
+I <Termine id="permessi">permessi</Termine> si vedono con `ls -l`, nella prima colonna:
+
+```
+-rw-r----- 1 studente contabili 2048 Oct 12 10:30 bilancio.txt
+```
+
+Riga per riga, i primi dieci caratteri `-rw-r-----` si leggono così:
+
+| Pezzo | Valore | Significato |
+|---|---|---|
+| 1° carattere | `-` | Il tipo: `-` è un file, `d` una cartella. |
+| caratteri 2-4 | `rw-` | Cosa può fare il **proprietario** (qui `studente`). |
+| caratteri 5-7 | `r--` | Cosa può fare il **gruppo** del file (qui `contabili`). |
+| caratteri 8-10 | `---` | Cosa possono fare **tutti gli altri**. |
+
+Ogni terna usa tre lettere, sempre in questo ordine; un trattino vuol dire «no»:
+
+| Lettera | Su un file | Su una cartella |
+|---|---|---|
+| `r` (*read*) | leggere il contenuto | vedere l'elenco dei file |
+| `w` (*write*) | modificarlo | creare e cancellare file al suo interno |
+| `x` (*execute*) | eseguirlo come programma | entrarci e attraversarla |
+
+Quindi `bilancio.txt` può essere letto e modificato da studente, solo letto da chi è nel gruppo contabili, e nessun altro può nemmeno aprirlo.
+
+Dopo i permessi vengono il proprietario (`studente`) e il gruppo (`contabili`) del file. Per decidere, Linux guarda **una sola terna**: quella del proprietario se sei il proprietario, altrimenti quella del gruppo se ne fai parte, altrimenti quella degli altri.
+
+<Analogia>
+Pensa a un armadietto in palestra con tre serrature diverse: una per chi lo ha affittato, una per la sua squadra, una per tutti gli altri. Ogni serratura può permettere di guardare dentro (r), mettere e togliere cose (w), usare quello che c'è (x).
+</Analogia>
+
+## Cambiare i permessi: chmod
+
+`chmod` (da *change mode*) cambia i permessi. Lo può fare solo il proprietario del file, oppure root. Ci sono due modi di scriverli.
+
+**Con le lettere.** Si indica *a chi* (`u` proprietario, *user*; `g` gruppo; `o` altri, *others*; `a` tutti), *cosa fare* (`+` aggiungi, `-` togli, `=` imposta esattamente) e *quali permessi*:
+
+```
+chmod u+x saluta.sh
+chmod go-r segreto.txt
+```
+
+Il primo aggiunge al proprietario il permesso di esecuzione; il secondo toglie a gruppo e altri il permesso di lettura.
+
+**Con i numeri.** Ogni terna diventa una cifra, sommando `r` = 4, `w` = 2, `x` = 1:
+
+| Terna | Calcolo | Cifra |
+|---|---|---|
+| `rwx` | 4 + 2 + 1 | 7 |
+| `r-x` | 4 + 0 + 1 | 5 |
+| `rw-` | 4 + 2 + 0 | 6 |
+| `r--` | 4 + 0 + 0 | 4 |
+
+Tre cifre, una per terna, nell'ordine proprietario, gruppo, altri. I due casi più comuni:
+
+```
+chmod 755 saluta.sh
+chmod 644 note.txt
+```
+
+`755` è `rwxr-xr-x`: tutti possono leggere ed eseguire, solo il proprietario modificare. `644` è `rw-r--r--`: tutti leggono, solo il proprietario modifica.
+
+## Gli script e il permesso di esecuzione
+
+Uno <Termine id="script">script</Termine> è un file di testo che contiene una serie di comandi, da eseguire uno dopo l'altro come se li scrivessi tu. È il primo passo per automatizzare il lavoro, e ne vedrai molti con Docker.
+
+```
+#!/bin/bash
+echo "Ciao dal mio primo script!"
+```
+
+Riga per riga: la prima riga, che inizia con `#!`, dice al sistema quale programma deve eseguire lo script (qui Bash). Le righe dopo sono comandi normali.
+
+Per avviare uno script dalla cartella in cui si trova si scrive `./` davanti al nome: il punto è la cartella corrente.
+
+```
+./saluta.sh
+```
+
+Se il file non ha il permesso `x`, il sistema rifiuta:
+
+```
+bash: ./saluta.sh: Permission denied
+```
+
+Basta aggiungerlo con `chmod u+x saluta.sh` (o `chmod 755 saluta.sh`) e riprovare. In alternativa, `bash saluta.sh` fa leggere il file a Bash: in quel caso basta il permesso di lettura.
+
+Prova qui: guarda i permessi con `ls -l`, prova ad avviare lo script, sistemalo e riprova.
+
+<Terminale file={{ "saluta.sh": "#!/bin/bash\necho \"Ciao dal mio primo script!\"\n", "segreto.txt": "password del wifi: 1234\n" }} />
+
+## Errori comuni
+
+**`bash: ./saluta.sh: Permission denied`**. Manca il permesso di esecuzione: `chmod u+x saluta.sh`.
+
+**`chmod: changing permissions of 'file': Operation not permitted`**. Non sei il proprietario del file: solo lui, o root con sudo, può cambiarne i permessi.
+
+**`chmod: invalid mode: ‘u+z’`**. Il modo è scritto male: le lettere valide sono `r`, `w` e `x`, e i numeri vanno da 0 a 7.
+
+**`chmod 777`** non dà errori, ma è quasi sempre una cattiva idea: chiunque può modificare il file. Se qualcosa non funziona, cerca il permesso che manca davvero invece di aprire tutto.
+
+## In breve
+
+- I **permessi** sono tre terne (proprietario, gruppo, altri) di tre lettere: `r` leggere, `w` scrivere, `x` eseguire.
+- `ls -l` li mostra; `chmod` li cambia, con lettere (`u+x`, `go-r`) o numeri (`755`, `644`).
+- Uno **script** è un file di comandi; per avviarlo con `./nome` serve il permesso `x`.
+- Solo il proprietario di un file, o root, può cambiarne i permessi.

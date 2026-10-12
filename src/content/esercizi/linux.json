@@ -1,0 +1,238 @@
+{
+  "missioni": [
+    {
+      "id": "chi-comanda",
+      "tipo": "terminale",
+      "dopoLezione": "utenti-e-root",
+      "obiettivi": [
+        {
+          "tipo": "comando-eseguito",
+          "programma": "id"
+        },
+        {
+          "tipo": "comando-eseguito",
+          "programma": "whoami",
+          "utente": "root"
+        },
+        {
+          "tipo": "comando-eseguito",
+          "programma": "cat",
+          "argomenti": [
+            "/etc/shadow"
+          ],
+          "utente": "root"
+        }
+      ]
+    },
+    {
+      "id": "porta-chiusa",
+      "tipo": "scelta",
+      "dopoLezione": "utenti-e-root",
+      "opzioni": [
+        "di-root",
+        "non-esiste",
+        "disco-pieno",
+        "nome-sbagliato"
+      ],
+      "corretta": "di-root"
+    },
+    {
+      "id": "leggi-permessi",
+      "tipo": "scelta",
+      "dopoLezione": "permessi",
+      "opzioni": [
+        "proprietario-gruppo",
+        "tutti",
+        "solo-proprietario",
+        "nessuno"
+      ],
+      "corretta": "proprietario-gruppo"
+    },
+    {
+      "id": "numero-permessi",
+      "tipo": "completa",
+      "dopoLezione": "permessi",
+      "risposte": [
+        [
+          "755"
+        ]
+      ]
+    },
+    {
+      "id": "primo-script",
+      "tipo": "terminale",
+      "dopoLezione": "permessi",
+      "xp": 80,
+      "inizio": {
+        "file": {
+          "saluta.sh": "#!/bin/bash\necho \"Ciao dal mio primo script!\"\n",
+          "segreto.txt": "password del wifi: 1234\n"
+        }
+      },
+      "obiettivi": [
+        {
+          "tipo": "eseguibile",
+          "percorso": "~/saluta.sh"
+        },
+        {
+          "tipo": "comando-eseguito",
+          "programma": "./saluta.sh"
+        },
+        {
+          "tipo": "permessi",
+          "percorso": "~/segreto.txt",
+          "modo": "600"
+        }
+      ]
+    },
+    {
+      "id": "installa-tree",
+      "tipo": "terminale",
+      "dopoLezione": "installare-programmi",
+      "inizio": {
+        "cartelle": [
+          "progetto/codice",
+          "progetto/documenti"
+        ],
+        "file": {
+          "progetto/codice/app.py": "print('ciao')\n"
+        }
+      },
+      "obiettivi": [
+        {
+          "tipo": "comando-eseguito",
+          "programma": "apt",
+          "argomenti": [
+            "update"
+          ],
+          "utente": "root"
+        },
+        {
+          "tipo": "pacchetto-installato",
+          "nome": "tree"
+        },
+        {
+          "tipo": "comando-eseguito",
+          "programma": "tree"
+        }
+      ]
+    },
+    {
+      "id": "ordine-apt",
+      "tipo": "ordina",
+      "dopoLezione": "installare-programmi",
+      "elementi": [
+        "aggiorna",
+        "installa",
+        "usa"
+      ]
+    },
+    {
+      "id": "crea-variabile",
+      "tipo": "terminale",
+      "dopoLezione": "variabili-ambiente",
+      "obiettivi": [
+        {
+          "tipo": "variabile",
+          "nome": "COLORE",
+          "valore": "blu",
+          "esportata": true
+        },
+        {
+          "tipo": "comando-eseguito",
+          "programma": "printenv",
+          "argomenti": [
+            "COLORE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cosa-e-path",
+      "tipo": "scelta",
+      "dopoLezione": "variabili-ambiente",
+      "opzioni": [
+        "cartelle-programmi",
+        "cartella-corrente",
+        "cronologia",
+        "password"
+      ],
+      "corretta": "cartelle-programmi"
+    },
+    {
+      "id": "caccia-agli-errori",
+      "tipo": "terminale",
+      "dopoLezione": "pipe-e-redirezione",
+      "xp": 80,
+      "inizio": {
+        "file": {
+          "registro.log": "10:00 INFO avvio completato\n10:05 INFO utente collegato\n10:07 ERRORE database non raggiungibile\n10:08 INFO nuovo tentativo\n10:09 ERRORE disco pieno\n10:12 INFO utente scollegato\n10:15 ERRORE certificato scaduto\n"
+        }
+      },
+      "obiettivi": [
+        {
+          "tipo": "file-contiene",
+          "percorso": "~/errori.txt",
+          "testo": "ERRORE disco pieno"
+        },
+        {
+          "tipo": "comando-eseguito",
+          "programma": "wc",
+          "opzioni": [
+            "l|lines"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dove-va-errore",
+      "tipo": "scelta",
+      "dopoLezione": "pipe-e-redirezione",
+      "opzioni": [
+        "schermo",
+        "file",
+        "nessuno",
+        "entrambi"
+      ],
+      "corretta": "schermo"
+    },
+    {
+      "id": "ferma-il-ribelle",
+      "tipo": "terminale",
+      "dopoLezione": "gestire-i-processi",
+      "xp": 80,
+      "inizio": {
+        "processi": [
+          {
+            "comando": "python3 calcolo-infinito.py",
+            "cpu": 98.7,
+            "mem": 1.4,
+            "ignoraTerm": true
+          }
+        ]
+      },
+      "obiettivi": [
+        {
+          "tipo": "comando-eseguito",
+          "programma": "ps"
+        },
+        {
+          "tipo": "processo-assente",
+          "comando": "calcolo-infinito"
+        }
+      ]
+    },
+    {
+      "id": "segnale-giusto",
+      "tipo": "scelta",
+      "dopoLezione": "gestire-i-processi",
+      "opzioni": [
+        "prima-term",
+        "subito-kill",
+        "ctrl-c",
+        "riavvia"
+      ],
+      "corretta": "prima-term"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "chi-comanda": {
+    "titolo": "Chi comanda qui?",
+    "domanda": "Scopri chi sei e a quali gruppi appartieni. Poi usa sudo per agire come root: chiedi chi sei e leggi il file delle password cifrate.",
+    "obiettivi": [
+      "Mostra utente e gruppi con id",
+      "Esegui whoami come root",
+      "Leggi /etc/shadow come root"
+    ],
+    "suggerimenti": [
+      "Il primo comando è di due lettere. Per gli altri due serve scrivere sudo davanti al comando.",
+      "Prova prima cat /etc/shadow senza sudo: vedrai il permesso negato. Poi aggiungi sudo davanti.",
+      "Esegui id, poi sudo whoami (risponde root), poi sudo cat /etc/shadow."
+    ],
+    "spiegazione": "Con sudo il comando gira come root, che supera ogni controllo dei permessi: per questo sudo whoami risponde root e sudo cat /etc/shadow riesce a leggere un file vietato agli altri utenti."
+  },
+  "porta-chiusa": {
+    "titolo": "Permesso negato",
+    "domanda": "Scrivi touch /etc/prova e ottieni: touch: cannot touch '/etc/prova': Permission denied. Perché?",
+    "opzioni": {
+      "di-root": "La cartella /etc appartiene a root e un utente normale non può crearci file.",
+      "non-esiste": "La cartella /etc non esiste.",
+      "disco-pieno": "Il disco è pieno.",
+      "nome-sbagliato": "Il nome «prova» non è permesso su Linux."
+    },
+    "feedback": {
+      "non-esiste": "Se /etc non esistesse il messaggio direbbe No such file or directory.",
+      "disco-pieno": "Con il disco pieno il messaggio sarebbe No space left on device.",
+      "nome-sbagliato": "«prova» è un nome valido: il problema è dove stai cercando di crearlo."
+    },
+    "suggerimenti": [
+      "Permission denied significa «permesso negato».",
+      "Chi è il proprietario delle cartelle di sistema come /etc?",
+      "/etc appartiene a root: lo studente non può crearci file. Con sudo touch /etc/prova funzionerebbe."
+    ],
+    "spiegazione": "Le cartelle di sistema appartengono a root. Un utente normale può leggerle ma non modificarle: è una protezione. Per cambiare qualcosa lì serve sudo."
+  },
+  "leggi-permessi": {
+    "titolo": "Chi può leggere?",
+    "domanda": "Un file ha questi permessi: -rw-r----- 1 studente contabili ... bilancio.txt. Chi può leggerlo?",
+    "opzioni": {
+      "proprietario-gruppo": "Lo studente (proprietario) e chi fa parte del gruppo contabili.",
+      "tutti": "Tutti gli utenti del computer.",
+      "solo-proprietario": "Solo lo studente.",
+      "nessuno": "Nessuno, perché manca il permesso x."
+    },
+    "feedback": {
+      "tutti": "L'ultima terna, quella degli altri, è ---: chi non è proprietario né del gruppo non può fare nulla.",
+      "solo-proprietario": "La terna del gruppo è r--: chi è nel gruppo contabili può leggere.",
+      "nessuno": "x serve per eseguire un programma, non per leggere un file."
+    },
+    "suggerimenti": [
+      "Dividi i permessi in tre terne dopo il primo carattere: rw- / r-- / ---.",
+      "La prima terna è del proprietario, la seconda del gruppo, la terza degli altri. Dove compare la r?",
+      "La r c'è nella terna del proprietario e in quella del gruppo: possono leggere lo studente e il gruppo contabili."
+    ],
+    "spiegazione": "rw- (proprietario: legge e scrive), r-- (gruppo: legge), --- (altri: niente). Quindi leggono il proprietario e il gruppo contabili."
+  },
+  "numero-permessi": {
+    "titolo": "Permessi in numeri",
+    "domanda": "Completa con le tre cifre.",
+    "modello": "I permessi rwxr-xr-x in numeri si scrivono ___ .",
+    "feedbackSpazi": ["Calcola una cifra per ogni terna: r = 4, w = 2, x = 1."],
+    "suggerimenti": [
+      "Dividi in tre terne: rwx, r-x, r-x.",
+      "rwx = 4 + 2 + 1. r-x = 4 + 0 + 1.",
+      "La risposta è 755."
+    ],
+    "spiegazione": "rwx = 7, r-x = 5, r-x = 5: 755. È il permesso tipico di programmi e script: tutti li possono eseguire, solo il proprietario li modifica."
+  },
+  "primo-script": {
+    "titolo": "Il primo script",
+    "domanda": "Nella tua cartella c'è lo script saluta.sh, ma non parte. Rendilo eseguibile e avvialo. Poi proteggi segreto.txt in modo che solo tu possa leggerlo e modificarlo.",
+    "obiettivi": [
+      "Dai a saluta.sh il permesso di esecuzione",
+      "Avvia lo script con ./saluta.sh",
+      "Imposta i permessi di segreto.txt a rw------- (600)"
+    ],
+    "suggerimenti": [
+      "Guarda i permessi con ls -l. Per cambiarli serve chmod.",
+      "chmod u+x saluta.sh aggiunge l'esecuzione per il proprietario. Per segreto.txt: rw- = 6, --- = 0.",
+      "Scrivi chmod u+x saluta.sh, poi ./saluta.sh, poi chmod 600 segreto.txt (oppure chmod go-r segreto.txt)."
+    ],
+    "spiegazione": "Uno script ha bisogno del permesso x per essere avviato con ./. Con 600 (rw-------) un file è leggibile e modificabile solo dal proprietario: è il permesso giusto per file con password e chiavi."
+  },
+  "installa-tree": {
+    "titolo": "Installa il tuo primo programma",
+    "domanda": "Il comando tree non è installato. Aggiorna l'elenco dei pacchetti, installalo e usalo per vedere la struttura delle tue cartelle.",
+    "obiettivi": [
+      "Aggiorna l'elenco dei pacchetti (come root)",
+      "Installa il pacchetto tree",
+      "Usa il comando tree"
+    ],
+    "suggerimenti": [
+      "Installare programmi è un'operazione da amministratore: serve sudo.",
+      "I comandi sono sudo apt update e sudo apt install seguito dal nome del pacchetto.",
+      "Scrivi sudo apt update, poi sudo apt install tree, poi tree."
+    ],
+    "spiegazione": "apt update aggiorna l'elenco, apt install scarica e installa il pacchetto dal repository. Entrambi richiedono sudo; usare il programma installato, invece, no."
+  },
+  "ordine-apt": {
+    "titolo": "Nell'ordine giusto",
+    "domanda": "Metti in ordine i passi per installare e usare un programma nuovo.",
+    "opzioni": {
+      "aggiorna": "sudo apt update",
+      "installa": "sudo apt install tree",
+      "usa": "tree"
+    },
+    "suggerimenti": [
+      "Prima di scegliere dal catalogo, conviene avere il catalogo aggiornato.",
+      "Un programma si può usare solo dopo averlo installato.",
+      "L'ordine è: sudo apt update, sudo apt install tree, tree."
+    ],
+    "spiegazione": "Prima si aggiorna l'elenco dei pacchetti, poi si installa, infine si usa il programma. Lo stesso ordine lo ritroverai nei Dockerfile."
+  },
+  "crea-variabile": {
+    "titolo": "Una variabile per tutti",
+    "domanda": "Crea una variabile COLORE con valore blu, mettila nell'ambiente e verificala con printenv.",
+    "obiettivi": [
+      "La variabile d'ambiente COLORE vale blu",
+      "Mostra il suo valore con printenv COLORE"
+    ],
+    "suggerimenti": [
+      "Ricorda: nome, uguale e valore, tutto attaccato. Per metterla nell'ambiente serve un comando in più.",
+      "export COLORE=blu crea la variabile e la esporta insieme.",
+      "Scrivi export COLORE=blu e poi printenv COLORE (deve stampare blu)."
+    ],
+    "spiegazione": "export mette la variabile nell'ambiente, così la ricevono anche i programmi avviati dalla shell, come printenv. Senza export, printenv non l'avrebbe vista."
+  },
+  "cosa-e-path": {
+    "titolo": "A cosa serve PATH?",
+    "domanda": "Che cosa contiene la variabile PATH?",
+    "opzioni": {
+      "cartelle-programmi": "L'elenco delle cartelle in cui la shell cerca i programmi.",
+      "cartella-corrente": "Il percorso della cartella in cui ti trovi.",
+      "cronologia": "L'elenco dei comandi già eseguiti.",
+      "password": "La password dell'utente."
+    },
+    "feedback": {
+      "cartella-corrente": "La cartella corrente sta in PWD, non in PATH.",
+      "cronologia": "La cronologia si vede con history ed è salvata in .bash_history.",
+      "password": "Le password non stanno mai nelle variabili d'ambiente di sistema."
+    },
+    "suggerimenti": [
+      "Prova echo $PATH nel terminale della lezione: cosa vedi?",
+      "Sono percorsi di cartelle separati da due punti.",
+      "PATH contiene le cartelle in cui la shell cerca i programmi quando scrivi un comando."
+    ],
+    "spiegazione": "Quando scrivi un comando, la shell lo cerca nelle cartelle elencate in PATH, in ordine. Se il programma sta altrove, ottieni command not found."
+  },
+  "caccia-agli-errori": {
+    "titolo": "Caccia agli errori",
+    "domanda": "Il registro di un'applicazione contiene messaggi INFO ed ERRORE. Salva solo le righe di errore in un file errori.txt e conta quante sono.",
+    "obiettivi": [
+      "Salva le righe con ERRORE nel file ~/errori.txt",
+      "Conta le righe con wc -l"
+    ],
+    "suggerimenti": [
+      "grep tiene solo le righe che contengono un testo. Con > mandi il risultato in un file.",
+      "grep ERRORE registro.log > errori.txt salva gli errori. Per contarli usa wc -l sul file, oppure una pipe.",
+      "Scrivi grep ERRORE registro.log > errori.txt e poi wc -l errori.txt (oppure grep ERRORE registro.log | wc -l)."
+    ],
+    "spiegazione": "grep filtra le righe, > salva l'output in un file, wc -l conta le righe. Collegando programmi semplici con redirezione e pipe si fanno analisi complesse: è così che si leggono i log dei container."
+  },
+  "dove-va-errore": {
+    "titolo": "Due canali",
+    "domanda": "Esegui ls documenti nulla > elenco.txt. La cartella documenti esiste, nulla no. Dove compare il messaggio d'errore su nulla?",
+    "opzioni": {
+      "schermo": "Sullo schermo, perché > redirige solo lo standard output.",
+      "file": "Nel file elenco.txt, insieme all'elenco.",
+      "nessuno": "Da nessuna parte: viene buttato via.",
+      "entrambi": "Sia sullo schermo sia nel file."
+    },
+    "feedback": {
+      "file": "> riguarda solo lo standard output: gli errori viaggiano sullo standard error.",
+      "nessuno": "Per buttarli via servirebbe 2> /dev/null.",
+      "entrambi": "Ogni messaggio va su un solo canale: l'errore sta sullo standard error."
+    },
+    "suggerimenti": [
+      "Ogni programma ha due uscite separate: una per i risultati e una per gli errori.",
+      "> redirige solo una delle due. Quale?",
+      "Sullo schermo: > manda nel file solo lo standard output, mentre l'errore viaggia sullo standard error."
+    ],
+    "spiegazione": "Lo standard output (l'elenco) finisce nel file, lo standard error (il messaggio su nulla) resta sullo schermo. Per mandare anche gli errori nel file si aggiunge 2>&1."
+  },
+  "ferma-il-ribelle": {
+    "titolo": "Ferma il processo ribelle",
+    "domanda": "Il computer è lentissimo: un programma sta usando quasi tutto il processore. Trovalo e fermalo.",
+    "obiettivi": [
+      "Elenca i processi con ps",
+      "Il processo calcolo-infinito non deve più essere in esecuzione"
+    ],
+    "suggerimenti": [
+      "ps aux mostra tutti i processi con la colonna %CPU: cerca quello con il valore più alto e annota il suo PID.",
+      "Prova prima kill seguito dal PID. Se il processo è ancora lì, controlla con ps aux e usa il segnale più forte.",
+      "Con ps aux trovi python3 calcolo-infinito.py e il suo PID. kill PID non basta, perché ignora TERM: serve kill -9 PID."
+    ],
+    "spiegazione": "kill manda TERM, una richiesta di chiudersi che questo processo ignora. kill -9 manda KILL, che il kernel applica comunque: è il rimedio da usare solo quando la richiesta gentile non funziona."
+  },
+  "segnale-giusto": {
+    "titolo": "Il segnale giusto",
+    "domanda": "Devi fermare un programma che sta salvando dei dati. Qual è il modo corretto di procedere?",
+    "opzioni": {
+      "prima-term": "Prima kill PID (TERM), e kill -9 solo se non si chiude.",
+      "subito-kill": "Subito kill -9 PID, così è più veloce.",
+      "ctrl-c": "Premere Ctrl+C in qualunque terminale.",
+      "riavvia": "Riavviare il computer."
+    },
+    "feedback": {
+      "subito-kill": "KILL non lascia al programma il tempo di finire di salvare: rischi dati a metà.",
+      "ctrl-c": "Ctrl+C manda un segnale solo al programma in primo piano in quel terminale.",
+      "riavvia": "Riavviare ferma tutto, anche ciò che funzionava: è molto più drastico del necessario."
+    },
+    "suggerimenti": [
+      "Pensa alla differenza tra chiedere di chiudere e staccare la corrente.",
+      "Quale segnale permette al programma di finire quello che sta facendo?",
+      "Prima kill PID, che manda TERM e lascia chiudere con ordine; kill -9 solo se non risponde."
+    ],
+    "spiegazione": "TERM chiede al processo di chiudersi e gli lascia il tempo di salvare. KILL lo ferma all'istante. Docker fa lo stesso con docker stop: prima TERM, poi KILL dopo 10 secondi."
+  }
+}

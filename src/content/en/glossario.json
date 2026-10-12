@@ -150,5 +150,73 @@
   "completamento": {
     "termine": "Completion",
     "definizione": "The shell feature that, when you press Tab, finishes typing command, file and folder names."
+  },
+  "utente": {
+    "termine": "User",
+    "definizione": "An identity used to work on the computer: it has a name, a number (UID), a home folder and owns files. Users are listed in /etc/passwd."
+  },
+  "gruppo": {
+    "termine": "Group",
+    "definizione": "A set of users, used to give them all the same permissions on certain files."
+  },
+  "root": {
+    "termine": "root",
+    "definizione": "The administrator user (UID 0): it passes every permission check and can do anything on the system."
+  },
+  "sudo": {
+    "termine": "sudo",
+    "definizione": "The command that runs a single command as root, after asking for the user's password."
+  },
+  "permessi": {
+    "termine": "Permissions",
+    "definizione": "The rules saying who can read (r), write (w) and execute (x) a file: three triplets for owner, group and others. Shown by ls -l and changed with chmod."
+  },
+  "script": {
+    "termine": "Script",
+    "definizione": "A text file containing a series of commands to run in order. It's started with ./name if it has execute permission."
+  },
+  "pacchetto": {
+    "termine": "Package",
+    "definizione": "An archive containing a program ready to install, with its version and list of dependencies."
+  },
+  "gestore-pacchetti": {
+    "termine": "Package manager",
+    "definizione": "The program that downloads, installs, updates and removes packages, resolving dependencies. On Debian and Ubuntu it's APT (the apt command)."
+  },
+  "repository": {
+    "termine": "Repository",
+    "definizione": "An online archive of packages, run by the people who maintain a distribution, from which the package manager downloads programs."
+  },
+  "variabile": {
+    "termine": "Variable",
+    "definizione": "A name associated with a value, created in the shell with NAME=value and used with $NAME."
+  },
+  "variabile-ambiente": {
+    "termine": "Environment variable",
+    "definizione": "A variable that is part of a process's environment and is passed to the programs it starts. Created with export; Docker sets it with -e."
+  },
+  "path": {
+    "termine": "PATH",
+    "definizione": "The environment variable listing, separated by colons, the folders where the shell looks for programs."
+  },
+  "standard-output": {
+    "termine": "Standard output (stdout)",
+    "definizione": "The channel where a program writes its normal results. Redirected with > and passed to another command with |."
+  },
+  "standard-error": {
+    "termine": "Standard error (stderr)",
+    "definizione": "The channel, separate from standard output, where a program writes error messages. Redirected with 2>."
+  },
+  "redirezione": {
+    "termine": "Redirection",
+    "definizione": "Sending a command's output to a file instead of the screen: > overwrites, >> appends, 2> is for errors."
+  },
+  "pipe": {
+    "termine": "Pipe",
+    "definizione": "The | symbol connecting two commands: the first one's standard output becomes the second one's input."
+  },
+  "segnale": {
+    "termine": "Signal",
+    "definizione": "A short message sent to a process asking it to do something, for example to terminate: TERM asks it to close, KILL ends it immediately."
   }
 }

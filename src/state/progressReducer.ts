@@ -14,6 +14,7 @@ export type ProgressAction =
   | { type: 'hintUsed'; missionId: string; at: string }
   | { type: 'missionCompleted'; missionId: string; baseXp: number; at: string }
   | { type: 'draftSaved'; missionId: string; content: string }
+  | { type: 'levelCompleted'; levelId: string; at: string }
   | { type: 'imported'; progress: ProgressState }
   | { type: 'reset' };
 
@@ -26,6 +27,7 @@ export function emptyProgress(): ProgressState {
     badges: {},
     activityDays: [],
     drafts: {},
+    levelsCompleted: {},
   };
 }
 
@@ -105,6 +107,10 @@ function applyAction(state: ProgressState, action: ProgressAction): ProgressStat
       if (state.drafts[action.missionId] === action.content) return state;
       return { ...state, drafts: { ...state.drafts, [action.missionId]: action.content } };
     }
+
+    case 'levelCompleted':
+      if (state.levelsCompleted[action.levelId]) return state;
+      return { ...state, levelsCompleted: { ...state.levelsCompleted, [action.levelId]: action.at } };
 
     case 'imported':
       return action.progress;

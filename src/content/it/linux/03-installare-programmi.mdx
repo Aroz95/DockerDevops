@@ -1,0 +1,81 @@
+---
+id: installare-programmi
+titolo: Installare programmi con apt
+durata: 8
+tipo: tecnica
+concetti_richiesti: [dipendenza, versione, distribuzione, sudo, root, comando, opzione]
+concetti_introdotti: [pacchetto, gestore-pacchetti, repository]
+fonti:
+  - titolo: "Debian Reference – Chapter 2. Debian package management"
+    url: https://www.debian.org/doc/manuals/debian-reference/ch02.en.html
+  - titolo: "The Debian GNU/Linux FAQ – Basics of the Debian package management system"
+    url: https://www.debian.org/doc/manuals/debian-faq/pkg-basics.en.html
+verificata_il: "2026-10-12"
+---
+
+## Perché ti serve
+
+Su Linux i programmi non si scaricano da un sito e si installano con un doppio clic: si installano con un comando, che pensa anche a tutto ciò di cui hanno bisogno. Ti servirà per installare Docker su un server, e lo ritroverai dentro i Dockerfile, dove le immagini si preparano installando programmi proprio così.
+
+## Pacchetti e repository
+
+Un <Termine id="pacchetto">pacchetto</Termine> è un archivio che contiene un programma pronto da installare, insieme alle informazioni che servono per farlo: nome, versione e **dipendenze**, cioè gli altri pacchetti di cui ha bisogno per funzionare.
+
+I pacchetti stanno in un <Termine id="repository">repository</Termine>: un grande archivio online, gestito da chi cura la distribuzione, che contiene migliaia di pacchetti controllati e compatibili tra loro.
+
+Il <Termine id="gestore-pacchetti">gestore di pacchetti</Termine> è il programma che scarica i pacchetti dal repository, li installa, risolve le dipendenze e li aggiorna. Su Debian e Ubuntu si chiama **APT**, e il comando è `apt`.
+
+<Analogia>
+È come un negozio di app sul telefono, ma per il terminale. Il repository è il catalogo del negozio; apt è il commesso che va a prendere il programma, porta anche gli accessori necessari (le dipendenze) e lo monta al posto giusto.
+</Analogia>
+
+## I comandi principali
+
+Installare e rimuovere programmi cambia il sistema, quindi questi comandi vanno eseguiti con `sudo`.
+
+| Comando | Cosa fa |
+|---|---|
+| `sudo apt update` | Scarica l'elenco aggiornato dei pacchetti disponibili. Non installa nulla. |
+| `sudo apt install tree` | Installa il pacchetto `tree` e le sue dipendenze. |
+| `sudo apt upgrade` | Aggiorna i pacchetti già installati alle versioni più recenti. |
+| `sudo apt remove tree` | Disinstalla il pacchetto (le sue configurazioni restano). |
+
+<Callout tipo="consiglio">
+Prima di installare qualcosa conviene sempre un `sudo apt update`: così apt sa quali sono le versioni più recenti. Lo vedrai fare anche dentro i Dockerfile.
+</Callout>
+
+## Cosa vedrai
+
+Installare `tree`, un programma che disegna le cartelle ad albero, produce un output come questo (accorciato):
+
+```
+Reading package lists... Done
+Building dependency tree... Done
+The following NEW packages will be installed:
+  tree
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Get:1 http://archive.ubuntu.com/ubuntu noble/universe amd64 tree amd64 2.1.1-2ubuntu3 [47.1 kB]
+Unpacking tree (2.1.1-2ubuntu3) ...
+Setting up tree (2.1.1-2ubuntu3) ...
+```
+
+Riga per riga: apt legge l'elenco dei pacchetti, calcola le dipendenze, annuncia cosa installerà, scarica il pacchetto dal repository (`Get:`), lo estrae (`Unpacking`) e lo configura (`Setting up`). I numeri di versione cambiano nel tempo.
+
+Prima di installare tree, prova a scrivere `tree`: Ubuntu ti dice che il comando non c'è e come installarlo.
+
+<Terminale cartelle={["progetto/codice", "progetto/documenti"]} file={{ "progetto/codice/app.py": "print('ciao')\n", "progetto/leggimi.txt": "Il mio progetto\n" }} />
+
+## Errori comuni
+
+**`E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)`** seguito da **`are you root?`**. Hai dimenticato `sudo`: installare programmi è un'operazione da amministratore.
+
+**`E: Unable to locate package nomepacchetto`**. Il pacchetto non esiste con quel nome, oppure l'elenco è vecchio: controlla il nome e prova `sudo apt update`.
+
+**`Do you want to continue? [Y/n]`**. Non è un errore: apt chiede conferma, per esempio prima di rimuovere qualcosa. Rispondi `y`, oppure aggiungi l'opzione `-y` per rispondere sì in automatico. Nel terminale del corso la risposta è sempre «no», quindi per rimuovere usa `-y`.
+
+## In breve
+
+- Un **pacchetto** contiene un programma, la sua versione e l'elenco delle sue dipendenze.
+- I pacchetti stanno nei **repository** della distribuzione.
+- Il **gestore di pacchetti** (su Debian e Ubuntu, `apt`) li installa con le loro dipendenze.
+- `sudo apt update` aggiorna l'elenco, `sudo apt install` installa, `sudo apt remove` rimuove.

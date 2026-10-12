@@ -150,5 +150,73 @@
   "completamento": {
     "termine": "Completamento",
     "definizione": "La funzione della shell che, premendo Tab, finisce di scrivere nomi di comandi, file e cartelle."
+  },
+  "utente": {
+    "termine": "Utente",
+    "definizione": "Un'identità con cui si usa il computer: ha un nome, un numero (UID), una cartella personale e possiede dei file. Gli utenti sono elencati in /etc/passwd."
+  },
+  "gruppo": {
+    "termine": "Gruppo",
+    "definizione": "Un insieme di utenti, usato per dare a tutti gli stessi permessi su certi file."
+  },
+  "root": {
+    "termine": "root",
+    "definizione": "L'utente amministratore (UID 0): supera tutti i controlli dei permessi e può fare qualsiasi cosa sul sistema."
+  },
+  "sudo": {
+    "termine": "sudo",
+    "definizione": "Il comando che esegue un singolo comando come root, dopo aver chiesto la password dell'utente."
+  },
+  "permessi": {
+    "termine": "Permessi",
+    "definizione": "Le regole che dicono chi può leggere (r), scrivere (w) ed eseguire (x) un file: tre terne per proprietario, gruppo e altri. Si vedono con ls -l e si cambiano con chmod."
+  },
+  "script": {
+    "termine": "Script",
+    "definizione": "Un file di testo che contiene una serie di comandi da eseguire in ordine. Si avvia con ./nome se ha il permesso di esecuzione."
+  },
+  "pacchetto": {
+    "termine": "Pacchetto",
+    "definizione": "Un archivio che contiene un programma pronto da installare, con versione ed elenco delle dipendenze."
+  },
+  "gestore-pacchetti": {
+    "termine": "Gestore di pacchetti",
+    "definizione": "Il programma che scarica, installa, aggiorna e rimuove i pacchetti risolvendo le dipendenze. Su Debian e Ubuntu è APT (comando apt)."
+  },
+  "repository": {
+    "termine": "Repository",
+    "definizione": "Un archivio online di pacchetti, gestito da chi cura una distribuzione, da cui il gestore di pacchetti scarica i programmi."
+  },
+  "variabile": {
+    "termine": "Variabile",
+    "definizione": "Un nome associato a un valore, creato nella shell con NOME=valore e usato con $NOME."
+  },
+  "variabile-ambiente": {
+    "termine": "Variabile d'ambiente",
+    "definizione": "Una variabile che fa parte dell'ambiente di un processo e viene passata ai programmi che avvia. Si crea con export; Docker la imposta con -e."
+  },
+  "path": {
+    "termine": "PATH",
+    "definizione": "La variabile d'ambiente che elenca, separate da due punti, le cartelle in cui la shell cerca i programmi."
+  },
+  "standard-output": {
+    "termine": "Standard output (stdout)",
+    "definizione": "Il canale in cui un programma scrive i suoi risultati normali. Si redirige con > e si passa a un altro comando con |."
+  },
+  "standard-error": {
+    "termine": "Standard error (stderr)",
+    "definizione": "Il canale, separato dallo standard output, in cui un programma scrive i messaggi d'errore. Si redirige con 2>."
+  },
+  "redirezione": {
+    "termine": "Redirezione",
+    "definizione": "Mandare l'output di un comando in un file invece che sullo schermo: > sovrascrive, >> aggiunge, 2> riguarda gli errori."
+  },
+  "pipe": {
+    "termine": "Pipe",
+    "definizione": "Il simbolo | che collega due comandi: lo standard output del primo diventa l'input del secondo."
+  },
+  "segnale": {
+    "termine": "Segnale",
+    "definizione": "Un breve messaggio inviato a un processo per chiedergli di fare qualcosa, per esempio di terminare: TERM chiede di chiudersi, KILL lo termina subito."
   }
 }

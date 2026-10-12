@@ -15,9 +15,13 @@ export const EXPORT_APP_ID = 'docker-devops-corso';
 
 /**
  * Migrazioni tra versioni dello schema: MIGRATIONS[n] converte dati della versione n
- * nella versione n + 1. Vuoto finché esiste solo la versione 1.
+ * nella versione n + 1.
  */
-const MIGRATIONS: Record<number, (data: Record<string, unknown>) => Record<string, unknown>> = {};
+const MIGRATIONS: Record<number, (data: Record<string, unknown>) => Record<string, unknown>> = {
+  // v1 → v2: nasce l'elenco dei livelli completati. Viene riempito dall'app al primo avvio,
+  // controllando quali livelli lo studente ha già finito.
+  1: (data) => ({ ...data, version: 2, levelsCompleted: {} }),
+};
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -86,6 +90,7 @@ export function sanitizeProgress(raw: unknown): SanitizeResult {
       badges: filterRecord(data.badges, isString),
       activityDays: [...new Set(days)].sort(),
       drafts: filterRecord(data.drafts, isString),
+      levelsCompleted: filterRecord(data.levelsCompleted, isString),
     },
   };
 }
