@@ -1,0 +1,111 @@
+---
+id: terminale-e-shell
+titolo: Il terminale e la shell
+durata: 7
+tipo: tecnica
+concetti_richiesti: [programma, sistema-operativo, linux, cartella]
+concetti_introdotti: [terminale, shell, bash, prompt]
+fonti:
+  - titolo: "GNU Bash Reference Manual – What is a shell?"
+    url: https://www.gnu.org/software/bash/manual/html_node/What-is-a-shell_003f.html
+  - titolo: "Linux man-pages – bash(1)"
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+verificata_il: "2026-10-12"
+---
+
+## Perché ti serve
+
+Docker si usa quasi sempre **scrivendo comandi**, non cliccando. I server su cui girano le applicazioni di solito non hanno nemmeno uno schermo: ci si collega da lontano e si lavora solo con il testo.
+
+Scrivere comandi ha anche dei vantaggi: un comando si può copiare, ripetere identico mille volte, condividere con un collega e, come vedrai nel Mondo 4, far eseguire in automatico a un computer. Per questo il terminale è lo strumento principale di chi lavora con Docker.
+
+## Il terminale
+
+Il <Termine id="terminale">terminale</Termine> è una finestra in cui scrivi del testo e il computer ti risponde con altro testo. Niente icone, niente pulsanti: solo righe di caratteri.
+
+<Analogia>
+È come una chat con il computer. Tu scrivi una richiesta precisa e premi Invio, lui esegue e ti risponde. Se la richiesta non è chiara, ti risponde con un errore, che è il suo modo di dire «non ho capito».
+</Analogia>
+
+## La shell
+
+Il terminale da solo è solo la finestra. Chi legge quello che scrivi e lo trasforma in azioni è un programma che gira dentro il terminale: la <Termine id="shell">shell</Termine>.
+
+Il manuale ufficiale di Bash descrive la shell come un **interprete di comandi**: legge ciò che scrivi, capisce quale programma vuoi avviare e con quali indicazioni, e lo avvia. È anche un vero linguaggio di programmazione, con cui si possono scrivere sequenze di comandi da eseguire in automatico.
+
+Su Linux la shell più diffusa si chiama <Termine id="bash">Bash</Termine>. È quella che userai in questo corso, nel terminale simulato e poi nei laboratori.
+
+<Callout tipo="info">
+Ricapitolando: il **terminale** è la finestra, la **shell** è il programma che capisce i comandi. Nel linguaggio di tutti i giorni si dice spesso «scrivilo nel terminale» intendendo entrambe le cose.
+</Callout>
+
+## Il prompt: la shell è pronta
+
+Quando la shell aspetta un comando, mostra all'inizio della riga un breve testo: il <Termine id="prompt">prompt</Termine>. Nel terminale del corso è questo:
+
+```
+studente@corso:~$
+```
+
+Riga per riga, da sinistra a destra:
+
+| Parte | Significato |
+|---|---|
+| `studente` | Il nome dell'utente con cui stai lavorando. |
+| `@` | Separatore: si legge «at», cioè «presso». |
+| `corso` | Il nome del computer. |
+| `:` | Separatore. |
+| `~` | La cartella in cui ti trovi adesso. Il simbolo `~` indica la tua cartella personale: lo vedrai bene nella lezione 3. |
+| `$` | La shell è pronta e aspetta un tuo comando. |
+
+Il prompt cambia da computer a computer, ma l'idea è sempre la stessa: quando lo vedi, puoi scrivere.
+
+<Callout tipo="consiglio">
+Negli esempi del corso trovi **solo il comando**, senza il prompt davanti. Scrivi solo il comando, poi premi Invio.
+</Callout>
+
+## Il primo comando
+
+Prova a scrivere nel terminale qui sotto questo comando e premi Invio:
+
+```
+whoami
+```
+
+Il nome viene dall'inglese *who am I?*, «chi sono io?». La shell avvia il programma `whoami`, che stampa il nome dell'utente:
+
+```
+studente
+```
+
+Poi prova questi due:
+
+- `hostname` stampa il nome del computer (`corso`);
+- `echo ciao` stampa di nuovo il testo che gli passi (`ciao`).
+
+<Terminale />
+
+## Errori comuni
+
+**`whomai: command not found`**. Il comando è scritto male: la shell non trova nessun programma con quel nome. Controlla lettera per lettera.
+
+**`Whoami: command not found`**. Su Linux le maiuscole contano: `Whoami` e `whoami` sono due nomi diversi, e i comandi sono quasi sempre in minuscolo.
+
+**`echociao: command not found`**. Manca lo spazio: la shell ha letto tutto come un unico nome di comando. Lo spazio è ciò che separa il comando dal resto.
+
+<Callout tipo="info">
+Gli errori dei programmi sono in inglese, come nella realtà. Il terminale del corso, quando può, aggiunge sotto una spiegazione in italiano con lo sfondo giallo.
+</Callout>
+
+## Dove trovo un terminale sul mio computer?
+
+Su macOS e su Linux c'è un'app che si chiama proprio **Terminale**: i comandi di base di questo livello funzionano anche lì. Su Windows l'app Terminale usa di solito una shell diversa, PowerShell, con comandi diversi.
+
+Per non dipendere dal tuo computer, in questo corso userai il terminale simulato e, per i laboratori, Codespaces, che ti dà un vero computer Linux nel browser.
+
+## In breve
+
+- Il **terminale** è la finestra in cui scrivi comandi e leggi le risposte.
+- La **shell** è il programma che interpreta i comandi; su Linux la più diffusa è **Bash**.
+- Il **prompt**, come `studente@corso:~$`, indica che la shell è pronta e mostra utente, computer e cartella.
+- Un comando si scrive e si conferma con Invio; maiuscole e spazi contano.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { checkGoals } from './goals';
+import { checkGoals, type Goal } from './goals';
 import { Machine, type MachineSetup } from './machine';
 import { parseLine } from './parse';
 import type { OutputLine } from './types';
@@ -294,3 +294,56 @@ describe('obiettivi delle missioni', () => {
     expect(checkGoals([{ tipo: 'comando-eseguito', programma: 'ls' }], machine)).toEqual([false]);
   });
 });
+
+describe('opzioni e conferme', () => {
+  it('rifiuta le opzioni sconosciute come i coreutils', () => {
+    const { run } = setup();
+    expect(run('ls -z')).toBe("ls: invalid option -- 'z'\nTry 'ls --help' for more information.");
+    expect(run('ls --pippo')).toBe("ls: unrecognized option '--pippo'\nTry 'ls --help' for more information.");
+    expect(run('mkdir -x prova')).toBe("mkdir: invalid option -- 'x'\nTry 'mkdir --help' for more information.");
+  });
+
+  it('ls -lh mostra le dimensioni leggibili', () => {
+    const { run } = setup({ cartelle: ['cartella'] });
+    expect(run('ls -lh')).toMatch(/^total \d+\ndrwxr-xr-x 2 studente studente 4\.0K /);
+  });
+
+  it('rm -i chiede conferma e (nel simulatore) non cancella', () => {
+    const { machine } = setup({ file: { 'a.txt': 'x', 'vuoto.txt': '' } });
+    const { lines } = machine.exec('rm -i a.txt vuoto.txt');
+    expect(text(lines)).toBe("rm: remove regular file 'a.txt'? \nrm: remove regular empty file 'vuoto.txt'? ");
+    expect(hints(lines)).toEqual(['promptAnsweredNo']);
+    expect(machine.fs.get('/home/studente/a.txt')).toBeDefined();
+  });
+
+  it('cp -i non sovrascrive un file esistente', () => {
+    const { machine, run } = setup({ file: { 'a.txt': 'nuovo', 'b.txt': 'vecchio' } });
+    expect(run('cp -i a.txt b.txt')).toBe("cp: overwrite 'b.txt'? ");
+    expect(machine.fs.get('/home/studente/b.txt')).toMatchObject({ content: 'vecchio' });
+    run('cp a.txt b.txt');
+    expect(machine.fs.get('/home/studente/b.txt')).toMatchObject({ content: 'nuovo' });
+  });
+
+  it('gli obiettivi riconoscono le opzioni in ogni forma e le alternative', () => {
+    const goal: Goal = { tipo: 'comando-eseguito', programma: 'ls', opzioni: ['a|all'] };
+    for (const command of ['ls -a', 'ls -la', 'ls -l -a', 'ls --all']) {
+      const { machine } = setup();
+      machine.exec(command);
+      expect(checkGoals([goal], machine), command).toEqual([true]);
+    }
+    const { machine } = setup();
+    machine.exec('ls -l');
+    expect(checkGoals([goal], machine)).toEqual([false]);
+
+    const either: Goal = {
+      tipo: 'uno-tra',
+      obiettivi: [
+        { tipo: 'comando-eseguito', programma: 'mkdir', argomenti: ['--help'] },
+        { tipo: 'comando-eseguito', programma: 'man', argomenti: ['mkdir'] },
+      ],
+    };
+    machine.exec('man mkdir');
+    expect(checkGoals([either], machine)).toEqual([true]);
+  });
+});
+

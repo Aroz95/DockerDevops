@@ -94,5 +94,61 @@
   "versione": {
     "termine": "Version",
     "definizione": "The number that identifies a published state of a piece of software, for example 2.4.1 (major.minor.patch)."
+  },
+  "terminale": {
+    "termine": "Terminal",
+    "definizione": "The window where you type commands and read the computer's answers, text only."
+  },
+  "shell": {
+    "termine": "Shell",
+    "definizione": "The program running in the terminal that reads the commands you type and starts the programs requested. It's also a programming language."
+  },
+  "bash": {
+    "termine": "Bash",
+    "definizione": "The most common shell on Linux. The name stands for Bourne-Again SHell."
+  },
+  "prompt": {
+    "termine": "Prompt",
+    "definizione": "The text at the start of the line, such as studente@corso:~$, telling you the shell is waiting for a command and showing user, computer and folder."
+  },
+  "comando": {
+    "termine": "Command",
+    "definizione": "A line that asks the shell to start a program, in the form: command options arguments."
+  },
+  "opzione": {
+    "termine": "Option",
+    "definizione": "A part of the command that changes its behavior. It starts with one dash (-l) or two (--all)."
+  },
+  "argomento": {
+    "termine": "Argument",
+    "definizione": "A part of the command that says what to work on: a file, a folder, a piece of text."
+  },
+  "manuale": {
+    "termine": "Manual (man)",
+    "definizione": "A command's official documentation, opened with man command-name. Exit with q."
+  },
+  "cartella-corrente": {
+    "termine": "Current folder (working directory)",
+    "definizione": "The folder the shell is in right now: commands work there unless told otherwise. pwd shows it."
+  },
+  "cartella-personale": {
+    "termine": "Home folder",
+    "definizione": "The folder where each user keeps their own files, such as /home/studente. The shell writes it as ~."
+  },
+  "percorso-assoluto": {
+    "termine": "Absolute path",
+    "definizione": "A path that starts with / and starts from the root of the file system: it works from any folder."
+  },
+  "percorso-relativo": {
+    "termine": "Relative path",
+    "definizione": "A path that doesn't start with / and starts from the current folder. .. means the folder above."
+  },
+  "cronologia": {
+    "termine": "History",
+    "definizione": "The list of commands already typed, which the shell remembers. Bring them back with the up arrow; the history command shows them all."
+  },
+  "completamento": {
+    "termine": "Completion",
+    "definizione": "The shell feature that, when you press Tab, finishes typing command, file and folder names."
   }
 }

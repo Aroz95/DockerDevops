@@ -1,0 +1,72 @@
+---
+id: lavorare-piu-veloce
+titolo: Working faster
+durata: 6
+tipo: tecnica
+concetti_richiesti: [shell, bash, comando, terminale, cartella-corrente]
+concetti_introdotti: [cronologia, completamento]
+fonti:
+  - titolo: "GNU Bash Reference Manual – Bash History Facilities"
+    url: https://www.gnu.org/software/bash/manual/html_node/Bash-History-Facilities.html
+  - titolo: "GNU Bash Reference Manual – Letting Readline Type For You"
+    url: https://www.gnu.org/software/bash/manual/html_node/Commands-For-Completion.html
+  - titolo: "Linux man-pages – readline(3)"
+    url: https://man7.org/linux/man-pages/man3/readline.3.html
+verificata_il: "2026-10-12"
+---
+
+## Why you need it
+
+Docker commands can be long, and typing them from scratch every time is tiring and leads to typos. The shell has a few helpers that people who use it every day rely on constantly: learn them now and they'll save you time for the whole course.
+
+## History: the commands you already typed
+
+The shell remembers the commands you've typed: it's the <Termine id="cronologia">history</Termine>.
+
+- **Up arrow ↑**: brings back the previous command. Press it several times to go further back.
+- **Down arrow ↓**: goes back towards the most recent commands.
+- The `history` command prints the numbered list of the commands you typed.
+
+You can bring back a command, fix part of it and press Enter: it's the fastest way to try again after a mistake.
+
+<Callout tipo="info">
+Bash saves the history in a hidden file in your home folder, `.bash_history`, when the shell closes. That way you find your commands again the next day.
+</Callout>
+
+## Completion: let the shell type for you
+
+<Termine id="completamento">Completion</Termine> is the feature that finishes typing for you. Type the beginning of a name and press the **Tab** key (the one with two arrows, above Caps Lock):
+
+- if there's only one name starting that way, the shell completes it;
+- if there are several, it completes the part they have in common and stops. In Bash, pressing Tab a second time shows the list of possibilities.
+
+It works both for commands (`whoa` + Tab → `whoami`) and for files and folders (`cd doc` + Tab → `cd documenti/`).
+
+<Analogia>
+It's like word suggestions on a phone keyboard, but more reliable: the shell only suggests names that really exist. If completion doesn't work, it's often a sign that the name you're typing is wrong.
+</Analogia>
+
+<Callout tipo="consiglio">
+Phones don't have a Tab key: in the course terminal you'll find a bar under the command line with **Tab**, **↑**, **↓** and **Ctrl+C**.
+</Callout>
+
+## Other useful keys
+
+| Keys | Effect |
+|---|---|
+| **Ctrl+C** | Cancels the line you're typing. If a command is running and never ends, it stops it. |
+| **Ctrl+L** or the `clear` command | Clears the screen. The history stays. |
+
+*Ctrl+C* means: hold down the Ctrl key and press C. You'll use it often with Docker, to stop a container started in the foreground.
+
+## Try it
+
+There's a folder with a very long name. Go into it without typing it all: type `cd prog` and press Tab. Then bring back the commands you've used with the up arrow and try `history`.
+
+<Terminale cartelle={["progetto-docker-del-corso/esercizi", "promemoria"]} />
+
+## In short
+
+- The **history** remembers commands: up and down arrows to bring them back, `history` to see them all.
+- **Completion** with Tab finishes typing command, file and folder names.
+- **Ctrl+C** cancels the line or stops a command; **Ctrl+L** or `clear` clears the screen.

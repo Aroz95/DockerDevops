@@ -1,0 +1,200 @@
+{
+  "primo-comando": {
+    "titolo": "Who am I? Where am I?",
+    "domanda": "In the terminal below, ask the computer for your user name and for the computer's name.",
+    "obiettivi": [
+      "Show the user name with whoami",
+      "Show the computer's name with hostname"
+    ],
+    "suggerimenti": [
+      "Both commands are in the lesson: one comes from “who am I?”, the other from “host name”, the computer's name.",
+      "Type whoami and press Enter. Then type hostname and press Enter.",
+      "Run whoami first (it answers studente) and then hostname (it answers corso). The goals tick themselves; then press Check."
+    ],
+    "spiegazione": "You ran your first commands: the shell started the whoami and hostname programs, which printed their answer in the terminal."
+  },
+  "parti-del-prompt": {
+    "titolo": "Reading the prompt",
+    "domanda": "In the prompt studente@corso:~$ what does the word “corso” mean?",
+    "opzioni": {
+      "utente": "The user's name",
+      "computer": "The computer's name",
+      "cartella": "The folder you're in",
+      "comando": "The last command run"
+    },
+    "feedback": {
+      "utente": "The user is the word before the @: studente.",
+      "cartella": "The folder comes after the colon: ~, that is the home folder.",
+      "comando": "The prompt doesn't show the commands run: it tells you the shell is ready."
+    },
+    "suggerimenti": [
+      "The prompt has the shape user@computer:folder$.",
+      "The word “corso” comes right after the @, read as “at”.",
+      "“corso” is the computer's name: studente at the computer corso."
+    ],
+    "spiegazione": "The prompt reads user@computer:folder$. So studente is the user, corso the computer, ~ the folder and $ means the shell is waiting for a command."
+  },
+  "parti-del-comando": {
+    "titolo": "Take the command apart",
+    "domanda": "Complete the sentence by writing exactly the parts of the command ls -l documenti.",
+    "modello": "In the command ls -l documenti, the option is ___ and the argument is ___ .",
+    "feedbackSpazi": [
+      "The option is the part that starts with a dash.",
+      "The argument is the part that says what to work on."
+    ],
+    "suggerimenti": [
+      "The parts of a command are, in order: command, options, arguments.",
+      "The option starts with a dash; the argument is the folder's name.",
+      "The option is -l and the argument is documenti."
+    ],
+    "spiegazione": "ls is the command, -l is the option (long listing) and documenti is the argument (the folder to list)."
+  },
+  "file-nascosti": {
+    "titolo": "The file you can't see",
+    "domanda": "There's a hidden file in your folder. Make it appear with ls, then ask for help on the mkdir command.",
+    "obiettivi": [
+      "List the folder showing hidden files too",
+      "Read mkdir's help (with --help or with man)"
+    ],
+    "suggerimenti": [
+      "Hidden files have a name starting with a dot. You need an ls option that shows them all.",
+      "The option is -a (or --all). For help: mkdir --help, or man mkdir.",
+      "Type ls -a and press Enter: .impostazioni appears. Then type mkdir --help."
+    ],
+    "spiegazione": "With ls -a (or --all) hidden files appear too, such as .impostazioni. To find out how a command works, --help or man are enough: you don't need to remember everything."
+  },
+  "trova-la-strada": {
+    "titolo": "Find your way",
+    "domanda": "Reach the 2026 folder, which is inside documenti and then inside lavoro. When you're there, check where you are.",
+    "obiettivi": [
+      "Go into the ~/documenti/lavoro/2026 folder",
+      "Check where you are with pwd"
+    ],
+    "suggerimenti": [
+      "Use ls to see what's there and cd to go in. You can go one folder at a time.",
+      "You can also write the whole relative path in one go, separating the folders with /.",
+      "Type cd documenti/lavoro/2026 and then pwd. The result must be /home/studente/documenti/lavoro/2026."
+    ],
+    "spiegazione": "With cd documenti/lavoro/2026 you use a relative path, starting from the home folder. You'd have got the same result going into one folder at a time, or with the absolute path /home/studente/documenti/lavoro/2026."
+  },
+  "assoluto-o-relativo": {
+    "titolo": "Absolute or relative?",
+    "domanda": "Which of these are absolute paths? Choose all the right answers.",
+    "opzioni": {
+      "home-foto": "/home/studente/foto",
+      "documenti-note": "documenti/note.txt",
+      "etc-hostname": "/etc/hostname",
+      "su-foto": "../foto",
+      "punto-note": "./note.txt"
+    },
+    "feedback": {
+      "documenti-note": "It doesn't start with /: it starts from the current folder, so it's relative.",
+      "su-foto": ".. means the folder above the current one: it's a relative path.",
+      "punto-note": ". means the current folder: it's a relative path."
+    },
+    "suggerimenti": [
+      "An absolute path always starts from the root of the file system.",
+      "Look only at the first character of each path.",
+      "/home/studente/foto and /etc/hostname are absolute: they're the only ones starting with /."
+    ],
+    "spiegazione": "Absolute paths start with /, so they work from any folder. The others are relative: their meaning depends on the current folder."
+  },
+  "sali-di-una": {
+    "titolo": "One floor up",
+    "domanda": "Complete the command.",
+    "modello": "To go up to the folder that contains the current one I type: cd ___",
+    "feedbackSpazi": ["You need the special name for the folder above: it's two identical characters."],
+    "suggerimenti": [
+      "There are two special names: one means this folder, the other the folder above.",
+      "This folder is a single dot. The one above…",
+      "The answer is .. (two dots together)."
+    ],
+    "spiegazione": "cd .. takes you to the folder that contains the current one. It can be repeated: cd ../.. goes up two levels."
+  },
+  "metti-in-ordine": {
+    "titolo": "Tidy up the desk",
+    "domanda": "The scrivania (desk) folder is a mess. Build a tidy archive by following the goals.",
+    "obiettivi": [
+      "Create the folder ~/archivio/foto",
+      "Move foto-mare.jpg into ~/archivio/foto",
+      "The photo must no longer be on the desk",
+      "Copy lista.txt into ~/archivio",
+      "A copy of lista.txt must stay on the desk",
+      "Delete vecchio.tmp"
+    ],
+    "suggerimenti": [
+      "You need mkdir, mv, cp and rm. Check often with ls.",
+      "mkdir -p archivio/foto creates both folders. mv moves, cp copies, rm deletes.",
+      "From the home folder: mkdir -p archivio/foto, then mv scrivania/foto-mare.jpg archivio/foto, then cp scrivania/lista.txt archivio, and finally rm scrivania/vecchio.tmp."
+    ],
+    "spiegazione": "You used the four main file commands: mkdir to create, mv to move (the original disappears), cp to copy (the original stays) and rm to delete."
+  },
+  "rm-cartella": {
+    "titolo": "A message to decode",
+    "domanda": "You type rm foto and the terminal answers: rm: cannot remove 'foto': Is a directory. What does it mean?",
+    "opzioni": {
+      "serve-r": "foto is a folder, and rm without the -r option doesn't delete folders.",
+      "non-esiste": "foto doesn't exist.",
+      "permessi": "You don't have permission to delete foto.",
+      "vuota": "foto is an empty folder, so there's nothing to delete."
+    },
+    "feedback": {
+      "non-esiste": "If it didn't exist the message would say No such file or directory.",
+      "permessi": "For permissions the message would be Permission denied: you'll see it in the next level.",
+      "vuota": "Even an empty folder isn't deleted by rm without -r: for empty ones there's rmdir."
+    },
+    "suggerimenti": [
+      "Is a directory means “it's a folder”.",
+      "To delete a folder with rm you need a particular option.",
+      "The message says foto is a folder: rm only deletes it with -r (or rmdir, if it's empty)."
+    ],
+    "spiegazione": "rm without options only deletes files. A folder needs rm -r, which also deletes everything inside it, or rmdir if the folder is empty."
+  },
+  "rinomina": {
+    "titolo": "Changing names",
+    "domanda": "Complete the command.",
+    "modello": "To rename bozza.txt to finale.txt I type: ___ bozza.txt finale.txt",
+    "feedbackSpazi": ["It's the same command used to move files."],
+    "suggerimenti": [
+      "For the system, renaming is like moving with a new name.",
+      "The command comes from the word move.",
+      "The answer is mv."
+    ],
+    "spiegazione": "mv bozza.txt finale.txt renames the file: for the system it's a move within the same folder with a different name."
+  },
+  "scorciatoie": {
+    "titolo": "The very long name",
+    "domanda": "Go into the esercizi folder, inside progetto-docker-del-corso. Try doing it with Tab, without typing the whole name. Then look at the commands you've typed.",
+    "obiettivi": [
+      "Go into ~/progetto-docker-del-corso/esercizi",
+      "Show the command history with history"
+    ],
+    "suggerimenti": [
+      "Type cd prog and press Tab (on a phone, the Tab key is in the bar under the terminal).",
+      "After the first completion type es and press Tab again.",
+      "Type cd prog, press Tab, type es, press Tab and then Enter. Finally type history."
+    ],
+    "spiegazione": "With Tab the shell completes names for you, with no typos. With history you see the list of everything you've typed, and with the up arrow you can bring it back."
+  },
+  "tab-ambiguo": {
+    "titolo": "When Tab isn't enough",
+    "domanda": "The folder has a progetto folder and a promemoria.txt file. You type cd pro and press Tab once. What happens?",
+    "opzioni": {
+      "si-ferma": "It doesn't complete anything, because two names start with “pro”. Pressing Tab again, Bash shows the list.",
+      "primo": "It completes with the first name in alphabetical order.",
+      "errore": "It gives the error command not found.",
+      "cancella": "It deletes the line."
+    },
+    "feedback": {
+      "primo": "The shell never picks at random: if there's more than one possibility, it stops.",
+      "errore": "Tab doesn't run anything: it only helps you type. Errors come when you press Enter.",
+      "cancella": "To cancel the line you use Ctrl+C, not Tab."
+    },
+    "suggerimenti": [
+      "How many names start with “pro”?",
+      "Completion only adds the part all the possibilities have in common.",
+      "Progetto and promemoria only share “pro”, which you've already typed: Tab adds nothing. A second Tab shows the possibilities."
+    ],
+    "spiegazione": "If several names start the same way, Tab only completes the common part. Type a few more letters (cd prog) and Tab completes it all."
+  }
+}

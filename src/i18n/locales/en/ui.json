@@ -187,7 +187,8 @@
       "verified": "Content checked against the official documentation on {{date}}."
     },
     "readAndMission": "Done reading, to the mission (+{{xp}} XP)",
-    "toMission": "Go to the mission →"
+    "toMission": "Go to the mission →",
+    "tryIt": "Try it here: it's a simulated terminal, you can't break anything."
   },
   "glossary": {
     "title": "Glossary",
@@ -265,7 +266,8 @@
       "execLimited": "In the simulator this command doesn't keep running inside the container.",
       "helpIntro": "Welcome to the simulated terminal! Type a command and press Enter. Type help to see the available commands; type command-name --help to learn how to use it (for example: ls --help).",
       "helpFooter": "The simulator reproduces real commands in a reduced version: for all the options check the official documentation.",
-      "manReduced": "This is a reduced version of the {{command}} manual. The full one is on man7.org."
+      "manReduced": "This is a reduced version of the {{command}} manual. The full one is on man7.org.",
+      "promptAnsweredNo": "Here the computer would wait for your answer: “y” (yes) to delete, “n” (no) to keep the file. The simulator always answers “no”, so nothing was deleted."
     }
   },
   "update": {

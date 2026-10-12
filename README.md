@@ -104,7 +104,9 @@ Tutte le chiavi in `localStorage` iniziano con `ddc:`. Al momento:
 
 3. Ogni concetto introdotto va aggiunto in `src/content/<lingua>/glossario.json`.
 4. Nel testo puoi usare, senza importarli: `<Termine id="cloud">cloud</Termine>`,
-   `<Callout tipo="info|consiglio|attenzione">…</Callout>`, `<Analogia>…</Analogia>`.
+   `<Callout tipo="info|consiglio|attenzione">…</Callout>`, `<Analogia>…</Analogia>` e
+   `<Terminale cartelle={["documenti"]} file={{ "note.txt": "ciao\n" }} />` (un terminale da provare
+   dentro la lezione, senza obiettivi né XP).
 
 I test bloccano la pubblicazione se:
 - una lezione usa un concetto (o un `<Termine>`) prima che sia stato introdotto;
@@ -153,8 +155,12 @@ si supera raggiungendo degli **obiettivi sullo stato finale**, non digitando un 
 
 Nei testi, `obiettivi` contiene la descrizione di ogni obiettivo (stesso ordine): si spuntano mentre lo
 studente lavora. Obiettivi disponibili: `cartella-corrente`, `esiste`, `non-esiste`, `file-contiene`,
-`comando-eseguito`, `immagine-presente`, `immagine-assente`, `container`, `nessun-container`
-(dettagli in `src/engine/sim/goals.ts`).
+`comando-eseguito` (con `argomenti` e `opzioni`, dove `"a|all"` accetta `-a`, `-la` o `--all`),
+`uno-tra` (basta una delle alternative), `immagine-presente`, `immagine-assente`, `container`,
+`nessun-container` (dettagli in `src/engine/sim/goals.ts`).
+
+Ogni missione nel terminale deve avere la sua soluzione in `src/content/terminal-missions.test.ts`:
+il test la esegue sul simulatore e controlla che gli obiettivi si raggiungano davvero.
 
 Il simulatore riproduce output e messaggi d'errore reali (bash, GNU coreutils, Docker Engine 29).
 Quando si aggiunge un comando, confrontarne l'output con quello vero e scriverne il test in

@@ -1,0 +1,140 @@
+---
+id: creare-copiare-spostare
+titolo: Creare, copiare, spostare e cancellare
+durata: 10
+tipo: tecnica
+concetti_richiesti: [cartella, file, comando, opzione, argomento, percorso-relativo, cartella-corrente]
+concetti_introdotti: []
+fonti:
+  - titolo: "Linux man-pages – mkdir(1)"
+    url: https://man7.org/linux/man-pages/man1/mkdir.1.html
+  - titolo: "Linux man-pages – touch(1)"
+    url: https://man7.org/linux/man-pages/man1/touch.1.html
+  - titolo: "Linux man-pages – cat(1)"
+    url: https://man7.org/linux/man-pages/man1/cat.1.html
+  - titolo: "Linux man-pages – cp(1)"
+    url: https://man7.org/linux/man-pages/man1/cp.1.html
+  - titolo: "Linux man-pages – mv(1)"
+    url: https://man7.org/linux/man-pages/man1/mv.1.html
+  - titolo: "Linux man-pages – rm(1)"
+    url: https://man7.org/linux/man-pages/man1/rm.1.html
+verificata_il: "2026-10-12"
+---
+
+## Perché ti serve
+
+Un progetto Docker è una cartella con dentro dei file: il codice dell'applicazione, il file che descrive come costruire l'immagine, le configurazioni. Dovrai creare queste cartelle, copiare file, rinominarli, fare pulizia. Tutto dal terminale.
+
+<Analogia>
+Pensa a un trasloco. Prepari scatole nuove (creare cartelle), ci metti dentro le cose (spostare), fai una copia dei documenti importanti prima di partire (copiare), butti quello che non serve più (cancellare). Ogni azione ha il suo comando.
+</Analogia>
+
+## Creare: mkdir e touch
+
+`mkdir` (da *make directory*) crea una cartella:
+
+```
+mkdir progetto
+```
+
+Se vuoi creare più livelli insieme, per esempio `progetto/codice/test` quando nemmeno `progetto` esiste, aggiungi l'opzione `-p` (da *parents*): crea anche le cartelle intermedie, e non dà errore se esistono già.
+
+```
+mkdir -p progetto/codice/test
+```
+
+`touch` crea un file vuoto. Se il file esiste già, non lo modifica: ne aggiorna solo la data.
+
+```
+touch progetto/leggimi.txt
+```
+
+## Leggere: cat
+
+`cat` stampa nel terminale il contenuto di un file. Il nome viene da *concatenate*, perché se gli passi più file li stampa uno dopo l'altro, uniti.
+
+```
+cat note.txt
+```
+
+## Copiare: cp
+
+`cp` (da *copy*) copia un file. Il primo argomento è l'originale, il secondo la destinazione:
+
+```
+cp note.txt note-copia.txt
+```
+
+Se la destinazione è una cartella che esiste, il file viene copiato lì dentro con lo stesso nome:
+
+```
+cp note.txt progetto
+```
+
+Per copiare una cartella con tutto il suo contenuto serve l'opzione `-r` (da *recursive*, ricorsivo: entra in ogni sottocartella):
+
+```
+cp -r progetto progetto-backup
+```
+
+Riga per riga: `cp` è il comando, `-r` chiede di copiare anche il contenuto delle cartelle, `progetto` è la cartella da copiare, `progetto-backup` il nome della copia.
+
+## Spostare e rinominare: mv
+
+`mv` (da *move*) sposta un file o una cartella. Lo stesso comando serve anche a **rinominare**, perché per il sistema rinominare è spostare con un nome nuovo:
+
+```
+mv bozza.txt finale.txt
+mv finale.txt progetto
+```
+
+Il primo comando rinomina `bozza.txt` in `finale.txt`; il secondo lo sposta dentro la cartella `progetto`. Con `mv` le cartelle si spostano senza bisogno di `-r`.
+
+<Callout tipo="attenzione">
+`cp` e `mv` **sovrascrivono senza chiedere**: se la destinazione esiste già, il file che c'era viene sostituito. Con l'opzione `-i` (da *interactive*) il comando chiede conferma prima di sovrascrivere.
+</Callout>
+
+## Cancellare: rm e rmdir
+
+`rm` (da *remove*) cancella file:
+
+```
+rm vecchio.txt
+```
+
+Da solo, `rm` non cancella le cartelle. Per cancellare una cartella **con tutto quello che contiene** serve `-r`:
+
+```
+rm -r progetto-backup
+```
+
+`rmdir` cancella una cartella solo se è **vuota**: è la versione prudente.
+
+<Callout tipo="attenzione">
+Nel terminale **non c'è il cestino**. Un file cancellato con `rm` non si recupera con un clic: considera il file perso. Prima di usare `rm -r`, controlla con `pwd` e `ls` di essere nel posto giusto. Con `rm -i` il comando chiede conferma per ogni file: nel terminale del corso vedrai la domanda, ma il simulatore risponde sempre «no».
+</Callout>
+
+## Prova
+
+In questa cartella personale c'è una `scrivania` un po' disordinata. Prova a creare una cartella, spostarci un file, copiarne un altro e cancellare quello inutile. Usa `ls` spesso per controllare cosa succede.
+
+<Terminale file={{ "scrivania/foto-mare.jpg": "", "scrivania/lista.txt": "pane\nlatte\n", "scrivania/vecchio.tmp": "" }} />
+
+## Errori comuni
+
+**`mkdir: cannot create directory ‘progetto’: File exists`**. Esiste già qualcosa con quel nome. Se volevi solo essere sicuro che ci fosse, usa `mkdir -p`.
+
+**`cp: -r not specified; omitting directory 'progetto'`**. Hai provato a copiare una cartella senza `-r`, e `cp` l'ha saltata.
+
+**`rm: cannot remove 'progetto': Is a directory`**. `rm` senza `-r` non cancella le cartelle.
+
+**`rmdir: failed to remove 'progetto': Directory not empty`**. `rmdir` cancella solo cartelle vuote: è una protezione, non un guasto.
+
+**`cp: cannot stat 'nota.txt': No such file or directory`**. Il file da copiare non esiste in quella posizione: controlla nome e cartella corrente.
+
+## In breve
+
+- `mkdir` crea cartelle (`-p` anche quelle intermedie); `touch` crea file vuoti; `cat` ne mostra il contenuto.
+- `cp origine destinazione` copia; per le cartelle serve `-r`.
+- `mv` sposta e rinomina; `cp` e `mv` sovrascrivono senza chiedere, a meno di `-i`.
+- `rm` cancella file, `rm -r` cartelle con tutto il contenuto, `rmdir` solo cartelle vuote. Non c'è il cestino.

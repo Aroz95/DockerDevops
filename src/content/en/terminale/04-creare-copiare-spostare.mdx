@@ -1,0 +1,140 @@
+---
+id: creare-copiare-spostare
+titolo: Creating, copying, moving and deleting
+durata: 10
+tipo: tecnica
+concetti_richiesti: [cartella, file, comando, opzione, argomento, percorso-relativo, cartella-corrente]
+concetti_introdotti: []
+fonti:
+  - titolo: "Linux man-pages – mkdir(1)"
+    url: https://man7.org/linux/man-pages/man1/mkdir.1.html
+  - titolo: "Linux man-pages – touch(1)"
+    url: https://man7.org/linux/man-pages/man1/touch.1.html
+  - titolo: "Linux man-pages – cat(1)"
+    url: https://man7.org/linux/man-pages/man1/cat.1.html
+  - titolo: "Linux man-pages – cp(1)"
+    url: https://man7.org/linux/man-pages/man1/cp.1.html
+  - titolo: "Linux man-pages – mv(1)"
+    url: https://man7.org/linux/man-pages/man1/mv.1.html
+  - titolo: "Linux man-pages – rm(1)"
+    url: https://man7.org/linux/man-pages/man1/rm.1.html
+verificata_il: "2026-10-12"
+---
+
+## Why you need it
+
+A Docker project is a folder with files in it: the application's code, the file describing how to build the image, the configuration. You'll need to create these folders, copy files, rename them, clean up. All from the terminal.
+
+<Analogia>
+Think of moving house. You prepare new boxes (creating folders), put things in them (moving), make a copy of the important documents before leaving (copying), throw away what you don't need anymore (deleting). Each action has its own command.
+</Analogia>
+
+## Creating: mkdir and touch
+
+`mkdir` (from *make directory*) creates a folder:
+
+```
+mkdir progetto
+```
+
+If you want to create several levels at once, for example `progetto/codice/test` when not even `progetto` exists, add the `-p` option (from *parents*): it also creates the folders in between, and doesn't complain if they already exist.
+
+```
+mkdir -p progetto/codice/test
+```
+
+`touch` creates an empty file. If the file already exists, it doesn't change it: it only updates its date.
+
+```
+touch progetto/leggimi.txt
+```
+
+## Reading: cat
+
+`cat` prints the contents of a file in the terminal. The name comes from *concatenate*, because if you give it several files it prints them one after the other, joined together.
+
+```
+cat note.txt
+```
+
+## Copying: cp
+
+`cp` (from *copy*) copies a file. The first argument is the original, the second the destination:
+
+```
+cp note.txt note-copia.txt
+```
+
+If the destination is a folder that exists, the file is copied into it with the same name:
+
+```
+cp note.txt progetto
+```
+
+To copy a folder with everything in it you need the `-r` option (from *recursive*: it goes into every subfolder):
+
+```
+cp -r progetto progetto-backup
+```
+
+Piece by piece: `cp` is the command, `-r` asks to copy the folders' contents too, `progetto` is the folder to copy, `progetto-backup` the name of the copy.
+
+## Moving and renaming: mv
+
+`mv` (from *move*) moves a file or a folder. The same command is also used to **rename**, because for the system renaming is moving with a new name:
+
+```
+mv bozza.txt finale.txt
+mv finale.txt progetto
+```
+
+The first command renames `bozza.txt` to `finale.txt`; the second moves it into the `progetto` folder. With `mv`, folders move without needing `-r`.
+
+<Callout tipo="attenzione">
+`cp` and `mv` **overwrite without asking**: if the destination already exists, the file that was there is replaced. With the `-i` option (from *interactive*) the command asks for confirmation before overwriting.
+</Callout>
+
+## Deleting: rm and rmdir
+
+`rm` (from *remove*) deletes files:
+
+```
+rm vecchio.txt
+```
+
+On its own, `rm` doesn't delete folders. To delete a folder **with everything it contains** you need `-r`:
+
+```
+rm -r progetto-backup
+```
+
+`rmdir` deletes a folder only if it's **empty**: it's the careful version.
+
+<Callout tipo="attenzione">
+In the terminal **there's no recycle bin**. A file deleted with `rm` can't be brought back with a click: consider it lost. Before using `rm -r`, check with `pwd` and `ls` that you're in the right place. With `rm -i` the command asks for confirmation for each file: in the course terminal you'll see the question, but the simulator always answers "no".
+</Callout>
+
+## Try it
+
+This home folder has a slightly messy `scrivania` (desk). Try creating a folder, moving a file into it, copying another one and deleting the useless one. Use `ls` often to check what happens.
+
+<Terminale file={{ "scrivania/foto-mare.jpg": "", "scrivania/lista.txt": "pane\nlatte\n", "scrivania/vecchio.tmp": "" }} />
+
+## Common errors
+
+**`mkdir: cannot create directory ‘progetto’: File exists`**. Something with that name already exists. If you only wanted to make sure it was there, use `mkdir -p`.
+
+**`cp: -r not specified; omitting directory 'progetto'`**. You tried to copy a folder without `-r`, and `cp` skipped it.
+
+**`rm: cannot remove 'progetto': Is a directory`**. `rm` without `-r` doesn't delete folders.
+
+**`rmdir: failed to remove 'progetto': Directory not empty`**. `rmdir` only deletes empty folders: it's a protection, not a fault.
+
+**`cp: cannot stat 'nota.txt': No such file or directory`**. The file to copy doesn't exist in that place: check the name and the current folder.
+
+## In short
+
+- `mkdir` creates folders (`-p` also the ones in between); `touch` creates empty files; `cat` shows their contents.
+- `cp source destination` copies; folders need `-r`.
+- `mv` moves and renames; `cp` and `mv` overwrite without asking, unless you use `-i`.
+- `rm` deletes files, `rm -r` folders with all their contents, `rmdir` only empty folders. There's no recycle bin.

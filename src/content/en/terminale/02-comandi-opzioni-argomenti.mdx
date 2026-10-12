@@ -1,0 +1,116 @@
+---
+id: comandi-opzioni-argomenti
+titolo: Commands, options and arguments
+durata: 8
+tipo: tecnica
+concetti_richiesti: [shell, programma, cartella, file, terminale]
+concetti_introdotti: [comando, opzione, argomento, manuale]
+fonti:
+  - titolo: "Linux man-pages – ls(1)"
+    url: https://man7.org/linux/man-pages/man1/ls.1.html
+  - titolo: "GNU Coreutils – ls invocation"
+    url: https://www.gnu.org/software/coreutils/manual/html_node/ls-invocation.html
+  - titolo: "Linux man-pages – man(1)"
+    url: https://man7.org/linux/man-pages/man1/man.1.html
+verificata_il: "2026-10-12"
+---
+
+## Why you need it
+
+Almost every command you'll type, including Docker's, has the same shape. Once you understand it, you'll be able to read a command you've never seen and work out what it does, instead of copying it by heart.
+
+## The shape of a command
+
+A <Termine id="comando">command</Termine> is a line that asks the shell to start a program. Take this example:
+
+```
+ls -l documenti
+```
+
+Piece by piece:
+
+| Part | What it is | Meaning |
+|---|---|---|
+| `ls` | the command | The program to start. `ls` comes from *list*: it lists the contents of a folder. |
+| `-l` | an option | Changes *how* the command works. `-l` (for *long*) asks for the long listing, with details. |
+| `documenti` | an argument | Says *what* to work on: the `documenti` folder. |
+
+The three parts are separated by **spaces**. The space is exactly what tells the shell where one part ends and the next begins.
+
+<Analogia>
+It's like ordering at a café: "coffee (the command), with milk (the option: how you want it), for my friend (the argument: who it's for)". Without an option you get the normal version; without an argument the command uses a default choice.
+</Analogia>
+
+## Options
+
+An <Termine id="opzione">option</Termine> changes how a command behaves. Options are recognizable because they start with a dash.
+
+- **Short options**: one dash and one letter, such as `-l` or `-a`. They can be **combined**: `ls -la` is the same as `ls -l -a`.
+- **Long options**: two dashes and a word, easier to remember, such as `--all`. For `ls`, `--all` does the same as `-a`.
+
+With `ls` the most useful ones are:
+
+| Option | Effect |
+|---|---|
+| `-l` | Long listing: for each file it shows type, permissions (you'll see them in the next level), owner, size, date and name. |
+| `-a` (`--all`) | Also shows **hidden** files, that is those whose name starts with a dot, such as `.impostazioni`. |
+| `-h` | Together with `-l`, writes sizes in a readable format, such as `4.0K` instead of `4096`. |
+
+<Callout tipo="info">
+On Linux a file whose name starts with a dot is **hidden**: `ls` doesn't normally show it. They are often configuration files. It's not a secret, just a way to avoid clutter.
+</Callout>
+
+## Arguments
+
+An <Termine id="argomento">argument</Termine> tells the command what to work on: a file, a folder, a piece of text. Some commands want one, others more than one, others none.
+
+If `ls` gets no arguments, it lists the folder you're in. With one argument it lists that folder; with several, it lists them all.
+
+**Names with spaces.** If a name contains a space, the shell would split it into two arguments. To keep it together, you write it in quotes:
+
+```
+ls "foto delle vacanze"
+```
+
+To avoid the problem, people who work with the terminal prefer names without spaces, such as `foto-vacanze`.
+
+## Asking the command for help
+
+Nobody remembers all the options of all the commands. There are two ways to ask for help.
+
+**`--help`**. Almost every command accepts the `--help` option, which prints a summary of how to use it:
+
+```
+ls --help
+```
+
+**`man`**. The `man` command opens a command's <Termine id="manuale">manual</Termine>, that is its complete official documentation:
+
+```
+man ls
+```
+
+On a real Linux the manual opens full-screen: you scroll with the arrows and exit by pressing the `q` key. The same pages are also online, on the man7.org website, and that's what the lessons of this course are written from.
+
+<Callout tipo="attenzione">
+In the course terminal `--help` and `man` show a **reduced version**, with only the options available in the simulator. For the full list use the links at the end of the lesson.
+</Callout>
+
+Try it here. Your folder has two folders, a normal file and a hidden file: compare `ls`, `ls -a`, `ls -l` and `ls -la`, then try `ls --help`.
+
+<Terminale cartelle={["documenti", "foto"]} file={{ "note.txt": "comprare il pane\n", ".impostazioni": "tema=scuro\n" }} />
+
+## Common errors
+
+**`ls: invalid option -- 'z'`**. The `-z` option doesn't exist for `ls`. The message continues with `Try 'ls --help' for more information.`: the program itself tells you where to look.
+
+**`ls-l: command not found`**. The space between command and option is missing, so the shell looks for a program called `ls-l`.
+
+**`ls: cannot access 'foto delle vacanze'...`** or similar, with a name cut in half. The name probably has spaces and the quotes are missing.
+
+## In short
+
+- A **command** has the shape `command options arguments`, with the parts separated by spaces.
+- **Options** change the behavior: short (`-l`, combinable as `-la`) or long (`--all`).
+- **Arguments** say what to work on; names with spaces go in quotes.
+- To find out how to use a command: `command --help` or `man command` (exit with `q`).

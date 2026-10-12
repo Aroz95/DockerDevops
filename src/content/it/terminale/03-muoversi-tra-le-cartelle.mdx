@@ -1,0 +1,119 @@
+---
+id: muoversi-tra-le-cartelle
+titolo: Muoversi tra le cartelle
+durata: 9
+tipo: tecnica
+concetti_richiesti: [cartella, file-system, comando, argomento, prompt]
+concetti_introdotti: [cartella-corrente, cartella-personale, percorso-assoluto, percorso-relativo]
+fonti:
+  - titolo: "Linux man-pages – path_resolution(7)"
+    url: https://man7.org/linux/man-pages/man7/path_resolution.7.html
+  - titolo: "Linux man-pages – bash(1) (cd, HOME, OLDPWD, tilde expansion)"
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+  - titolo: "Linux man-pages – pwd(1)"
+    url: https://man7.org/linux/man-pages/man1/pwd.1.html
+verificata_il: "2026-10-12"
+---
+
+## Perché ti serve
+
+Nel terminale non vedi le cartelle come icone: devi sapere **dove ti trovi** e **come spostarti**. È la prima cosa da imparare, perché quasi tutti gli errori dei principianti nascono da un comando eseguito nella cartella sbagliata. Con Docker succederà spesso di dover essere nella cartella giusta del progetto prima di lanciare un comando.
+
+## La cartella corrente: dove sono adesso?
+
+In ogni momento la shell si trova dentro una cartella: la <Termine id="cartella-corrente">cartella corrente</Termine> (in inglese *working directory*, cartella di lavoro). I comandi che scrivi lavorano lì, se non dici diversamente.
+
+<Analogia>
+Immagina il file system come un grande palazzo con tante stanze, una dentro l'altra. Tu sei sempre in una stanza. `pwd` risponde a «in che stanza sono?», `ls` a «cosa c'è in questa stanza?», `cd` è «vai in un'altra stanza».
+</Analogia>
+
+Tre comandi, uno per ogni domanda:
+
+| Comando | Viene da | Cosa fa |
+|---|---|---|
+| `pwd` | *print working directory* | Stampa il percorso completo della cartella corrente. |
+| `ls` | *list* | Elenca il contenuto della cartella corrente (o di quella indicata). |
+| `cd cartella` | *change directory* | Ti sposta nella cartella indicata. |
+
+## La cartella personale e il simbolo ~
+
+Ogni utente ha una sua <Termine id="cartella-personale">cartella personale</Termine> (in inglese *home*), dove tenere i propri file. Nel corso è `/home/studente`.
+
+La shell la indica con il simbolo **tilde** `~`: è il `~` che vedi nel prompt quando sei lì. Su molte tastiere italiane la tilde non ha un tasto proprio: per questo nel terminale del corso puoi sempre scrivere il percorso per intero.
+
+Due scorciatoie utili:
+
+- `cd` senza argomenti ti riporta sempre nella cartella personale;
+- `cd -` ti riporta nella cartella in cui eri **prima** dell'ultimo spostamento, e stampa quale è.
+
+## Percorsi assoluti e relativi
+
+Per dire a `cd` dove andare gli passi un percorso. Ci sono due modi di scriverlo.
+
+Un <Termine id="percorso-assoluto">percorso assoluto</Termine> inizia con `/`: parte dalla radice del file system e vale da qualsiasi cartella tu sia. Per esempio:
+
+```
+cd /home/studente/documenti
+```
+
+Un <Termine id="percorso-relativo">percorso relativo</Termine> **non** inizia con `/`: parte dalla cartella corrente. Se sei in `/home/studente`, questo comando porta nello stesso posto di quello sopra:
+
+```
+cd documenti
+```
+
+Due nomi speciali si usano nei percorsi relativi:
+
+| Nome | Significato |
+|---|---|
+| `.` | Questa cartella. |
+| `..` | La cartella che contiene questa, cioè quella «di sopra». |
+
+Quindi, partendo da `/home/studente/documenti/lavoro`:
+
+| Comando | Dove arrivi |
+|---|---|
+| `cd ..` | `/home/studente/documenti` |
+| `cd ../..` | `/home/studente` |
+| `cd ../../foto` | `/home/studente/foto` |
+| `cd /etc` | `/etc` (percorso assoluto: non importa dove eri) |
+
+<Callout tipo="consiglio">
+Quando non sai dove sei, chiedilo: `pwd`. Quando non sai cosa c'è, guarda: `ls`. È l'abitudine che evita più errori in assoluto.
+</Callout>
+
+## Cosa vedrai
+
+Ecco una piccola sessione, con il prompt che cambia man mano:
+
+```
+studente@corso:~$ pwd
+/home/studente
+studente@corso:~$ cd documenti
+studente@corso:~/documenti$ ls
+lavoro  note.txt
+studente@corso:~/documenti$ cd lavoro
+studente@corso:~/documenti/lavoro$ cd ../..
+studente@corso:~$
+```
+
+Nota come la parte dopo i due punti del prompt mostra sempre dove sei.
+
+Prova a esplorare: in questa cartella personale ci sono `documenti/lavoro` e `foto/vacanze`.
+
+<Terminale cartelle={["documenti/lavoro", "foto/vacanze"]} file={{ "documenti/note.txt": "ricordarsi di studiare\n" }} />
+
+## Errori comuni
+
+**`bash: cd: lavoro: No such file or directory`**. Nella cartella corrente non c'è niente con quel nome. Forse sei nella cartella sbagliata (controlla con `pwd`) o il nome è diverso (controlla con `ls`).
+
+**`bash: cd: note.txt: Not a directory`**. Hai provato a entrare in un file. Con `cd` si entra solo nelle cartelle.
+
+**`cd Documenti` non funziona ma `cd documenti` sì**. Le maiuscole contano anche nei nomi di cartelle e file.
+
+## In breve
+
+- La **cartella corrente** è quella in cui ti trovi: `pwd` la mostra, `ls` ne elenca il contenuto, `cd` ti sposta.
+- La **cartella personale** si indica con `~`; `cd` senza argomenti ti riporta lì, `cd -` alla cartella precedente.
+- Un **percorso assoluto** inizia con `/` e vale ovunque; un **percorso relativo** parte dalla cartella corrente.
+- `.` è la cartella corrente, `..` quella di sopra.

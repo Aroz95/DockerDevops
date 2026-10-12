@@ -1,0 +1,200 @@
+{
+  "primo-comando": {
+    "titolo": "Chi sono? Dove sono?",
+    "domanda": "Nel terminale qui sotto chiedi al computer il nome del tuo utente e il nome del computer.",
+    "obiettivi": [
+      "Mostra il nome dell'utente con whoami",
+      "Mostra il nome del computer con hostname"
+    ],
+    "suggerimenti": [
+      "I due comandi sono scritti nella lezione: uno viene da «who am I?», l'altro da «host name», il nome del computer.",
+      "Scrivi whoami e premi Invio. Poi scrivi hostname e premi Invio.",
+      "Esegui prima whoami (risponde studente) e poi hostname (risponde corso). Gli obiettivi si spuntano da soli; poi premi Verifica."
+    ],
+    "spiegazione": "Hai eseguito i tuoi primi comandi: la shell ha avviato i programmi whoami e hostname, che hanno stampato la risposta nel terminale."
+  },
+  "parti-del-prompt": {
+    "titolo": "Leggere il prompt",
+    "domanda": "Nel prompt studente@corso:~$ che cosa indica la parola «corso»?",
+    "opzioni": {
+      "utente": "Il nome dell'utente",
+      "computer": "Il nome del computer",
+      "cartella": "La cartella in cui ti trovi",
+      "comando": "L'ultimo comando eseguito"
+    },
+    "feedback": {
+      "utente": "L'utente è la parola prima della @: studente.",
+      "cartella": "La cartella è dopo i due punti: ~, cioè la cartella personale.",
+      "comando": "Il prompt non mostra i comandi eseguiti: indica che la shell è pronta."
+    },
+    "suggerimenti": [
+      "Il prompt ha la forma utente@computer:cartella$.",
+      "La parola «corso» viene subito dopo la @, che si legge «presso».",
+      "«corso» è il nome del computer: studente presso il computer corso."
+    ],
+    "spiegazione": "Il prompt si legge utente@computer:cartella$. Quindi studente è l'utente, corso il computer, ~ la cartella e $ indica che la shell aspetta un comando."
+  },
+  "parti-del-comando": {
+    "titolo": "Smonta il comando",
+    "domanda": "Completa la frase scrivendo esattamente le parti del comando ls -l documenti.",
+    "modello": "Nel comando ls -l documenti, l'opzione è ___ e l'argomento è ___ .",
+    "feedbackSpazi": [
+      "L'opzione è la parte che inizia con il trattino.",
+      "L'argomento è la parte che dice su cosa lavorare."
+    ],
+    "suggerimenti": [
+      "Le parti di un comando sono, in ordine: comando, opzioni, argomenti.",
+      "L'opzione inizia con un trattino; l'argomento è il nome della cartella.",
+      "L'opzione è -l e l'argomento è documenti."
+    ],
+    "spiegazione": "ls è il comando, -l è l'opzione (elenco lungo) e documenti è l'argomento (la cartella da elencare)."
+  },
+  "file-nascosti": {
+    "titolo": "Il file che non si vede",
+    "domanda": "Nella tua cartella c'è un file nascosto. Fallo comparire con ls, poi chiedi aiuto sul comando mkdir.",
+    "obiettivi": [
+      "Elenca la cartella mostrando anche i file nascosti",
+      "Leggi l'aiuto di mkdir (con --help oppure con man)"
+    ],
+    "suggerimenti": [
+      "I file nascosti hanno il nome che inizia con un punto. Serve un'opzione di ls che li mostri tutti.",
+      "L'opzione è -a (oppure --all). Per l'aiuto: mkdir --help, oppure man mkdir.",
+      "Scrivi ls -a e premi Invio: compare .impostazioni. Poi scrivi mkdir --help."
+    ],
+    "spiegazione": "Con ls -a (o --all) compaiono anche i file nascosti, come .impostazioni. Per scoprire come si usa un comando bastano --help o man: non serve ricordare tutto a memoria."
+  },
+  "trova-la-strada": {
+    "titolo": "Trova la strada",
+    "domanda": "Raggiungi la cartella 2026, che si trova dentro documenti e poi dentro lavoro. Quando ci sei, verifica dove sei.",
+    "obiettivi": [
+      "Entra nella cartella ~/documenti/lavoro/2026",
+      "Controlla dove sei con pwd"
+    ],
+    "suggerimenti": [
+      "Usa ls per vedere cosa c'è e cd per entrare. Puoi andare una cartella alla volta.",
+      "Puoi anche scrivere tutto il percorso relativo in un colpo solo, separando le cartelle con /.",
+      "Scrivi cd documenti/lavoro/2026 e poi pwd. Il risultato deve essere /home/studente/documenti/lavoro/2026."
+    ],
+    "spiegazione": "Con cd documenti/lavoro/2026 usi un percorso relativo, che parte dalla cartella personale. Avresti ottenuto lo stesso risultato entrando in una cartella alla volta, o con il percorso assoluto /home/studente/documenti/lavoro/2026."
+  },
+  "assoluto-o-relativo": {
+    "titolo": "Assoluto o relativo?",
+    "domanda": "Quali di questi sono percorsi assoluti? Scegli tutte le risposte giuste.",
+    "opzioni": {
+      "home-foto": "/home/studente/foto",
+      "documenti-note": "documenti/note.txt",
+      "etc-hostname": "/etc/hostname",
+      "su-foto": "../foto",
+      "punto-note": "./note.txt"
+    },
+    "feedback": {
+      "documenti-note": "Non inizia con /: parte dalla cartella corrente, quindi è relativo.",
+      "su-foto": ".. indica la cartella di sopra rispetto a quella corrente: è un percorso relativo.",
+      "punto-note": ". indica la cartella corrente: è un percorso relativo."
+    },
+    "suggerimenti": [
+      "Un percorso assoluto parte sempre dalla radice del file system.",
+      "Guarda solo il primo carattere di ogni percorso.",
+      "Sono assoluti /home/studente/foto e /etc/hostname: sono gli unici che iniziano con /."
+    ],
+    "spiegazione": "I percorsi assoluti iniziano con /, quindi valgono da qualunque cartella. Gli altri sono relativi: il loro significato dipende dalla cartella corrente."
+  },
+  "sali-di-una": {
+    "titolo": "Un piano più su",
+    "domanda": "Completa il comando.",
+    "modello": "Per salire nella cartella che contiene quella attuale scrivo: cd ___",
+    "feedbackSpazi": ["Serve il nome speciale che indica la cartella di sopra: sono due caratteri uguali."],
+    "suggerimenti": [
+      "Ci sono due nomi speciali: uno indica questa cartella, l'altro quella di sopra.",
+      "Questa cartella è un punto solo. Quella di sopra…",
+      "La risposta è .. (due punti attaccati)."
+    ],
+    "spiegazione": "cd .. ti porta nella cartella che contiene quella attuale. Si può ripetere: cd ../.. sale di due livelli."
+  },
+  "metti-in-ordine": {
+    "titolo": "Metti in ordine la scrivania",
+    "domanda": "La cartella scrivania è in disordine. Crea un archivio ordinato seguendo gli obiettivi.",
+    "obiettivi": [
+      "Crea la cartella ~/archivio/foto",
+      "Sposta foto-mare.jpg dentro ~/archivio/foto",
+      "La foto non deve più essere sulla scrivania",
+      "Copia lista.txt dentro ~/archivio",
+      "Una copia di lista.txt deve restare sulla scrivania",
+      "Cancella vecchio.tmp"
+    ],
+    "suggerimenti": [
+      "Ti servono mkdir, mv, cp e rm. Controlla spesso con ls.",
+      "mkdir -p archivio/foto crea entrambe le cartelle. mv sposta, cp copia, rm cancella.",
+      "Dalla cartella personale: mkdir -p archivio/foto, poi mv scrivania/foto-mare.jpg archivio/foto, poi cp scrivania/lista.txt archivio, infine rm scrivania/vecchio.tmp."
+    ],
+    "spiegazione": "Hai usato i quattro comandi principali per i file: mkdir per creare, mv per spostare (l'originale sparisce), cp per copiare (l'originale resta) e rm per cancellare."
+  },
+  "rm-cartella": {
+    "titolo": "Un messaggio da decifrare",
+    "domanda": "Scrivi rm foto e il terminale risponde: rm: cannot remove 'foto': Is a directory. Che cosa significa?",
+    "opzioni": {
+      "serve-r": "foto è una cartella, e rm senza l'opzione -r non cancella le cartelle.",
+      "non-esiste": "foto non esiste.",
+      "permessi": "Non hai il permesso di cancellare foto.",
+      "vuota": "foto è una cartella vuota, quindi non c'è niente da cancellare."
+    },
+    "feedback": {
+      "non-esiste": "Se non esistesse il messaggio direbbe No such file or directory.",
+      "permessi": "Per i permessi il messaggio sarebbe Permission denied: lo vedrai nel prossimo livello.",
+      "vuota": "Anche una cartella vuota non si cancella con rm senza -r: per quelle vuote c'è rmdir."
+    },
+    "suggerimenti": [
+      "Is a directory significa «è una cartella».",
+      "Per cancellare una cartella con rm serve un'opzione particolare.",
+      "Il messaggio dice che foto è una cartella: rm la cancella solo con -r (o con rmdir, se è vuota)."
+    ],
+    "spiegazione": "rm senza opzioni cancella solo file. Per una cartella serve rm -r, che cancella anche tutto ciò che contiene, oppure rmdir se la cartella è vuota."
+  },
+  "rinomina": {
+    "titolo": "Cambiare nome",
+    "domanda": "Completa il comando.",
+    "modello": "Per rinominare bozza.txt in finale.txt scrivo: ___ bozza.txt finale.txt",
+    "feedbackSpazi": ["È lo stesso comando che serve per spostare i file."],
+    "suggerimenti": [
+      "Per il sistema rinominare è come spostare con un nome nuovo.",
+      "Il comando viene dall'inglese move.",
+      "La risposta è mv."
+    ],
+    "spiegazione": "mv bozza.txt finale.txt rinomina il file: per il sistema è uno spostamento nella stessa cartella con un nome diverso."
+  },
+  "scorciatoie": {
+    "titolo": "Il nome lunghissimo",
+    "domanda": "Entra nella cartella esercizi, dentro progetto-docker-del-corso. Prova a farlo con Tab, senza scrivere tutto il nome. Poi guarda i comandi che hai scritto.",
+    "obiettivi": [
+      "Entra in ~/progetto-docker-del-corso/esercizi",
+      "Mostra la cronologia dei comandi con history"
+    ],
+    "suggerimenti": [
+      "Scrivi cd prog e premi Tab (sul telefono, il tasto Tab è nella barra sotto il terminale).",
+      "Dopo il primo completamento scrivi es e premi di nuovo Tab.",
+      "Scrivi cd prog, premi Tab, scrivi es, premi Tab e poi Invio. Infine scrivi history."
+    ],
+    "spiegazione": "Con Tab la shell completa i nomi al posto tuo, senza errori di battitura. Con history vedi l'elenco di tutto ciò che hai scritto, e con la freccia su puoi richiamarlo."
+  },
+  "tab-ambiguo": {
+    "titolo": "Quando Tab non basta",
+    "domanda": "Nella cartella ci sono una cartella progetto e un file promemoria.txt. Scrivi cd pro e premi Tab una volta. Cosa succede?",
+    "opzioni": {
+      "si-ferma": "Non completa niente, perché ci sono due nomi che iniziano con «pro». Premendo Tab di nuovo, Bash mostra l'elenco.",
+      "primo": "Completa con il primo nome in ordine alfabetico.",
+      "errore": "Dà l'errore command not found.",
+      "cancella": "Cancella la riga."
+    },
+    "feedback": {
+      "primo": "La shell non sceglie mai a caso: se le possibilità sono più di una, si ferma.",
+      "errore": "Tab non esegue nulla: aiuta solo a scrivere. Gli errori arrivano quando premi Invio.",
+      "cancella": "Per cancellare la riga si usa Ctrl+C, non Tab."
+    },
+    "suggerimenti": [
+      "Quanti nomi iniziano con «pro»?",
+      "Il completamento aggiunge solo la parte comune a tutte le possibilità.",
+      "Progetto e promemoria hanno in comune solo «pro», che hai già scritto: Tab non aggiunge nulla. Un secondo Tab mostra le possibilità."
+    ],
+    "spiegazione": "Se più nomi iniziano allo stesso modo, Tab completa solo la parte comune. Basta scrivere qualche lettera in più (cd prog) e Tab completa tutto."
+  }
+}

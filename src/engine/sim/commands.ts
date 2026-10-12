@@ -41,6 +41,28 @@ function joinLines(items: string[]): string {
   return items.length ? `${items.join('\n')}\n` : '';
 }
 
+/**
+ * Opzioni sconosciute: stesso messaggio dei GNU coreutils.
+ * Restituisce l'errore da mostrare, oppure null se tutte le opzioni sono valide.
+ */
+function badOption(
+  command: string,
+  parsed: { flags: Set<string>; long: Set<string> },
+  allowedShort: string,
+  allowedLong: string[],
+  code = 1,
+): CommandOutput | null {
+  const short = [...parsed.flags].find((flag) => !allowedShort.includes(flag));
+  if (short) {
+    return fail(code, `${command}: invalid option -- '${short}'`, `Try '${command} --help' for more information.`);
+  }
+  const long = [...parsed.long].find((name) => !allowedLong.includes(name));
+  if (long) {
+    return fail(code, `${command}: unrecognized option '--${long}'`, `Try '${command} --help' for more information.`);
+  }
+  return null;
+}
+
 const ERROR_TEXT: Record<FsError, string> = {
   missing: 'No such file or directory',
   noParent: 'No such file or directory',
@@ -87,10 +109,29 @@ function size(node: FsNode): number {
   return node.type === 'dir' ? 4096 : new TextEncoder().encode(node.content).length;
 }
 
+/** Dimensione come `ls -h`: 4096 → 4.0K, 1536 → 1.5K, 300 → 300 (arrotondando per eccesso). */
+function humanSize(bytes: number): string {
+  if (bytes < 1024) return String(bytes);
+  const units = ['K', 'M', 'G', 'T'];
+  let value = bytes / 1024;
+  let unit = 0;
+  while (value >= 1024 && unit < units.length - 1) {
+    value /= 1024;
+    unit++;
+  }
+  const text = value < 10 ? (Math.ceil(value * 10) / 10).toFixed(1) : String(Math.ceil(value));
+  return `${text}${units[unit]}`;
+}
+
 const ls: CommandFn = (m, args) => {
-  const { flags, long, rest } = splitFlags(args);
+  const parsed = splitFlags(args);
+  const { flags, long, rest } = parsed;
+  const invalid = badOption('ls', parsed, 'alh1', ['all', 'human-readable'], 2);
+  if (invalid) return invalid;
   const showAll = flags.has('a') || long.has('all');
   const longFormat = flags.has('l');
+  const human = flags.has('h') || long.has('human-readable');
+  const shownSize = (node: FsNode) => (human ? humanSize(size(node)) : String(size(node)));
   const targets = rest.length ? rest : ['.'];
   const out: string[] = [];
   const errors: string[] = [];
@@ -101,7 +142,7 @@ const ls: CommandFn = (m, args) => {
       const node = name === '.' || name === '..' ? m.fs.get(resolvePath(dir, name)) : m.fs.get(resolvePath(dir, name));
       return { name, node: node as FsNode };
     });
-    const width = Math.max(1, ...entries.map((e) => String(size(e.node)).length));
+    const width = Math.max(1, ...entries.map((e) => shownSize(e.node).length));
     const total = entries.reduce(
       (sum, e) => sum + (e.node.type === 'dir' ? 4 : Math.ceil(size(e.node) / 4096) * 4),
       0,
@@ -110,7 +151,7 @@ const ls: CommandFn = (m, args) => {
       `total ${total}`,
       ...entries.map(({ name, node }) => {
         const links = node.type === 'dir' ? 2 + [...node.children.values()].filter((c) => c.type === 'dir').length : 1;
-        return `${permissions(node)} ${links} ${USER} ${USER} ${String(size(node)).padStart(width)} ${formatDate(node.mtime)} ${name}`;
+        return `${permissions(node)} ${links} ${USER} ${USER} ${shownSize(node).padStart(width)} ${formatDate(node.mtime)} ${name}`;
       }),
     ];
   };
@@ -167,7 +208,10 @@ const cd: CommandFn = (m, args) => {
 };
 
 const mkdir: CommandFn = (m, args) => {
-  const { flags, long, rest } = splitFlags(args);
+  const parsed = splitFlags(args);
+  const { flags, long, rest } = parsed;
+  const invalid = badOption('mkdir', parsed, 'pv', ['parents', 'verbose']);
+  if (invalid) return invalid;
   if (!rest.length) return fail(1, 'mkdir: missing operand', "Try 'mkdir --help' for more information.");
   const parents = flags.has('p') || long.has('parents');
   const errors: string[] = [];
@@ -210,11 +254,32 @@ const echo: CommandFn = (_m, args) => {
 };
 
 const rm: CommandFn = (m, args) => {
-  const { flags, long, rest } = splitFlags(args);
+  const parsed = splitFlags(args);
+  const { flags, long, rest } = parsed;
+  const invalid = badOption('rm', parsed, 'fiIrRv', ['force', 'interactive', 'recursive', 'verbose']);
+  if (invalid) return invalid;
   const force = flags.has('f') || long.has('force');
   const recursive = flags.has('r') || flags.has('R') || long.has('recursive');
   if (!rest.length) {
     return force ? ok() : fail(1, 'rm: missing operand', "Try 'rm --help' for more information.");
+  }
+  // rm -i chiede conferma per ogni file. Il simulatore non può aspettare la risposta:
+  // mostra la domanda reale e risponde «no», quindi non cancella nulla.
+  if ((flags.has('i') || long.has('interactive')) && !force) {
+    const out: string[] = [];
+    const errors: string[] = [];
+    for (const name of rest) {
+      const node = m.fs.get(resolvePath(m.cwd, name));
+      if (!node) errors.push(`rm: cannot remove '${name}': No such file or directory`);
+      else if (node.type === 'dir' && !recursive) errors.push(`rm: cannot remove '${name}': Is a directory`);
+      else if (node.type === 'dir') out.push(`rm: descend into directory '${name}'? `);
+      else out.push(`rm: remove regular ${node.content === '' ? 'empty ' : ''}file '${name}'? `);
+    }
+    return {
+      stdout: '',
+      extra: [...out.map((text) => ({ kind: 'out' as const, text })), ...toErr(errors), ...(out.length ? [hint('promptAnsweredNo')] : [])],
+      code: errors.length ? 1 : 0,
+    };
   }
   const errors: string[] = [];
   for (const name of rest) {
@@ -249,7 +314,13 @@ function destination(m: Machine, source: string, dest: string): string {
 
 function copyOrMove(name: 'cp' | 'mv'): CommandFn {
   return (m, args) => {
-    const { flags, long, rest } = splitFlags(args);
+    const parsed = splitFlags(args);
+    const { flags, long, rest } = parsed;
+    const invalid =
+      name === 'cp'
+        ? badOption('cp', parsed, 'rRiv', ['recursive', 'interactive', 'verbose'])
+        : badOption('mv', parsed, 'fiv', ['force', 'interactive', 'verbose']);
+    if (invalid) return invalid;
     const recursive = flags.has('r') || flags.has('R') || long.has('recursive');
     if (rest.length === 0) return fail(1, `${name}: missing file operand`, `Try '${name} --help' for more information.`);
     if (rest.length === 1) {
@@ -260,6 +331,8 @@ function copyOrMove(name: 'cp' | 'mv'): CommandFn {
     if (sources.length > 1 && !m.fs.isDir(resolvePath(m.cwd, dest))) {
       return fail(1, `${name}: target '${dest}': Not a directory`);
     }
+    const interactive = flags.has('i') || long.has('interactive');
+    const prompts: string[] = [];
     const errors: string[] = [];
     for (const source of sources) {
       const sourcePath = resolvePath(m.cwd, source);
@@ -282,6 +355,11 @@ function copyOrMove(name: 'cp' | 'mv'): CommandFn {
         errors.push(`${name}: cannot overwrite directory '${dest}' with non-directory`);
         continue;
       }
+      if (existing?.type === 'file' && interactive) {
+        // -i: chiederebbe conferma prima di sovrascrivere; il simulatore risponde «no».
+        prompts.push(`${name}: overwrite '${dest}'? `);
+        continue;
+      }
       const error = m.fs.place(target, name === 'cp' ? m.fs.clone(node) : node);
       if (error) {
         errors.push(`${name}: cannot create regular file '${dest}': ${ERROR_TEXT[error]}`);
@@ -289,7 +367,15 @@ function copyOrMove(name: 'cp' | 'mv'): CommandFn {
       }
       if (name === 'mv') m.fs.remove(sourcePath, true);
     }
-    return { stdout: '', extra: toErr(errors), code: errors.length ? 1 : 0 };
+    return {
+      stdout: '',
+      extra: [
+        ...prompts.map((text) => ({ kind: 'out' as const, text })),
+        ...toErr(errors),
+        ...(prompts.length ? [hint('promptAnsweredNo')] : []),
+      ],
+      code: errors.length ? 1 : 0,
+    };
   };
 }
 

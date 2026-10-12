@@ -11,8 +11,14 @@ export type Goal =
   | { tipo: 'esiste'; percorso: string; come?: 'cartella' | 'file' }
   | { tipo: 'non-esiste'; percorso: string }
   | { tipo: 'file-contiene'; percorso: string; testo: string }
-  /** Un comando eseguito con successo, con (facoltativo) alcune parole tra gli argomenti. */
-  | { tipo: 'comando-eseguito'; programma: string; argomenti?: string[] }
+  /**
+   * Un comando eseguito con successo.
+   * - argomenti: parole che devono comparire tra gli argomenti;
+   * - opzioni: opzioni da usare, scritte come "a" o "a|all": vale -a, -la (opzioni unite) oppure --all.
+   */
+  | { tipo: 'comando-eseguito'; programma: string; argomenti?: string[]; opzioni?: string[] }
+  /** Basta raggiungere uno degli obiettivi elencati (più strade corrette). */
+  | { tipo: 'uno-tra'; obiettivi: Goal[] }
   | { tipo: 'immagine-presente'; immagine: string }
   | { tipo: 'immagine-assente'; immagine: string }
   | {
@@ -26,6 +32,16 @@ export type Goal =
       minimo?: number;
     }
   | { tipo: 'nessun-container'; immagine?: string; stato?: 'running' | 'exited' | 'created' };
+
+/** "a|all": vero se tra gli argomenti c'è -a, un gruppo come -la, oppure --all. */
+function hasOption(args: string[], wanted: string): boolean {
+  const [short = '', long] = wanted.split('|');
+  return args.some(
+    (arg) =>
+      (short.length === 1 && /^-[^-]/.test(arg) && arg.slice(1).includes(short)) ||
+      (long !== undefined && arg === `--${long}`),
+  );
+}
 
 export function checkGoal(goal: Goal, machine: Machine): boolean {
   machine.docker.refresh();
@@ -50,8 +66,11 @@ export function checkGoal(goal: Goal, machine: Machine): boolean {
         ({ argv, code }) =>
           code === 0 &&
           argv[0] === goal.programma &&
-          (goal.argomenti ?? []).every((wanted) => argv.slice(1).includes(wanted)),
+          (goal.argomenti ?? []).every((wanted) => argv.slice(1).includes(wanted)) &&
+          (goal.opzioni ?? []).every((wanted) => hasOption(argv.slice(1), wanted)),
       );
+    case 'uno-tra':
+      return goal.obiettivi.some((alternative) => checkGoal(alternative, machine));
     case 'immagine-presente':
       return Boolean(machine.docker.findImage(goal.immagine));
     case 'immagine-assente':

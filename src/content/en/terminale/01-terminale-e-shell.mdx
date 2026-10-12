@@ -1,0 +1,111 @@
+---
+id: terminale-e-shell
+titolo: The terminal and the shell
+durata: 7
+tipo: tecnica
+concetti_richiesti: [programma, sistema-operativo, linux, cartella]
+concetti_introdotti: [terminale, shell, bash, prompt]
+fonti:
+  - titolo: "GNU Bash Reference Manual – What is a shell?"
+    url: https://www.gnu.org/software/bash/manual/html_node/What-is-a-shell_003f.html
+  - titolo: "Linux man-pages – bash(1)"
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+verificata_il: "2026-10-12"
+---
+
+## Why you need it
+
+Docker is almost always used by **typing commands**, not by clicking. The servers that run applications usually don't even have a screen: you connect to them from far away and work with text only.
+
+Typing commands also has advantages: a command can be copied, repeated identically a thousand times, shared with a colleague and, as you'll see in World 4, run automatically by a computer. That's why the terminal is the main tool of anyone working with Docker.
+
+## The terminal
+
+The <Termine id="terminale">terminal</Termine> is a window where you type text and the computer answers with more text. No icons, no buttons: just lines of characters.
+
+<Analogia>
+It's like a chat with the computer. You write a precise request and press Enter, it carries it out and answers. If the request isn't clear, it answers with an error, which is its way of saying "I didn't understand".
+</Analogia>
+
+## The shell
+
+The terminal on its own is just the window. What reads what you type and turns it into actions is a program running inside the terminal: the <Termine id="shell">shell</Termine>.
+
+The official Bash manual describes the shell as a **command interpreter**: it reads what you type, works out which program you want to start and with which instructions, and starts it. It's also a real programming language, which can be used to write sequences of commands to run automatically.
+
+On Linux the most common shell is called <Termine id="bash">Bash</Termine>. It's the one you'll use in this course, in the simulated terminal and later in the labs.
+
+<Callout tipo="info">
+To recap: the **terminal** is the window, the **shell** is the program that understands commands. In everyday language people often say "type it in the terminal" meaning both.
+</Callout>
+
+## The prompt: the shell is ready
+
+When the shell is waiting for a command, it shows a short text at the start of the line: the <Termine id="prompt">prompt</Termine>. In the course terminal it's this:
+
+```
+studente@corso:~$
+```
+
+Piece by piece, from left to right:
+
+| Part | Meaning |
+|---|---|
+| `studente` | The name of the user you're working as. |
+| `@` | Separator: read as "at". |
+| `corso` | The name of the computer. |
+| `:` | Separator. |
+| `~` | The folder you're in right now. The `~` symbol means your home folder: you'll see it properly in lesson 3. |
+| `$` | The shell is ready and waiting for your command. |
+
+The prompt changes from computer to computer, but the idea is always the same: when you see it, you can type.
+
+<Callout tipo="consiglio">
+In the course examples you'll find **only the command**, without the prompt in front. Type just the command, then press Enter.
+</Callout>
+
+## Your first command
+
+Try typing this command in the terminal below and press Enter:
+
+```
+whoami
+```
+
+The name comes from *who am I?*. The shell starts the `whoami` program, which prints the user's name:
+
+```
+studente
+```
+
+Then try these two:
+
+- `hostname` prints the computer's name (`corso`);
+- `echo ciao` prints back the text you give it (`ciao`).
+
+<Terminale />
+
+## Common errors
+
+**`whomai: command not found`**. The command is misspelled: the shell can't find any program with that name. Check it letter by letter.
+
+**`Whoami: command not found`**. On Linux capital letters matter: `Whoami` and `whoami` are two different names, and commands are almost always lowercase.
+
+**`echociao: command not found`**. The space is missing: the shell read everything as a single command name. The space is what separates the command from the rest.
+
+<Callout tipo="info">
+Programs' errors are in English, as in real life. When it can, the course terminal adds an explanation underneath on a yellow background.
+</Callout>
+
+## Where do I find a terminal on my computer?
+
+On macOS and on Linux there's an app called **Terminal**: the basic commands of this level work there too. On Windows the Terminal app usually runs a different shell, PowerShell, with different commands.
+
+So as not to depend on your computer, in this course you'll use the simulated terminal and, for the labs, Codespaces, which gives you a real Linux computer in the browser.
+
+## In short
+
+- The **terminal** is the window where you type commands and read the answers.
+- The **shell** is the program that interprets commands; on Linux the most common one is **Bash**.
+- The **prompt**, such as `studente@corso:~$`, tells you the shell is ready and shows user, computer and folder.
+- A command is typed and confirmed with Enter; capital letters and spaces matter.

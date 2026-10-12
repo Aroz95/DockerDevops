@@ -1,0 +1,232 @@
+{
+  "missioni": [
+    {
+      "id": "primo-comando",
+      "tipo": "terminale",
+      "dopoLezione": "terminale-e-shell",
+      "obiettivi": [
+        {
+          "tipo": "comando-eseguito",
+          "programma": "whoami"
+        },
+        {
+          "tipo": "comando-eseguito",
+          "programma": "hostname"
+        }
+      ]
+    },
+    {
+      "id": "parti-del-prompt",
+      "tipo": "scelta",
+      "dopoLezione": "terminale-e-shell",
+      "opzioni": [
+        "utente",
+        "computer",
+        "cartella",
+        "comando"
+      ],
+      "corretta": "computer"
+    },
+    {
+      "id": "parti-del-comando",
+      "tipo": "completa",
+      "dopoLezione": "comandi-opzioni-argomenti",
+      "risposte": [
+        [
+          "-l"
+        ],
+        [
+          "documenti"
+        ]
+      ]
+    },
+    {
+      "id": "file-nascosti",
+      "tipo": "terminale",
+      "dopoLezione": "comandi-opzioni-argomenti",
+      "inizio": {
+        "cartelle": [
+          "documenti"
+        ],
+        "file": {
+          "note.txt": "ciao\n",
+          ".impostazioni": "tema=scuro\n"
+        }
+      },
+      "obiettivi": [
+        {
+          "tipo": "comando-eseguito",
+          "programma": "ls",
+          "opzioni": [
+            "a|all"
+          ]
+        },
+        {
+          "tipo": "uno-tra",
+          "obiettivi": [
+            {
+              "tipo": "comando-eseguito",
+              "programma": "mkdir",
+              "argomenti": [
+                "--help"
+              ]
+            },
+            {
+              "tipo": "comando-eseguito",
+              "programma": "man",
+              "argomenti": [
+                "mkdir"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trova-la-strada",
+      "tipo": "terminale",
+      "dopoLezione": "muoversi-tra-le-cartelle",
+      "inizio": {
+        "cartelle": [
+          "documenti/lavoro/2026",
+          "foto/vacanze"
+        ]
+      },
+      "obiettivi": [
+        {
+          "tipo": "cartella-corrente",
+          "percorso": "~/documenti/lavoro/2026"
+        },
+        {
+          "tipo": "comando-eseguito",
+          "programma": "pwd"
+        }
+      ]
+    },
+    {
+      "id": "assoluto-o-relativo",
+      "tipo": "scelta-multipla",
+      "dopoLezione": "muoversi-tra-le-cartelle",
+      "opzioni": [
+        "home-foto",
+        "documenti-note",
+        "etc-hostname",
+        "su-foto",
+        "punto-note"
+      ],
+      "corrette": [
+        "home-foto",
+        "etc-hostname"
+      ]
+    },
+    {
+      "id": "sali-di-una",
+      "tipo": "completa",
+      "dopoLezione": "muoversi-tra-le-cartelle",
+      "risposte": [
+        [
+          "..",
+          "../"
+        ]
+      ]
+    },
+    {
+      "id": "metti-in-ordine",
+      "tipo": "terminale",
+      "dopoLezione": "creare-copiare-spostare",
+      "xp": 80,
+      "inizio": {
+        "file": {
+          "scrivania/foto-mare.jpg": "",
+          "scrivania/lista.txt": "pane\nlatte\n",
+          "scrivania/vecchio.tmp": ""
+        }
+      },
+      "obiettivi": [
+        {
+          "tipo": "esiste",
+          "percorso": "~/archivio/foto",
+          "come": "cartella"
+        },
+        {
+          "tipo": "esiste",
+          "percorso": "~/archivio/foto/foto-mare.jpg",
+          "come": "file"
+        },
+        {
+          "tipo": "non-esiste",
+          "percorso": "~/scrivania/foto-mare.jpg"
+        },
+        {
+          "tipo": "file-contiene",
+          "percorso": "~/archivio/lista.txt",
+          "testo": "latte"
+        },
+        {
+          "tipo": "esiste",
+          "percorso": "~/scrivania/lista.txt",
+          "come": "file"
+        },
+        {
+          "tipo": "non-esiste",
+          "percorso": "~/scrivania/vecchio.tmp"
+        }
+      ]
+    },
+    {
+      "id": "rm-cartella",
+      "tipo": "scelta",
+      "dopoLezione": "creare-copiare-spostare",
+      "opzioni": [
+        "serve-r",
+        "non-esiste",
+        "permessi",
+        "vuota"
+      ],
+      "corretta": "serve-r"
+    },
+    {
+      "id": "rinomina",
+      "tipo": "completa",
+      "dopoLezione": "creare-copiare-spostare",
+      "risposte": [
+        [
+          "mv"
+        ]
+      ]
+    },
+    {
+      "id": "scorciatoie",
+      "tipo": "terminale",
+      "dopoLezione": "lavorare-piu-veloce",
+      "inizio": {
+        "cartelle": [
+          "progetto-docker-del-corso/esercizi",
+          "promemoria"
+        ]
+      },
+      "obiettivi": [
+        {
+          "tipo": "cartella-corrente",
+          "percorso": "~/progetto-docker-del-corso/esercizi"
+        },
+        {
+          "tipo": "comando-eseguito",
+          "programma": "history"
+        }
+      ]
+    },
+    {
+      "id": "tab-ambiguo",
+      "tipo": "scelta",
+      "dopoLezione": "lavorare-piu-veloce",
+      "opzioni": [
+        "si-ferma",
+        "primo",
+        "errore",
+        "cancella"
+      ],
+      "corretta": "si-ferma"
+    }
+  ]
+}

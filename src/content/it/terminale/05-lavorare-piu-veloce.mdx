@@ -1,0 +1,72 @@
+---
+id: lavorare-piu-veloce
+titolo: Lavorare più veloce
+durata: 6
+tipo: tecnica
+concetti_richiesti: [shell, bash, comando, terminale, cartella-corrente]
+concetti_introdotti: [cronologia, completamento]
+fonti:
+  - titolo: "GNU Bash Reference Manual – Bash History Facilities"
+    url: https://www.gnu.org/software/bash/manual/html_node/Bash-History-Facilities.html
+  - titolo: "GNU Bash Reference Manual – Letting Readline Type For You"
+    url: https://www.gnu.org/software/bash/manual/html_node/Commands-For-Completion.html
+  - titolo: "Linux man-pages – readline(3)"
+    url: https://man7.org/linux/man-pages/man3/readline.3.html
+verificata_il: "2026-10-12"
+---
+
+## Perché ti serve
+
+I comandi di Docker possono essere lunghi, e scriverli ogni volta da capo stanca e porta errori di battitura. La shell ha alcuni aiuti che chi la usa ogni giorno sfrutta di continuo: imparali adesso e ti faranno risparmiare tempo per tutto il corso.
+
+## La cronologia: i comandi già scritti
+
+La shell ricorda i comandi che hai scritto: è la <Termine id="cronologia">cronologia</Termine> (in inglese *history*).
+
+- **Freccia su ↑**: richiama il comando precedente. Premila più volte per andare ancora più indietro.
+- **Freccia giù ↓**: torna verso i comandi più recenti.
+- Il comando `history` stampa l'elenco numerato dei comandi scritti.
+
+Puoi richiamare un comando, correggerne un pezzo e premere Invio: è il modo più veloce per riprovare dopo un errore.
+
+<Callout tipo="info">
+Bash salva la cronologia in un file nascosto della tua cartella personale, `.bash_history`, quando la shell si chiude. Così ritrovi i comandi anche il giorno dopo.
+</Callout>
+
+## Il completamento: lascia scrivere alla shell
+
+Il <Termine id="completamento">completamento</Termine> è la funzione che finisce di scrivere al posto tuo. Scrivi l'inizio di un nome e premi il tasto **Tab** (quello con le due frecce, sopra il blocco maiuscole):
+
+- se c'è un solo nome che inizia così, la shell lo completa;
+- se ce ne sono diversi, completa la parte in comune e si ferma. In Bash, premendo Tab una seconda volta, vedi l'elenco delle possibilità.
+
+Funziona sia per i comandi (`whoa` + Tab → `whoami`) sia per file e cartelle (`cd doc` + Tab → `cd documenti/`).
+
+<Analogia>
+È come il suggerimento delle parole sulla tastiera del telefono, ma più affidabile: la shell propone solo nomi che esistono davvero. Se il completamento non funziona, spesso è il segnale che il nome che stai scrivendo è sbagliato.
+</Analogia>
+
+<Callout tipo="consiglio">
+Sul telefono non c'è il tasto Tab: nel terminale del corso trovi sotto la riga di comando una barra con **Tab**, **↑**, **↓** e **Ctrl+C**.
+</Callout>
+
+## Altri tasti utili
+
+| Tasti | Effetto |
+|---|---|
+| **Ctrl+C** | Annulla la riga che stai scrivendo. Se un comando è in esecuzione e non finisce più, lo interrompe. |
+| **Ctrl+L** oppure il comando `clear` | Pulisce lo schermo. La cronologia resta. |
+
+*Ctrl+C* significa: tieni premuto il tasto Ctrl e premi C. Lo userai spesso con Docker, per fermare un container avviato in primo piano.
+
+## Prova
+
+C'è una cartella con un nome molto lungo. Entraci senza scriverlo tutto: scrivi `cd prog` e premi Tab. Poi richiama con la freccia su i comandi già usati e prova `history`.
+
+<Terminale cartelle={["progetto-docker-del-corso/esercizi", "promemoria"]} />
+
+## In breve
+
+- La **cronologia** ricorda i comandi: freccia su e giù per richiamarli, `history` per vederli tutti.
+- Il **completamento** con Tab finisce di scrivere nomi di comandi, file e cartelle.
+- **Ctrl+C** annulla la riga o interrompe un comando; **Ctrl+L** o `clear` pulisce lo schermo.

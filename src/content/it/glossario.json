@@ -94,5 +94,61 @@
   "versione": {
     "termine": "Versione",
     "definizione": "Il numero che identifica uno stato pubblicato di un software, per esempio 2.4.1 (maggiore.minore.correzione)."
+  },
+  "terminale": {
+    "termine": "Terminale",
+    "definizione": "La finestra in cui si scrivono comandi e si leggono le risposte del computer, solo testo."
+  },
+  "shell": {
+    "termine": "Shell",
+    "definizione": "Il programma che gira nel terminale, legge i comandi che scrivi e avvia i programmi richiesti. È anche un linguaggio di programmazione."
+  },
+  "bash": {
+    "termine": "Bash",
+    "definizione": "La shell più diffusa su Linux. Il nome viene da Bourne-Again SHell."
+  },
+  "prompt": {
+    "termine": "Prompt",
+    "definizione": "Il testo all'inizio della riga, come studente@corso:~$, che indica che la shell aspetta un comando e mostra utente, computer e cartella."
+  },
+  "comando": {
+    "termine": "Comando",
+    "definizione": "Una riga che chiede alla shell di avviare un programma, nella forma: comando opzioni argomenti."
+  },
+  "opzione": {
+    "termine": "Opzione",
+    "definizione": "Una parte del comando che ne cambia il comportamento. Inizia con un trattino (-l) o con due (--all)."
+  },
+  "argomento": {
+    "termine": "Argomento",
+    "definizione": "Una parte del comando che indica su cosa lavorare: un file, una cartella, un testo."
+  },
+  "manuale": {
+    "termine": "Manuale (man)",
+    "definizione": "La documentazione ufficiale di un comando, che si apre con man nome-comando. Si esce con q."
+  },
+  "cartella-corrente": {
+    "termine": "Cartella corrente (working directory)",
+    "definizione": "La cartella in cui la shell si trova in quel momento: i comandi lavorano lì se non si indica altro. La mostra pwd."
+  },
+  "cartella-personale": {
+    "termine": "Cartella personale (home)",
+    "definizione": "La cartella dove ogni utente tiene i propri file, come /home/studente. La shell la indica con ~."
+  },
+  "percorso-assoluto": {
+    "termine": "Percorso assoluto",
+    "definizione": "Un percorso che inizia con / e parte dalla radice del file system: vale da qualsiasi cartella."
+  },
+  "percorso-relativo": {
+    "termine": "Percorso relativo",
+    "definizione": "Un percorso che non inizia con / e parte dalla cartella corrente. .. indica la cartella di sopra."
+  },
+  "cronologia": {
+    "termine": "Cronologia (history)",
+    "definizione": "L'elenco dei comandi già scritti, che la shell ricorda. Si richiamano con la freccia su; il comando history li mostra tutti."
+  },
+  "completamento": {
+    "termine": "Completamento",
+    "definizione": "La funzione della shell che, premendo Tab, finisce di scrivere nomi di comandi, file e cartelle."
   }
 }

@@ -1,0 +1,119 @@
+---
+id: muoversi-tra-le-cartelle
+titolo: Moving between folders
+durata: 9
+tipo: tecnica
+concetti_richiesti: [cartella, file-system, comando, argomento, prompt]
+concetti_introdotti: [cartella-corrente, cartella-personale, percorso-assoluto, percorso-relativo]
+fonti:
+  - titolo: "Linux man-pages – path_resolution(7)"
+    url: https://man7.org/linux/man-pages/man7/path_resolution.7.html
+  - titolo: "Linux man-pages – bash(1) (cd, HOME, OLDPWD, tilde expansion)"
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+  - titolo: "Linux man-pages – pwd(1)"
+    url: https://man7.org/linux/man-pages/man1/pwd.1.html
+verificata_il: "2026-10-12"
+---
+
+## Why you need it
+
+In the terminal you don't see folders as icons: you have to know **where you are** and **how to move**. It's the first thing to learn, because almost all beginners' mistakes come from a command run in the wrong folder. With Docker you'll often need to be in the right project folder before running a command.
+
+## The current folder: where am I now?
+
+At any moment the shell is inside a folder: the <Termine id="cartella-corrente">current folder</Termine> (also called the *working directory*). The commands you type work there, unless you say otherwise.
+
+<Analogia>
+Imagine the file system as a big building with many rooms, one inside the other. You are always in a room. `pwd` answers "which room am I in?", `ls` answers "what's in this room?", `cd` is "go to another room".
+</Analogia>
+
+Three commands, one for each question:
+
+| Command | Comes from | What it does |
+|---|---|---|
+| `pwd` | *print working directory* | Prints the full path of the current folder. |
+| `ls` | *list* | Lists the contents of the current folder (or of the one given). |
+| `cd folder` | *change directory* | Moves you into the given folder. |
+
+## The home folder and the ~ symbol
+
+Every user has their own <Termine id="cartella-personale">home folder</Termine>, where they keep their files. In the course it's `/home/studente`.
+
+The shell writes it with the **tilde** symbol `~`: it's the `~` you see in the prompt when you're there. On some keyboards the tilde is hard to type: in the course terminal you can always write the full path instead.
+
+Two useful shortcuts:
+
+- `cd` with no arguments always takes you back to your home folder;
+- `cd -` takes you back to the folder you were in **before** the last move, and prints which one it is.
+
+## Absolute and relative paths
+
+To tell `cd` where to go you give it a path. There are two ways to write it.
+
+An <Termine id="percorso-assoluto">absolute path</Termine> starts with `/`: it starts from the root of the file system and works from any folder you're in. For example:
+
+```
+cd /home/studente/documenti
+```
+
+A <Termine id="percorso-relativo">relative path</Termine> does **not** start with `/`: it starts from the current folder. If you're in `/home/studente`, this command takes you to the same place as the one above:
+
+```
+cd documenti
+```
+
+Two special names are used in relative paths:
+
+| Name | Meaning |
+|---|---|
+| `.` | This folder. |
+| `..` | The folder that contains this one, that is the one "above". |
+
+So, starting from `/home/studente/documenti/lavoro`:
+
+| Command | Where you end up |
+|---|---|
+| `cd ..` | `/home/studente/documenti` |
+| `cd ../..` | `/home/studente` |
+| `cd ../../foto` | `/home/studente/foto` |
+| `cd /etc` | `/etc` (absolute path: it doesn't matter where you were) |
+
+<Callout tipo="consiglio">
+When you don't know where you are, ask: `pwd`. When you don't know what's there, look: `ls`. It's the habit that prevents the most mistakes of all.
+</Callout>
+
+## What you'll see
+
+Here's a short session, with the prompt changing as you go:
+
+```
+studente@corso:~$ pwd
+/home/studente
+studente@corso:~$ cd documenti
+studente@corso:~/documenti$ ls
+lavoro  note.txt
+studente@corso:~/documenti$ cd lavoro
+studente@corso:~/documenti/lavoro$ cd ../..
+studente@corso:~$
+```
+
+Notice how the part of the prompt after the colon always shows where you are.
+
+Try exploring: this home folder contains `documenti/lavoro` and `foto/vacanze`.
+
+<Terminale cartelle={["documenti/lavoro", "foto/vacanze"]} file={{ "documenti/note.txt": "ricordarsi di studiare\n" }} />
+
+## Common errors
+
+**`bash: cd: lavoro: No such file or directory`**. There's nothing with that name in the current folder. Maybe you're in the wrong folder (check with `pwd`) or the name is different (check with `ls`).
+
+**`bash: cd: note.txt: Not a directory`**. You tried to go into a file. `cd` only goes into folders.
+
+**`cd Documenti` doesn't work but `cd documenti` does**. Capital letters matter in folder and file names too.
+
+## In short
+
+- The **current folder** is where you are: `pwd` shows it, `ls` lists its contents, `cd` moves you.
+- The **home folder** is written `~`; `cd` with no arguments takes you back there, `cd -` to the previous folder.
+- An **absolute path** starts with `/` and works everywhere; a **relative path** starts from the current folder.
+- `.` is the current folder, `..` the one above.

@@ -15,7 +15,8 @@ export type HintKey =
   | 'execLimited'
   | 'helpIntro'
   | 'helpFooter'
-  | 'manReduced';
+  | 'manReduced'
+  | 'promptAnsweredNo';
 
 export type OutputLine =
   | { kind: 'out' | 'err'; text: string }

@@ -1,0 +1,116 @@
+---
+id: comandi-opzioni-argomenti
+titolo: Comandi, opzioni e argomenti
+durata: 8
+tipo: tecnica
+concetti_richiesti: [shell, programma, cartella, file, terminale]
+concetti_introdotti: [comando, opzione, argomento, manuale]
+fonti:
+  - titolo: "Linux man-pages – ls(1)"
+    url: https://man7.org/linux/man-pages/man1/ls.1.html
+  - titolo: "GNU Coreutils – ls invocation"
+    url: https://www.gnu.org/software/coreutils/manual/html_node/ls-invocation.html
+  - titolo: "Linux man-pages – man(1)"
+    url: https://man7.org/linux/man-pages/man1/man.1.html
+verificata_il: "2026-10-12"
+---
+
+## Perché ti serve
+
+Quasi tutti i comandi che scriverai, compresi quelli di Docker, hanno la stessa forma. Una volta capita, saprai leggere un comando mai visto prima e capire cosa fa, invece di copiarlo a memoria.
+
+## La forma di un comando
+
+Un <Termine id="comando">comando</Termine> è una riga che chiede alla shell di avviare un programma. Prendiamo questo esempio:
+
+```
+ls -l documenti
+```
+
+Riga per riga:
+
+| Parte | Cos'è | Significato |
+|---|---|---|
+| `ls` | il comando | Il programma da avviare. `ls` viene da *list*: elenca il contenuto di una cartella. |
+| `-l` | un'opzione | Cambia il *modo* in cui il comando lavora. `-l` (da *long*) chiede l'elenco lungo, con i dettagli. |
+| `documenti` | un argomento | Indica *su cosa* lavorare: la cartella `documenti`. |
+
+Le tre parti sono separate da **spazi**. È proprio lo spazio che dice alla shell dove finisce una parte e inizia la successiva.
+
+<Analogia>
+È come ordinare al bar: «caffè (il comando), macchiato (l'opzione: come lo vuoi), per il mio amico (l'argomento: per chi)». Senza opzione ottieni la versione normale; senza argomento il comando usa una scelta predefinita.
+</Analogia>
+
+## Le opzioni
+
+Un'<Termine id="opzione">opzione</Termine> modifica il comportamento di un comando. Le opzioni si riconoscono perché iniziano con un trattino.
+
+- **Opzioni brevi**: un trattino e una lettera, come `-l` o `-a`. Si possono **unire**: `ls -la` è come scrivere `ls -l -a`.
+- **Opzioni lunghe**: due trattini e una parola, più facili da ricordare, come `--all`. Per `ls`, `--all` fa la stessa cosa di `-a`.
+
+Con `ls` le più utili sono:
+
+| Opzione | Effetto |
+|---|---|
+| `-l` | Elenco lungo: per ogni file mostra tipo, permessi (li vedrai nel prossimo livello), proprietario, dimensione, data e nome. |
+| `-a` (`--all`) | Mostra anche i file **nascosti**, cioè quelli il cui nome inizia con un punto, come `.impostazioni`. |
+| `-h` | Insieme a `-l`, scrive le dimensioni in un formato leggibile, come `4.0K` invece di `4096`. |
+
+<Callout tipo="info">
+Su Linux un file il cui nome inizia con un punto è **nascosto**: `ls` normalmente non lo mostra. Spesso sono file di configurazione. Non è un segreto, è solo un modo per non fare confusione.
+</Callout>
+
+## Gli argomenti
+
+Un <Termine id="argomento">argomento</Termine> dice al comando su cosa lavorare: un file, una cartella, un testo. Alcuni comandi ne vogliono uno, altri più di uno, altri nessuno.
+
+Se `ls` non riceve argomenti, elenca la cartella in cui ti trovi. Con un argomento elenca quella cartella; con più argomenti, le elenca tutte.
+
+**Nomi con spazi.** Se un nome contiene uno spazio, la shell lo dividerebbe in due argomenti. Per tenerlo unito lo si scrive tra virgolette:
+
+```
+ls "foto delle vacanze"
+```
+
+Per evitare il problema, chi lavora con il terminale preferisce nomi senza spazi, come `foto-vacanze`.
+
+## Chiedere aiuto al comando
+
+Nessuno ricorda tutte le opzioni di tutti i comandi. Ci sono due modi per chiedere aiuto.
+
+**`--help`**. Quasi tutti i comandi accettano l'opzione `--help`, che stampa un riassunto di come si usano:
+
+```
+ls --help
+```
+
+**`man`**. Il comando `man` apre il <Termine id="manuale">manuale</Termine> di un comando, cioè la sua documentazione ufficiale completa:
+
+```
+man ls
+```
+
+Su un vero Linux il manuale si apre a schermo intero: si scorre con le frecce e si esce premendo il tasto `q`. Le stesse pagine si trovano anche online, sul sito man7.org, ed è da lì che sono scritte le lezioni di questo corso.
+
+<Callout tipo="attenzione">
+Nel terminale del corso `--help` e `man` mostrano una **versione ridotta**, con le sole opzioni disponibili nel simulatore. Per l'elenco completo usa i link in fondo alla lezione.
+</Callout>
+
+Prova qui. Nella tua cartella ci sono due cartelle, un file normale e un file nascosto: confronta `ls`, `ls -a`, `ls -l` e `ls -la`, poi prova `ls --help`.
+
+<Terminale cartelle={["documenti", "foto"]} file={{ "note.txt": "comprare il pane\n", ".impostazioni": "tema=scuro\n" }} />
+
+## Errori comuni
+
+**`ls: invalid option -- 'z'`**. L'opzione `-z` non esiste per `ls`. Il messaggio continua con `Try 'ls --help' for more information.`: il programma stesso ti suggerisce dove guardare.
+
+**`ls-l: command not found`**. Manca lo spazio tra comando e opzione, quindi la shell cerca un programma chiamato `ls-l`.
+
+**`ls: cannot access 'foto delle vacanze'...`** o simili, con un nome tagliato a metà. Probabilmente il nome ha degli spazi e mancano le virgolette.
+
+## In breve
+
+- Un **comando** ha la forma `comando opzioni argomenti`, con le parti separate da spazi.
+- Le **opzioni** cambiano il comportamento: brevi (`-l`, unibili in `-la`) o lunghe (`--all`).
+- Gli **argomenti** dicono su cosa lavorare; i nomi con spazi vanno tra virgolette.
+- Per scoprire come si usa un comando: `comando --help` oppure `man comando` (si esce con `q`).

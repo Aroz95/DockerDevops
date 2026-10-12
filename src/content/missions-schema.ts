@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import type { Goal } from '@/engine/sim/goals';
 
 const id = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'id: minuscolo-con-trattini');
 
@@ -18,32 +19,36 @@ const path = z.string().min(1);
 const containerState = z.enum(['running', 'exited', 'created']);
 
 /** Obiettivi delle missioni nel terminale (vedi src/engine/sim/goals.ts). */
-const goalSchema = z.discriminatedUnion('tipo', [
-  z.object({ tipo: z.literal('cartella-corrente'), percorso: path }),
-  z.object({ tipo: z.literal('esiste'), percorso: path, come: z.enum(['cartella', 'file']).optional() }),
-  z.object({ tipo: z.literal('non-esiste'), percorso: path }),
-  z.object({ tipo: z.literal('file-contiene'), percorso: path, testo: z.string().min(1) }),
-  z.object({
-    tipo: z.literal('comando-eseguito'),
-    programma: z.string().min(1),
-    argomenti: z.array(z.string()).optional(),
-  }),
-  z.object({ tipo: z.literal('immagine-presente'), immagine: z.string().min(1) }),
-  z.object({ tipo: z.literal('immagine-assente'), immagine: z.string().min(1) }),
-  z.object({
-    tipo: z.literal('container'),
-    immagine: z.string().optional(),
-    nome: z.string().optional(),
-    stato: containerState.optional(),
-    porta: z.string().regex(/^\d+:\d+$/).optional(),
-    minimo: z.number().int().positive().optional(),
-  }),
-  z.object({
-    tipo: z.literal('nessun-container'),
-    immagine: z.string().optional(),
-    stato: containerState.optional(),
-  }),
-]);
+const goalSchema: z.ZodType<Goal> = z.lazy(() =>
+  z.discriminatedUnion('tipo', [
+    z.object({ tipo: z.literal('cartella-corrente'), percorso: path }),
+    z.object({ tipo: z.literal('esiste'), percorso: path, come: z.enum(['cartella', 'file']).optional() }),
+    z.object({ tipo: z.literal('non-esiste'), percorso: path }),
+    z.object({ tipo: z.literal('file-contiene'), percorso: path, testo: z.string().min(1) }),
+    z.object({
+      tipo: z.literal('comando-eseguito'),
+      programma: z.string().min(1),
+      argomenti: z.array(z.string()).optional(),
+      opzioni: z.array(z.string().regex(/^[A-Za-z0-9](\|[a-z0-9-]+)?$/)).optional(),
+    }),
+    z.object({ tipo: z.literal('uno-tra'), obiettivi: z.array(goalSchema).min(2) }),
+    z.object({ tipo: z.literal('immagine-presente'), immagine: z.string().min(1) }),
+    z.object({ tipo: z.literal('immagine-assente'), immagine: z.string().min(1) }),
+    z.object({
+      tipo: z.literal('container'),
+      immagine: z.string().optional(),
+      nome: z.string().optional(),
+      stato: containerState.optional(),
+      porta: z.string().regex(/^\d+:\d+$/).optional(),
+      minimo: z.number().int().positive().optional(),
+    }),
+    z.object({
+      tipo: z.literal('nessun-container'),
+      immagine: z.string().optional(),
+      stato: containerState.optional(),
+    }),
+  ]),
+);
 
 /** Stato iniziale della macchina simulata (vedi MachineSetup in src/engine/sim/machine.ts). */
 const machineSetupSchema = z.object({
